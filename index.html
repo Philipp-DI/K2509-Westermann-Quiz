@@ -546,16 +546,6 @@
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     color: var(--ink-faint);
-    opacity: 0;
-    transition: opacity 0.15s ease;
-  }
-  .review-item:hover .review-source,
-  .review-item:focus-within .review-source {
-    opacity: 1;
-  }
-  /* Touch devices: always show source */
-  @media (hover: none) {
-    .review-source { opacity: 0.7; }
   }
   .review-correct-answer {
     margin-top: 8px;
