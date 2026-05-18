@@ -545,7 +545,17 @@
     margin-top: 6px;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
-    color: var(--ink-soft);
+    color: var(--ink-faint);
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .review-item:hover .review-source,
+  .review-item:focus-within .review-source {
+    opacity: 1;
+  }
+  /* Touch devices: always show source */
+  @media (hover: none) {
+    .review-source { opacity: 0.7; }
   }
   .review-correct-answer {
     margin-top: 8px;
@@ -953,6 +963,300 @@ const QUESTIONS = {
       explain: "Wertschöpfung ist der Mehrwert, den ein Unternehmen durch seine Leistung schafft: Umsatzerlös minus Vorleistungen (Material, Fremdleistungen) minus Abschreibungen. Die Wertschöpfung wird auf Eigentümer/Darlehen, Steuern und Mitarbeiter (Löhne, Sozialabgaben, Prämien) verteilt.",
       source: "LF 1, Kap. 1.3.5"
     }
+  ],
+
+  /* ============================================================
+     LERNFELD 2 - Arbeitsplätze nach Kundenwunsch ausstatten
+     ============================================================ */
+  "LF2": [
+    {
+      type: "mc",
+      q: "Welches Prinzip beschreibt die grundlegende Arbeitsweise eines Computers?",
+      options: [
+        "EVA-Prinzip (Eingabe - Verarbeitung - Ausgabe)",
+        "AVE-Prinzip (Ausgabe - Verarbeitung - Eingabe)",
+        "REV-Prinzip (Rechnen - Eingeben - Verarbeiten)",
+        "IPO-Prinzip (Input - Programm - Output)"
+      ],
+      correct: 0,
+      explain: "Das EVA-Prinzip beschreibt die drei Grundfunktionen eines Computers: Eingabe der Daten, Verarbeitung in der Zentraleinheit, Ausgabe der Ergebnisse. Für einen funktionierenden Computer werden mindestens eine Zentraleinheit, eine Eingabe- und eine Ausgabeeinheit benötigt.",
+      source: "LF 2, Kap. 2.1.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Aussage zum Arbeitsspeicher (RAM) ist korrekt?",
+      options: [
+        "Der RAM behält seinen Inhalt auch nach dem Ausschalten des Computers.",
+        "Der RAM ist ein flüchtiger Speicher und verliert seinen Inhalt beim Ausschalten.",
+        "Der RAM dient zur dauerhaften Speicherung des Betriebssystems.",
+        "Der RAM ersetzt vollständig die Festplatte."
+      ],
+      correct: 1,
+      explain: "RAM (Random Access Memory) ist ein flüchtiger Speicher - alle Daten werden beim Ausschalten gelöscht. Während des Betriebs hält der RAM Programme und Daten bereit, auf die die CPU direkt zugreifen kann. Im Gegensatz dazu speichert das ROM auf dem Mainboard das BIOS/UEFI dauerhaft.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "fill",
+      q: "Wie heißt das Basisprogramm auf dem Mainboard, das den Startvorgang des Computers ausführt und das Betriebssystem von der Festplatte lädt? (heute meist als UEFI bezeichnet)",
+      answers: ["BIOS", "Basic Input Output System", "Basic-Input-Output-System"],
+      explain: "Das BIOS (Basic Input Output System) ist auf einem ROM-Chip des Mainboards gespeichert und führt den Startvorgang aus. Es ruft das eigentliche Betriebssystem von der Festplatte auf. Heute wird BIOS überwiegend durch UEFI ersetzt, das mehr Funktionen und höhere Sicherheit bietet.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "tf",
+      q: "DDR4-RAM-Module sind abwärtskompatibel und können in Mainboards eingesetzt werden, die für DDR3-RAM ausgelegt sind.",
+      correct: false,
+      explain: "Falsch. Die verschiedenen DDR-Generationen sind untereinander nicht kompatibel. DDR4 passt weder physikalisch noch elektrisch in DDR3-Slots. Beim Aufrüsten muss daher genau geprüft werden, welche RAM-Generation das Mainboard unterstützt.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Festplattentechnologie ist energieeffizienter, deutlich schneller bei Bootvorgängen und Datentransfer, aber pro GB teurer als die ältere Alternative?",
+      options: [
+        "HDD (Hard Disk Drive)",
+        "SSD (Solid State Drive)",
+        "eMMC (embedded Multimedia Card)",
+        "Magnetband-Speicher"
+      ],
+      correct: 1,
+      explain: "SSDs nutzen Flash-Speicher ohne bewegliche Teile - daher leise, schneller Datentransfer, schnelles Booten und geringerer Energieverbrauch. Nachteil: höherer Preis pro GB im Vergleich zur klassischen HDD. Aus energetischen Gründen sind SSDs vorzuziehen.",
+      source: "LF 2, Kap. 2.4.3"
+    },
+    {
+      type: "multi",
+      q: "Welche der folgenden Komponenten gehören zur Zentraleinheit eines Computers im engeren Sinne? (Mehrfachauswahl)",
+      options: [
+        "CPU (Prozessor)",
+        "Tastatur",
+        "Arbeitsspeicher (RAM)",
+        "Mainboard mit Chipsatz",
+        "Monitor"
+      ],
+      correct: [0, 2, 3],
+      explain: "Die Zentraleinheit umfasst Mainboard, CPU und Arbeitsspeicher - alles, was zur direkten Datenverarbeitung gehört. Tastatur und Monitor sind Peripheriegeräte (für Eingabe bzw. Ausgabe), gehören also nicht zur Zentraleinheit.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welches Dokument wird vom Auftraggeber erstellt und beschreibt die Anforderungen mit den Fragen \"Was?\" und \"Wofür?\"?",
+      options: [
+        "Pflichtenheft",
+        "Lastenheft",
+        "Werkvertrag",
+        "Sollkonzept"
+      ],
+      correct: 1,
+      explain: "Das Lastenheft (User Specification) wird vom Auftraggeber/Kunden erstellt und beschreibt die Gesamtheit der Forderungen - das Was und Wofür. Es ist allgemein verständlich und ergebnisorientiert. Das Pflichtenheft erstellt der Auftragnehmer als Antwort darauf (Wie und Womit).",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "mc",
+      q: "Wer erstellt das Pflichtenheft und welche Fragen beantwortet es?",
+      options: [
+        "Der Auftraggeber - es beantwortet \"Was?\" und \"Wofür?\"",
+        "Der Auftragnehmer - es beantwortet \"Wie?\" und \"Womit?\"",
+        "Eine externe Zertifizierungsstelle - es beantwortet \"Wann?\" und \"Wo?\"",
+        "Der Projektmanager des Kunden - es beantwortet \"Wer?\" und \"Warum?\""
+      ],
+      correct: 1,
+      explain: "Das Pflichtenheft (Functional Specification) wird vom Auftragnehmer auf Basis des Lastenhefts erstellt. Es enthält die konkreten Realisierungsvorgaben - das Wie und Womit - und ist Grundlage für den Kundenvertrag und den späteren Abnahmekatalog.",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "fill",
+      q: "In welcher DIN-Norm zum Projektmanagement sind die Begriffe Lasten- und Pflichtenheft definiert?",
+      answers: ["DIN 69901-5", "DIN 69901", "DIN 69905"],
+      explain: "Die DIN 69901-5 (Projektmanagement, Begriffe) definiert Lasten- und Pflichtenheft. Wichtig: Die Norm legt die Begriffe fest, nicht aber die konkrete Gliederung oder die Inhalte - jedes Unternehmen hat hier seinen eigenen Standard.",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "multi",
+      q: "Welche Eigenschaften zeichnen Thin Clients aus? (Mehrfachauswahl)",
+      options: [
+        "Einfache Systemadministration",
+        "Hoher Energieverbrauch",
+        "Schnelle Betriebsbereitschaft",
+        "Geringe Betriebskosten",
+        "Volle lokale Datenverarbeitung"
+      ],
+      correct: [0, 2, 3],
+      explain: "Thin Clients bieten einfache Administration, schnelle Betriebsbereitschaft, geringe Betriebskosten und geringen Energieverbrauch - sie entsprechen damit der Forderung nach Green-IT. Die eigentliche Datenverarbeitung läuft serverseitig, nicht lokal auf dem Thin Client.",
+      source: "LF 2, Kap. 2.2.2"
+    },
+    {
+      type: "mc",
+      q: "Was bedeutet der Begriff \"Konfiguration\" im IT-Kontext?",
+      options: [
+        "Die reine Hardware-Ausstattung eines Computers",
+        "Die Zusammenstellung, Einstellungen und Abstimmung von Komponenten, Geräten und Programmen auf eine Anwendung",
+        "Die Anbindung eines Computers an das Netzwerk",
+        "Das Update von Treibern und Software"
+      ],
+      correct: 1,
+      explain: "Konfiguration bezeichnet die Zusammenstellung, Einstellungen und Abstimmungen von Komponenten, Geräten und Programmen in Bezug auf die Anwendungen. Je nach Einsatzzweck werden Geräte und Komponenten zu einer maßgeschneiderten Konfiguration zusammengestellt.",
+      source: "LF 2, Kap. 2.1.1"
+    },
+    {
+      type: "tf",
+      q: "Die Festplatte zählt zu den Peripheriegeräten eines Computers.",
+      correct: true,
+      explain: "Korrekt. Peripheriegeräte sind alle Geräte zur Eingabe, Ausgabe und Speicherung der Daten - die Festplatte gehört als externe Speichereinheit dazu. Zur Zentraleinheit zählen nur CPU, RAM und Mainboard.",
+      source: "LF 2, Kap. 2.1.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Prozessor-Reihe von Intel ist speziell für leistungsstarke Workstations und Server konzipiert (mit Performance-Stufen Bronze, Silver, Gold und Platinum)?",
+      options: [
+        "Intel Core i9",
+        "Intel Core i7",
+        "Intel Xeon",
+        "Intel Pentium"
+      ],
+      correct: 2,
+      explain: "Intel Xeon-Prozessoren sind für Workstations und Server ausgelegt - mit den Performance-Stufen Bronze, Silver, Gold und Platinum. Sie bieten mehr Cache, mehr Cores, ECC-Speicher-Unterstützung und höhere Zuverlässigkeit. Das AMD-Pendant für diesen Bereich ist der Ryzen Threadripper bzw. EPYC.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "fill",
+      q: "Wie heißt der Leitbegriff für eine Unternehmenskultur, die IT möglichst umweltschonend beschafft, einsetzt und entsorgt - mit ganzheitlicher Betrachtung von Beschaffung, Nutzung, Verwertung und Entsorgung?",
+      answers: ["Green-IT", "Green IT", "GreenIT"],
+      explain: "Green-IT zielt auf eine ganzheitliche, ressourcenschonende Betrachtung des IT-Lebenszyklus. Maßnahmen: schlanke Architektur, energieeffiziente Komponenten, Virtualisierung, längere Nutzungsdauer, Refurbished IT, BYOD-Konzepte. Überprüfbar durch Nachhaltigkeitsrichtlinien und -berichte.",
+      source: "LF 2, Kap. 2.3.2"
+    },
+    {
+      type: "multi",
+      q: "Welche der folgenden Speichertypen sind nichtflüchtig (behalten Daten ohne Stromversorgung)? (Mehrfachauswahl)",
+      options: [
+        "RAM (DDR4)",
+        "SSD",
+        "HDD",
+        "Cache-Speicher der CPU",
+        "ROM (mit BIOS/UEFI)"
+      ],
+      correct: [1, 2, 4],
+      explain: "Nichtflüchtig sind SSD und HDD (Massenspeicher) sowie das ROM mit dem BIOS/UEFI. RAM und der CPU-Cache sind flüchtige Speicher - sie verlieren ihren Inhalt beim Ausschalten.",
+      source: "LF 2, Kap. 2.4.1, 2.4.3"
+    },
+    {
+      type: "mc",
+      q: "Welche Vertragsart liegt vor, wenn ein Systemhaus IT-Hardware an einen Kunden liefert und das Eigentum übergeht?",
+      options: [
+        "Werkvertrag",
+        "Dienstleistungsvertrag",
+        "Kaufvertrag",
+        "Mietvertrag"
+      ],
+      correct: 2,
+      explain: "Der Kaufvertrag regelt die Übergabe von Eigentum gegen Bezahlung. Im IT-Bereich kommen außerdem der Werkvertrag (geschuldet wird ein konkretes Werk/Ergebnis, z.B. eine fertige Konfiguration) und der Dienstleistungsvertrag (geschuldet wird die Tätigkeit, nicht der Erfolg, z.B. Beratung, Support) zum Einsatz.",
+      source: "LF 2, Kap. 2.5, 2.9.4"
+    },
+    {
+      type: "mc",
+      q: "Was beschreibt der Begriff BYOD (Bring Your Own Device) im betrieblichen Kontext?",
+      options: [
+        "Die Pflicht des Arbeitgebers, jedem Mitarbeiter ein dienstliches Endgerät bereitzustellen",
+        "Mitarbeiter nutzen ihre privaten Geräte auch betrieblich, ggf. mit Zuschüssen des Arbeitgebers",
+        "Die zentrale Bestellung aller Geräte über einen einzigen Lieferanten",
+        "Die ausschließliche Verwendung von Open-Source-Software"
+      ],
+      correct: 1,
+      explain: "BYOD steht für die betriebliche Nutzung privater Geräte durch Mitarbeiter. Vorteil: Ressourceneinsparung, geringerer Beschaffungsaufwand, Mitarbeiterzufriedenheit. Mitarbeiter erhalten ggf. Zuschüsse. Herausforderung: IT-Sicherheit, Datenschutz und Trennung von privaten und betrieblichen Daten müssen geregelt sein.",
+      source: "LF 2, Kap. 2.3.2"
+    },
+    {
+      type: "tf",
+      q: "Single-Core-Prozessoren sind für anspruchsvolle Anwendungen wie 3D-Rendering, CAD und professionelle Videobearbeitung ausreichend.",
+      correct: false,
+      explain: "Falsch. Single-Core-Prozessoren reichen für Standardanwendungen (Office, Kommunikation, einfache Bildbearbeitung). Für 3D-Rendering, CAD, Videobearbeitung und professionelle Audio-/Bildbearbeitung sind Multi-Core-Prozessoren notwendig, da diese Anwendungen die Last auf mehrere Kerne verteilen können.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Kriterien werden in einem Lastenheft typischerweise unterschieden, um die Wichtigkeit von Anforderungen zu strukturieren?",
+      options: [
+        "A-, B- und C-Kriterien",
+        "Muss-, Kann- und Abgrenzungskriterien",
+        "Soll-, Wunsch- und Verbots-Kriterien",
+        "Prio-1-, Prio-2- und Prio-3-Kriterien"
+      ],
+      correct: 1,
+      explain: "Funktionale Anforderungen werden im Lastenheft typischerweise in Muss-Kriterien (zwingend), Kann-Kriterien (optional/Wunsch) und Abgrenzungskriterien (was ausdrücklich nicht zum Lieferumfang gehört) unterteilt. So lassen sich Prioritäten klar kommunizieren.",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "fill",
+      q: "Welches Akronym beschreibt eine Methode zur Zielformulierung mit den Eigenschaften Spezifisch, Messbar, Akzeptiert, Realistisch und Terminiert?",
+      answers: ["SMART"],
+      explain: "Die SMART-Methode hilft, Ziele präzise zu formulieren: Spezifisch (eindeutig), Messbar (mit Kennzahlen), Akzeptiert (von allen Beteiligten), Realistisch (machbar), Terminiert (mit Frist). Besonders im Pflichtenheft sollten Ziele SMART formuliert sein, um spätere Abnahmen zu erleichtern.",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "mc",
+      q: "Welche Anforderungstypen werden bei der Anforderungsanalyse üblicherweise unterschieden?",
+      options: [
+        "Externe und interne Anforderungen",
+        "Funktionale und nicht funktionale Anforderungen",
+        "Hardware- und Software-Anforderungen",
+        "Schriftliche und mündliche Anforderungen"
+      ],
+      correct: 1,
+      explain: "Funktionale Anforderungen beschreiben, WAS das System leisten soll (z.B. Druck, Datenexport). Nicht funktionale Anforderungen beschreiben, WIE es geleistet werden soll (z.B. Performance, Sicherheit, Verfügbarkeit, Benutzbarkeit, rechtliche/kulturelle/normative Vorgaben).",
+      source: "LF 2, Kap. 2.5.3, LF 5"
+    },
+    {
+      type: "multi",
+      q: "Welche der folgenden Punkte gehören typischerweise in ein Lastenheft? (Mehrfachauswahl)",
+      options: [
+        "Ausgangssituation und Zielsetzung",
+        "Funktionale Anforderungen (Muss-/Kann-/Abgrenzungskriterien)",
+        "Detaillierter Programmcode der Lösung",
+        "Lieferumfang",
+        "Abnahmekriterien"
+      ],
+      correct: [0, 1, 3, 4],
+      explain: "Typische Lastenheft-Bestandteile: Ausgangssituation/Zielsetzung, funktionale Anforderungen, nicht funktionale Anforderungen, Lebenszyklus des Gesamtsystems, Lieferumfang und Abnahmekriterien. Programmcode oder technische Lösungsdetails gehören NICHT ins Lastenheft - das würde die Lösungsfreiheit des Auftragnehmers einschränken.",
+      source: "LF 2, Kap. 2.5.3"
+    },
+    {
+      type: "mc",
+      q: "Welche Komponente auf dem Mainboard sorgt für die Kommunikation zwischen allen Hardware-Komponenten und bestimmt maßgeblich die Ausstattung und Leistung des Mainboards?",
+      options: [
+        "Die CPU (der Prozessor)",
+        "Das BIOS",
+        "Der Chipsatz",
+        "Der RAM-Slot"
+      ],
+      correct: 2,
+      explain: "Der Chipsatz organisiert über seine Controller den Datenverkehr zwischen CPU, RAM, Festplatten und Peripherie. Beim Mainboard-Kauf ist die Kompatibilität von Chipsatz, Prozessor und Sockel entscheidend - sie bestimmt, welche CPUs überhaupt eingesetzt werden können.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "tf",
+      q: "Bei der Beschaffung von IT-Systemen sind die Schutzziele Vertraulichkeit, Integrität und Verfügbarkeit unabhängig vom Arbeitsplatz pauschal anzuwenden.",
+      correct: false,
+      explain: "Falsch. Die Schutzziele sind grundsätzlich relevant, aber die Anforderungen müssen je nach Arbeitsplatz und Schutzbedarf differenziert betrachtet werden. Für Standardarbeitsplätze reichen Standardanforderungen (pauschal), für Spezialanforderungen ist eine Anforderungsanalyse oder ein Lasten-/Pflichtenheft nötig. Die Schutzbedarfsanalyse selbst wird in LF 4 vertieft.",
+      source: "LF 2, Kap. 2.3.4, vgl. LF 4"
+    },
+    {
+      type: "fill",
+      q: "Welche RAM-Variante korrigiert Speicherfehler selbstständig und wird daher häufig in Servern und hochwertigen Workstations eingesetzt? (Abkürzung)",
+      answers: ["ECC", "ECC-RAM", "ECC RAM"],
+      explain: "ECC (Error Correcting Code) RAM kann Speicherfehler erkennen und korrigieren. In gängigen Desktop-PCs und Notebooks wird unbuffered, unregistered RAM ohne ECC verwendet. Server und Workstations setzen auf das teurere \"fully buffered, registered ECC RAM\", um Datenintegrität sicherzustellen.",
+      source: "LF 2, Kap. 2.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Aussage beschreibt die typische Reihenfolge im idealtypischen Ablauf bis zum Projektbeginn am besten?",
+      options: [
+        "Pflichtenheft (Auftraggeber) → Lastenheft (Auftragnehmer) → Vertrag",
+        "Lastenheft (Auftraggeber) → Pflichtenheft (Auftragnehmer) → Vertrag → Projektstart",
+        "Vertrag → Lastenheft → Pflichtenheft → Projektstart",
+        "Angebot → Bestellung → Lastenheft → Pflichtenheft"
+      ],
+      correct: 1,
+      explain: "Idealtypischer Ablauf: Auftraggeber erstellt das Lastenheft → übergibt es an den Auftragnehmer → dieser erstellt auf Basis des Lastenhefts das Pflichtenheft → Pflichtenheft wird Grundlage des Vertrags → nach Vertragsunterzeichnung startet das Projekt. Das Pflichtenheft kann während des Projekts noch ergänzt werden.",
+      source: "LF 2, Kap. 2.5.3"
+    }
   ]
 };
 
@@ -961,7 +1265,7 @@ const QUESTIONS = {
    ===================================================================== */
 const LERNFELDER = [
   { id: "LF1",  num: "LF 01", title: "Das Unternehmen und die eigene Rolle im Betrieb beschreiben", block: "grund", available: true },
-  { id: "LF2",  num: "LF 02", title: "Arbeitsplätze nach Kundenwunsch ausstatten", block: "grund", available: false },
+  { id: "LF2",  num: "LF 02", title: "Arbeitsplätze nach Kundenwunsch ausstatten", block: "grund", available: true },
   { id: "LF3",  num: "LF 03", title: "Clients in Netzwerke einbinden", block: "grund", available: false },
   { id: "LF4",  num: "LF 04", title: "Schutzbedarfsanalyse im eigenen Arbeitsbereich durchführen", block: "grund", available: false },
   { id: "LF5",  num: "LF 05", title: "Software zur Verwaltung von Daten anpassen", block: "grund", available: false },
