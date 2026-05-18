@@ -1,0 +1,1575 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>K25-09 Westermann-Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Base palette (light mode) */
+    --bg: #faf7f2;
+    --bg-card: #ffffff;
+    --bg-card-hover: #fcfaf6;
+    --ink: #1a1a1a;
+    --ink-soft: #5a5a5a;
+    --ink-faint: #999;
+    --border: #e8e2d8;
+    --border-strong: #d4ccc0;
+    --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.06);
+
+    /* Per-block accent colors (match book covers) */
+    --accent-grund: #1e5a96;       /* LF 1-5: Blue */
+    --accent-grund-soft: #e1ecf6;
+    --accent-fach1: #7a2238;       /* LF 6-9: Deep red, almost purple */
+    --accent-fach1-soft: #f3e0e5;
+    --accent-fach2: #2d6a3a;       /* LF 10-12: Green */
+    --accent-fach2-soft: #dcecdf;
+
+    /* Active accent - reassigned per quiz */
+    --accent: var(--accent-grund);
+    --accent-soft: var(--accent-grund-soft);
+
+    --correct: #2d7a3e;
+    --correct-soft: #dcf0e0;
+    --wrong: #b03030;
+    --wrong-soft: #fce0e0;
+  }
+
+  [data-theme="dark"] {
+    --bg: #16171a;
+    --bg-card: #1f2125;
+    --bg-card-hover: #25282d;
+    --ink: #ececec;
+    --ink-soft: #a8a8a8;
+    --ink-faint: #6a6a6a;
+    --border: #2e3138;
+    --border-strong: #3a3e46;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 4px 16px rgba(0,0,0,.4);
+
+    --accent-grund: #5b9bd5;
+    --accent-grund-soft: #1f2f44;
+    --accent-fach1: #d47a90;
+    --accent-fach1-soft: #3a2228;
+    --accent-fach2: #6db378;
+    --accent-fach2-soft: #1f3322;
+
+    --correct: #6db378;
+    --correct-soft: #1f3322;
+    --wrong: #d47878;
+    --wrong-soft: #3a1f1f;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Source Sans 3', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    min-height: 100vh;
+    padding: 32px 16px;
+    background-image:
+      radial-gradient(circle at 15% 10%, color-mix(in srgb, var(--accent) 6%, transparent) 0%, transparent 40%),
+      radial-gradient(circle at 85% 90%, color-mix(in srgb, var(--accent) 4%, transparent) 0%, transparent 40%);
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .container { max-width: 760px; margin: 0 auto; }
+
+  /* ===== HEADER ===== */
+  header {
+    margin-bottom: 48px;
+    padding-bottom: 32px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  header .header-content { text-align: center; }
+  header .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  header h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: clamp(34px, 5.5vw, 52px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  header h1 em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  header .sub {
+    color: var(--ink-soft);
+    font-size: 15px;
+  }
+
+  /* Dark mode toggle */
+  .theme-toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+  }
+  .theme-toggle:hover {
+    color: var(--ink);
+    border-color: var(--border-strong);
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+
+  /* ===== LERNFELD SELECTOR ===== */
+  .lf-section { margin-bottom: 32px; }
+  .lf-section-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+    padding-left: 4px;
+  }
+  .lf-section.grund .lf-section-title { color: var(--accent-grund); }
+  .lf-section.fach1 .lf-section-title { color: var(--accent-fach1); }
+  .lf-section.fach2 .lf-section-title { color: var(--accent-fach2); }
+
+  .lf-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+  .lf-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    box-shadow: var(--shadow);
+    border-top: 3px solid var(--card-accent, var(--accent-grund));
+  }
+  .lf-card.grund { --card-accent: var(--accent-grund); }
+  .lf-card.fach1 { --card-accent: var(--accent-fach1); }
+  .lf-card.fach2 { --card-accent: var(--accent-fach2); }
+
+  .lf-card:hover:not(:disabled) {
+    transform: translateY(-2px);
+    background: var(--bg-card-hover);
+    box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  }
+  .lf-card:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .lf-card .lf-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--card-accent);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  .lf-card .lf-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+  }
+  .lf-card .lf-meta {
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .lf-card .lf-stats {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .lf-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 2px 0;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    transition: color 0.15s ease;
+  }
+  .lf-stat.clickable:hover { color: var(--card-accent); text-decoration: underline; }
+  .lf-stat.best { color: var(--correct); }
+  .lf-stat .stat-label { color: var(--ink-faint); }
+
+  .lf-card .resume-banner {
+    margin-top: 12px;
+    padding: 8px 10px;
+    background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+    border-radius: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--card-accent);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  /* ===== SETTINGS BAR ===== */
+  .settings {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 32px;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+  .settings label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .settings select {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  /* ===== QUIZ ===== */
+  .progress-bar {
+    height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .q-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    letter-spacing: 0.05em;
+  }
+  .q-type-badge {
+    background: var(--accent-soft);
+    color: var(--accent);
+    padding: 3px 9px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+  /* Readable question text - Source Sans, not serif */
+  .q-text {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 1.45;
+    margin-bottom: 24px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+
+  .options { display: flex; flex-direction: column; gap: 10px; }
+  .option {
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    font-family: inherit;
+    font-size: 15px;
+    color: var(--ink);
+    text-align: left;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    line-height: 1.45;
+  }
+  .option:hover:not(.disabled) {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .option.selected {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+  }
+  .option.correct {
+    border-color: var(--correct);
+    background: var(--correct-soft);
+    color: var(--ink);
+  }
+  .option.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-soft);
+    color: var(--ink);
+  }
+  .option .marker {
+    flex-shrink: 0;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--border-strong);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink-soft);
+    margin-top: 1px;
+  }
+  .option.multi .marker { border-radius: 4px; }
+  .option.selected .marker { border-color: var(--accent); background: var(--accent); color: white; }
+  .option.correct .marker { border-color: var(--correct); background: var(--correct); color: white; }
+  .option.wrong .marker { border-color: var(--wrong); background: var(--wrong); color: white; }
+  .option.disabled { cursor: default; }
+
+  .fill-input {
+    width: 100%;
+    background: var(--bg-card);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 14px 18px;
+    font-family: inherit;
+    font-size: 16px;
+    color: var(--ink);
+    transition: border-color 0.15s ease;
+  }
+  .fill-input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .fill-input.correct { border-color: var(--correct); background: var(--correct-soft); }
+  .fill-input.wrong { border-color: var(--wrong); background: var(--wrong-soft); }
+
+  .feedback {
+    margin-top: 20px;
+    padding: 16px 18px;
+    border-radius: 8px;
+    font-size: 14.5px;
+    line-height: 1.6;
+  }
+  .feedback.correct {
+    background: var(--correct-soft);
+    border-left: 3px solid var(--correct);
+    color: var(--ink);
+  }
+  .feedback.wrong {
+    background: var(--wrong-soft);
+    border-left: 3px solid var(--wrong);
+    color: var(--ink);
+  }
+  .feedback strong { color: inherit; }
+  .feedback .source {
+    margin-top: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.65;
+  }
+
+  /* ===== BUTTONS ===== */
+  .btn-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 24px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+  .btn {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    letter-spacing: 0.01em;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .btn.primary { background: var(--accent); color: white; }
+  .btn.ghost {
+    background: transparent;
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+  }
+  .btn.ghost:hover { color: var(--ink); border-color: var(--border-strong); }
+
+  /* ===== RESULTS ===== */
+  .result-display {
+    text-align: center;
+    padding: 24px 0 0;
+  }
+  .result-score {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.03em;
+  }
+  .result-score .total {
+    color: var(--ink-soft);
+    font-size: 32px;
+  }
+  .result-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 8px;
+    margin-bottom: 24px;
+  }
+  .result-message {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 20px;
+    color: var(--ink);
+    max-width: 480px;
+    margin: 0 auto 24px;
+  }
+  .result-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-bottom: 32px;
+  }
+
+  .review-list {
+    margin-top: 24px;
+    text-align: left;
+  }
+  .review-list h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .review-item {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+  }
+  .review-item:last-child { border-bottom: none; }
+  .review-item .review-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .review-item .review-q {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    line-height: 1.4;
+    flex: 1;
+  }
+  .review-item .review-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .review-item.right .review-status { color: var(--correct); background: var(--correct-soft); }
+  .review-item.wrong .review-status { color: var(--wrong); background: var(--wrong-soft); }
+  .review-explain {
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+    margin-top: 6px;
+  }
+  .review-source {
+    margin-top: 6px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+  }
+  .review-correct-answer {
+    margin-top: 8px;
+    padding: 8px 12px;
+    background: var(--correct-soft);
+    border-left: 2px solid var(--correct);
+    border-radius: 4px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+
+  footer {
+    text-align: center;
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    font-size: 12px;
+    color: var(--ink-soft);
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.05em;
+  }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 600px) {
+    body { padding: 16px 12px; }
+    .card { padding: 20px; }
+    .btn-row { flex-direction: column-reverse; }
+    .btn { width: 100%; }
+    .theme-toggle { position: static; margin: 0 auto 16px; }
+    header .header-content { text-align: center; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Theme umschalten">
+      <span id="theme-icon">☀</span><span id="theme-label">Hell</span>
+    </button>
+    <div class="header-content">
+      <div class="eyebrow">IT-Berufe · Westermann</div>
+      <h1>K25-09 <em>Westermann-Quiz</em></h1>
+      <div class="sub">Wissensstand prüfen. Lücken finden. Wiederholen.</div>
+    </div>
+  </header>
+
+  <!-- ============ LERNFELD SELECTOR ============ -->
+  <div id="screen-select">
+    <div class="settings">
+      <label>
+        Fragen pro Runde:
+        <select id="num-questions">
+          <option value="5">5</option>
+          <option value="10" selected>10</option>
+          <option value="15">15</option>
+          <option value="all">alle</option>
+        </select>
+      </label>
+      <label style="margin-left:auto">
+        <button class="btn ghost" id="btn-reset" type="button">Fortschritt zurücksetzen</button>
+      </label>
+    </div>
+
+    <div id="lf-sections"></div>
+  </div>
+
+  <!-- ============ QUIZ SCREEN ============ -->
+  <div id="screen-quiz" class="hidden">
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="card">
+      <div class="q-header">
+        <span id="q-counter">Frage 1 von 10</span>
+        <span class="q-type-badge" id="q-type">MC</span>
+      </div>
+      <div class="q-text" id="q-text"></div>
+      <div id="q-body"></div>
+      <div class="feedback hidden" id="feedback"></div>
+      <div class="btn-row">
+        <button class="btn ghost" id="btn-abort">Pausieren</button>
+        <button class="btn primary" id="btn-check">Prüfen</button>
+        <button class="btn primary hidden" id="btn-next">Weiter</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ RESULT SCREEN ============ -->
+  <div id="screen-result" class="hidden">
+    <div class="card">
+      <div class="result-display">
+        <div class="result-score"><span id="r-score">0</span><span class="total">/<span id="r-total">10</span></span></div>
+        <div class="result-label" id="r-label">Ergebnis</div>
+        <div class="result-message" id="r-message"></div>
+        <div class="result-meta" id="r-meta"></div>
+        <div class="btn-row" style="justify-content:center">
+          <button class="btn ghost" id="btn-back">Zur Übersicht</button>
+          <button class="btn primary" id="btn-retry">Nochmal mit neuen Fragen</button>
+        </div>
+        <div class="review-list" id="review-list"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Quellen: Westermann · IT-Berufe · Grundstufe (2020) &amp; Fachstufe (2022/2023) · Offline-fähig · v0.2
+  </footer>
+
+</div>
+
+<script>
+/* =====================================================================
+   QUESTION POOL
+   Each question references the source: e.g. "LF 1, Kap. 1.3.4"
+   Question types:
+     - mc       Multiple choice, exactly one correct
+     - multi    Multiple choice, multiple correct
+     - fill     Fill in the blank (case-insensitive, trim whitespace)
+     - tf       True/False
+   ===================================================================== */
+
+const QUESTIONS = {
+  /* ============================================================
+     LERNFELD 1 - Das Unternehmen und die eigene Rolle
+     ============================================================ */
+  "LF1": [
+    {
+      type: "mc",
+      q: "Welches Gesetz regelt die rechtlichen Rahmenbedingungen der dualen Berufsausbildung in Deutschland?",
+      options: [
+        "Berufsbildungsgesetz (BBiG)",
+        "Bürgerliches Gesetzbuch (BGB)",
+        "Handelsgesetzbuch (HGB)",
+        "Arbeitsschutzgesetz (ArbSchG)"
+      ],
+      correct: 0,
+      explain: "Das BBiG legt die Grundlagen der Berufsausbildung fest, darunter die Mindestbestandteile des Ausbildungsvertrags (§ 11) sowie die Rechte und Pflichten von Ausbildenden und Auszubildenden (§§ 13-17).",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Stelle ist als zentrale Organisation der Berufsausbildung u.a. für die Zulassung von Ausbildungsbetrieben und die Abschlussprüfung zuständig?",
+      options: [
+        "Arbeitsagentur",
+        "Industrie- und Handelskammer (IHK)",
+        "Berufsschule",
+        "Bundesinstitut für Berufsbildung (BIBB)"
+      ],
+      correct: 1,
+      explain: "Die IHK ist die zentrale Organisation der Berufsausbildung. Sie ist für die Zulassung der Betriebe, die Beratung aller Ausbildungsbeteiligten und die Abschlussprüfung zuständig.",
+      source: "LF 1, Kap. 1.2"
+    },
+    {
+      type: "tf",
+      q: "Die Probezeit in einer Berufsausbildung muss mindestens einen Monat und darf höchstens vier Monate betragen.",
+      correct: true,
+      explain: "Korrekt. Die Probezeit ist im BBiG geregelt: Sie liegt zwischen einem und vier Monaten. Innerhalb dieser Zeit kann das Ausbildungsverhältnis fristlos und ohne Angabe von Gründen gekündigt werden.",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "multi",
+      q: "Welche der folgenden Angaben gehören laut § 11 BBiG zu den Pflichtbestandteilen eines Berufsausbildungsvertrags? (Mehrfachauswahl)",
+      options: [
+        "Beginn und Dauer der Berufsausbildung",
+        "Dauer der Probezeit",
+        "Die kalkulierten Kosten der Ausbildung",
+        "Höhe und Zahlung der Vergütung",
+        "Dauer des Urlaubs"
+      ],
+      correct: [0, 1, 3, 4],
+      explain: "§ 11 BBiG schreibt u.a. vor: Art/Gliederung/Ziel, Beginn und Dauer, Ausbildungsmaßnahmen außerhalb der Stätte, tägliche Ausbildungszeit, Probezeit, Vergütung, Urlaub, Kündigungsvoraussetzungen sowie Tarifhinweise. Die kalkulierten Kosten der Ausbildung gehören nicht dazu.",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "mc",
+      q: "Ein Auszubildender ist 17 Jahre alt. Wie viele Urlaubstage stehen ihm laut JArbSchG mindestens zu?",
+      options: [
+        "20 Werktage",
+        "25 Werktage",
+        "27 Werktage",
+        "30 Werktage"
+      ],
+      correct: 2,
+      explain: "Das Jugendarbeitsschutzgesetz staffelt den Mindesturlaub nach Alter: unter 16 Jahre → 30 Tage, unter 17 → 27 Tage, unter 18 → 25 Tage. Ein 17-Jähriger fällt also unter die mittlere Stufe mit 27 Tagen.",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "fill",
+      q: "Wie heißt die gewählte Interessenvertretung speziell für Auszubildende und Jugendliche im Betrieb? (Abkürzung mit drei Buchstaben)",
+      answers: ["JAV"],
+      explain: "Die Jugend- und Auszubildendenvertretung (JAV) wird zusätzlich zum Betriebsrat gewählt. Sie wacht über die Einhaltung von BBiG, JArbSchG und Tarifverträgen. Voraussetzung: mindestens fünf wahlberechtigte Jugendliche oder Azubis im Betrieb.",
+      source: "LF 1, Kap. 1.2.2"
+    },
+    {
+      type: "mc",
+      q: "Welche Rechtsform ist eine Kapitalgesellschaft, bei der das Mindeststammkapital 25.000 € beträgt und die Haftung auf das Gesellschaftsvermögen beschränkt ist?",
+      options: [
+        "Offene Handelsgesellschaft (OHG)",
+        "Kommanditgesellschaft (KG)",
+        "Gesellschaft mit beschränkter Haftung (GmbH)",
+        "Gesellschaft bürgerlichen Rechts (GbR)"
+      ],
+      correct: 2,
+      explain: "Die GmbH ist eine Kapitalgesellschaft (juristische Person) mit Mindeststammkapital von 25.000 €, von denen 50% sofort eingezahlt werden müssen. Die Haftung ist auf das Gesellschaftsvermögen beschränkt - das Privatvermögen der Gesellschafter ist geschützt.",
+      source: "LF 1, Kap. 1.3.4"
+    },
+    {
+      type: "mc",
+      q: "Was ist die sogenannte 1-Euro-GmbH bzw. Mini-GmbH offiziell für eine Rechtsform?",
+      options: [
+        "GmbH light",
+        "Unternehmergesellschaft (UG) (haftungsbeschränkt)",
+        "Einzelunternehmen mit Sondersatzung",
+        "Kommanditgesellschaft auf Aktien (KGaA)"
+      ],
+      correct: 1,
+      explain: "Die UG (haftungsbeschränkt) wurde durch das MoMiG eingeführt, um Gründungen zu erleichtern. Sie kann bereits mit 1 € Stammkapital gegründet werden, muss aber 25% des Jahresgewinns als Rücklage einbehalten, bis 25.000 € erreicht sind. Sacheinlagen sind ausgeschlossen.",
+      source: "LF 1, Kap. 1.3.4"
+    },
+    {
+      type: "tf",
+      q: "Eine GbR (Gesellschaft bürgerlichen Rechts) muss zwingend ins Handelsregister eingetragen werden, um wirksam zu entstehen.",
+      correct: false,
+      explain: "Falsch. Die GbR ist die einfachste Form einer Mehrpersonengesellschaft und benötigt keine Handelsregistereintragung. Erst wenn ein Unternehmen kaufmännisch eingerichtet ist oder eine Firma führen will, wird die Eintragung relevant - dann gilt das HGB.",
+      source: "LF 1, Kap. 1.3.4"
+    },
+    {
+      type: "fill",
+      q: "Welche Art von Vollmacht ist die umfassendste handelsrechtliche Vollmacht und muss zwingend ins Handelsregister eingetragen werden?",
+      answers: ["Prokura"],
+      explain: "Die Prokura (§§ 48-53 HGB) umfasst alle gewöhnlichen und außergewöhnlichen Geschäfte und Rechtshandlungen eines Handelsgewerbes. Sie wird mit dem Zusatz \"ppa.\" (per procura) gezeichnet und entsteht erst mit der Eintragung ins Handelsregister.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "mc",
+      q: "Welche Organisationsform ist als Weiterentwicklung des Mehrliniensystems zu verstehen, bei der jede Stelle von zwei gleichberechtigten Instanzen geführt wird (z.B. produkt- und funktionsorientiert)?",
+      options: [
+        "Stablinienorganisation",
+        "Einliniensystem",
+        "Matrixorganisation",
+        "Divisionale Organisation"
+      ],
+      correct: 2,
+      explain: "Die Matrixorganisation kombiniert zwei Leitungsdimensionen, z.B. Produkte und Funktionen. Stärke: zwei Kernkompetenzen führen zu besserem Ergebnis. Schwäche: Streitigkeiten in den Zuständigkeiten, Teamarbeit ist erfolgskritisch.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "multi",
+      q: "Welche der genannten Punkte zählen zu den volkswirtschaftlichen Produktionsfaktoren? (Mehrfachauswahl)",
+      options: [
+        "Arbeit",
+        "Boden",
+        "Kapital",
+        "Konsumgüter",
+        "Steuern"
+      ],
+      correct: [0, 1, 2],
+      explain: "Die drei klassischen volkswirtschaftlichen Produktionsfaktoren sind Arbeit, Boden und Kapital. Haushalte stellen diese den Unternehmen zur Verfügung, dafür erhalten sie Einkommen (Löhne, Mieten, Zinsen).",
+      source: "LF 1, Kap. 1.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Aussage zum autoritären Führungsstil ist korrekt?",
+      options: [
+        "Mitarbeiter werden am Entscheidungsprozess beteiligt.",
+        "Vorgesetzte treffen alle Entscheidungen allein.",
+        "Die Kontrolle bezieht sich primär auf Arbeitsergebnisse.",
+        "Es wird ein partnerschaftliches Arbeiten erwartet."
+      ],
+      correct: 1,
+      explain: "Beim autoritären Führungsstil treffen Vorgesetzte alle Entscheidungen allein. Mitarbeiter erhalten Weisungen und Einzelanordnungen, ihre Tätigkeiten werden laufend überprüft. Die anderen Aussagen beschreiben den kooperativen Führungsstil.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "tf",
+      q: "Flache Hierarchien führen tendenziell zu schnelleren Entscheidungs- und Informationswegen sowie höherer Mitarbeitermotivation.",
+      correct: true,
+      explain: "Korrekt. Je flacher die Hierarchie, desto schneller Entscheidungs- und Informationswege, desto motivierter die Mitarbeiter und desto höher die Innovationsleistung. Mitarbeiter übernehmen mehr Selbstverantwortung.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "fill",
+      q: "Wie heißt das öffentliche Verzeichnis, in das Einzelkaufleute, Personen- und Kapitalgesellschaften ihre wesentlichen Rechtsverhältnisse eintragen lassen müssen?",
+      answers: ["Handelsregister"],
+      explain: "Das Handelsregister hat eine Publikationsfunktion: Jeder kann zu Informationszwecken Einsicht nehmen. Durch die Eintragung erlangt die Firma die Kaufmannseigenschaft und unterliegt dem HGB. Abteilung A für Einzelkaufleute/Personengesellschaften, Abteilung B für Kapitalgesellschaften.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "mc",
+      q: "Was beschreibt der Begriff Jobrotation?",
+      options: [
+        "Die Erweiterung der Aufgaben um ähnliche Tätigkeiten gleichen Schwierigkeitsgrads",
+        "Den systematischen Arbeitsplatzwechsel zur Vertiefung von Fachkenntnissen",
+        "Die Übernahme anspruchsvollerer Aufgaben (Aufstieg)",
+        "Die Verlagerung von Aufgaben an externe Dienstleister"
+      ],
+      correct: 1,
+      explain: "Jobrotation ist der systematische Arbeitsplatzwechsel. Ziel: Vertiefung von Fachkenntnissen, Vermeidung von Monotonie und einseitiger Belastung. Job Enlargement dagegen ist die Erweiterung um gleichwertige Aufgaben am selben Arbeitsplatz.",
+      source: "LF 1, Kap. 1.2.3"
+    },
+    {
+      type: "mc",
+      q: "Welche der vier IT-Ausbildungsberufe gehören zu den eher kaufmännisch orientierten Berufen?",
+      options: [
+        "Fachinformatiker und IT-Systemelektroniker",
+        "IT-Systemelektroniker und Kaufleute für IT-Systemmanagement",
+        "Kaufleute für IT-Systemmanagement und Kaufleute für Digitalisierungsmanagement",
+        "Fachinformatiker und Kaufleute für Digitalisierungsmanagement"
+      ],
+      correct: 2,
+      explain: "Die kaufmännisch orientierten IT-Berufe sind die Kaufleute für IT-Systemmanagement und die Kaufleute für Digitalisierungsmanagement. Bei ihnen steht ab LF 7-9 die Projektarbeit von Beschaffung bis Bereitstellung im Mittelpunkt - bei den technischen Berufen dagegen die technische Systembereitstellung.",
+      source: "LF 1, Kap. 1.1"
+    },
+    {
+      type: "fill",
+      q: "Welcher europäische Karriere-Pass dient als datensicheres, werbefreies und mehrsprachiges Portal für Bewerbungen innerhalb Europas?",
+      answers: ["Europass"],
+      explain: "Der Europass ist das europäische Karrieremanagement-Portal mit zahlreichen Funktionen - datensicher, werbefrei und mehrsprachig. Daneben fördert Erasmus+ den Lebens- und Arbeitsaustausch in Europa.",
+      source: "LF 1, Kap. 1.2.3"
+    },
+    {
+      type: "tf",
+      q: "Auszubildende dürfen während ihrer Ausbildung bis zu einem Viertel der Ausbildungsdauer im Ausland eingesetzt werden.",
+      correct: true,
+      explain: "Korrekt. Bis zu 25% der Ausbildungsdauer können im Ausland absolviert werden. Solche Maßnahmen sollten in den Vertrag aufgenommen werden - die IHK und Stellen wie berufsbildung-ohne-grenzen.de informieren dazu.",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Funktion erfüllt eine Stabsstelle in der Aufbauorganisation?",
+      options: [
+        "Sie besitzt umfassende Anordnungs- und Entscheidungsbefugnis gegenüber nachgeordneten Stellen.",
+        "Sie ist die ausführende Stelle ohne Leitungsbefugnis.",
+        "Sie unterstützt eine Instanz beratend, ohne eigene Leitungs- und Entscheidungsbefugnis.",
+        "Sie ist eine externe Stelle, die per Outsourcing eingebunden ist."
+      ],
+      correct: 2,
+      explain: "Stabsstellen haben eine beratungs- und entscheidungsvorbereitende Funktion. Sie sind eine Hilfsstelle für eine Instanz, besitzen aber keine eigenen Leitungs- oder Entscheidungsbefugnisse.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "multi",
+      q: "Welche Grundprinzipien sollten bei der Stellenbildung beachtet werden? (Mehrfachauswahl)",
+      options: [
+        "Arbeitsteilung",
+        "Überschaubarkeit",
+        "Maximierung der Stellenanzahl",
+        "Angemessenheit",
+        "Anonymität"
+      ],
+      correct: [0, 1, 3],
+      explain: "Die drei Grundprinzipien der Stellenbildung: Arbeitsteilung (auch Outsourcing prüfen), Überschaubarkeit (Stelleninhaber nicht überfordern - zeitlich, sachlich, in Abhängigkeiten) und Angemessenheit (zur Leistungsfähigkeit passend, ggf. mit Qualifizierung).",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "mc",
+      q: "Stellenausschreibungen müssen nach dem Allgemeinen Gleichbehandlungsgesetz (AGG) geschlechtsneutral erfolgen. Wofür steht das \"d\" im Zusatz \"(m/w/d)\"?",
+      options: [
+        "deutsch",
+        "divers",
+        "duales Studium",
+        "doktoriert"
+      ],
+      correct: 1,
+      explain: "Das \"d\" steht für divers (alternativ \"i\" für intersexuell). Das AGG verlangt geschlechtsneutrale Ausschreibungen - die Ergänzung trägt der Anerkennung weiterer Geschlechtsidentitäten Rechnung.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "tf",
+      q: "Bei einer Krankheit eines Auszubildenden ist spätestens am dritten Tag eine ärztliche Bescheinigung beim Ausbildenden vorzulegen.",
+      correct: true,
+      explain: "Korrekt. Die Benachrichtigungspflicht (§ 13 BBiG) verlangt: unverzüglich Nachricht über das Fernbleiben unter Angabe von Gründen und bei Krankheit oder Unfall spätestens am dritten Tag eine ärztliche Bescheinigung.",
+      source: "LF 1, Kap. 1.2.1"
+    },
+    {
+      type: "fill",
+      q: "Wie nennt man das volkswirtschaftliche Modell, das den Austausch zwischen Haushalten und Unternehmen darstellt - Faktorleistungen gegen Einkommen und Konsumausgaben gegen Konsumgüter?",
+      answers: ["Wirtschaftskreislauf", "einfacher Wirtschaftskreislauf"],
+      explain: "Der einfache Wirtschaftskreislauf zeigt den modellhaften Geldfluss: Haushalte stellen Arbeit, Boden und Kapital bereit und erhalten dafür Einkommen. Mit dem Einkommen kaufen sie Konsumgüter, das Geld fließt zu den Unternehmen zurück.",
+      source: "LF 1, Kap. 1.4.1"
+    },
+    {
+      type: "mc",
+      q: "Welche Aussage zum Management by Objectives (MbO) trifft zu?",
+      options: [
+        "Vorgesetzte legen alle Entscheidungen ohne Beteiligung der Mitarbeiter fest.",
+        "Mitarbeiter und Vorgesetzte vereinbaren gemeinsam Ziele, deren Erreichung überprüft wird.",
+        "Aufgaben werden ohne Abstimmung an externe Firmen ausgelagert.",
+        "Hierarchien werden bewusst maximal vertieft."
+      ],
+      correct: 1,
+      explain: "Beim MbO bringen sich Mitarbeiter besser ein, Verantwortlichkeiten sind klar und überprüfbar geregelt, Motivation und Mitwirkung steigen, das Management wird entlastet. Nachteil: Zielvereinbarung und -kontrolle kosten Zeit, andere Aufgaben können aus dem Blickfeld geraten.",
+      source: "LF 1, Kap. 1.3.3"
+    },
+    {
+      type: "mc",
+      q: "Was beschreibt der Begriff Wertschöpfung in einem Unternehmen?",
+      options: [
+        "Den gesamten Umsatzerlös eines Geschäftsjahres",
+        "Die Differenz zwischen Umsatzerlös und Vorleistungen abzüglich Abschreibungen",
+        "Den Gewinn vor Steuern",
+        "Die Summe aller Löhne und Gehälter im Unternehmen"
+      ],
+      correct: 1,
+      explain: "Wertschöpfung ist der Mehrwert, den ein Unternehmen durch seine Leistung schafft: Umsatzerlös minus Vorleistungen (Material, Fremdleistungen) minus Abschreibungen. Die Wertschöpfung wird auf Eigentümer/Darlehen, Steuern und Mitarbeiter (Löhne, Sozialabgaben, Prämien) verteilt.",
+      source: "LF 1, Kap. 1.3.5"
+    }
+  ]
+};
+
+/* =====================================================================
+   LERNFELD METADATA (with block assignment for accent colors)
+   ===================================================================== */
+const LERNFELDER = [
+  { id: "LF1",  num: "LF 01", title: "Das Unternehmen und die eigene Rolle im Betrieb beschreiben", block: "grund", available: true },
+  { id: "LF2",  num: "LF 02", title: "Arbeitsplätze nach Kundenwunsch ausstatten", block: "grund", available: false },
+  { id: "LF3",  num: "LF 03", title: "Clients in Netzwerke einbinden", block: "grund", available: false },
+  { id: "LF4",  num: "LF 04", title: "Schutzbedarfsanalyse im eigenen Arbeitsbereich durchführen", block: "grund", available: false },
+  { id: "LF5",  num: "LF 05", title: "Software zur Verwaltung von Daten anpassen", block: "grund", available: false },
+  { id: "LF6",  num: "LF 06", title: "Serviceanfragen bearbeiten", block: "fach1", available: false },
+  { id: "LF7",  num: "LF 07", title: "Funktionalität in IT-Systeme programmieren", block: "fach1", available: false },
+  { id: "LF8",  num: "LF 08", title: "Daten systemübergreifend bereitstellen", block: "fach1", available: false },
+  { id: "LF9",  num: "LF 09", title: "Netzwerke und Dienste bereitstellen", block: "fach1", available: false },
+  { id: "LF10", num: "LF 10", title: "Benutzerschnittstellen gestalten und entwickeln", block: "fach2", available: false },
+  { id: "LF11", num: "LF 11", title: "Cyber-physische Systeme entwickeln", block: "fach2", available: false },
+  { id: "LF12", num: "LF 12", title: "Kundenspezifische Anwendungsentwicklung durchführen", block: "fach2", available: false }
+];
+
+const BLOCK_LABELS = {
+  grund: "Grundstufe · LF 1-5",
+  fach1: "Fachstufe I · LF 6-9",
+  fach2: "Fachstufe II · LF 10-12"
+};
+
+const BLOCK_ACCENT_VAR = {
+  grund: "--accent-grund",
+  fach1: "--accent-fach1",
+  fach2: "--accent-fach2"
+};
+const BLOCK_ACCENT_SOFT_VAR = {
+  grund: "--accent-grund-soft",
+  fach1: "--accent-fach1-soft",
+  fach2: "--accent-fach2-soft"
+};
+
+/* =====================================================================
+   STATE & STORAGE
+   ===================================================================== */
+const STORAGE_KEY = "itberufe_quiz_v2";
+const THEME_KEY = "itberufe_quiz_theme";
+
+function loadData() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    return raw ? JSON.parse(raw) : { stats: {}, paused: {} };
+  } catch (e) { return { stats: {}, paused: {} }; }
+}
+function saveData(d) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {}
+}
+function recordAttempt(lfId, attempt) {
+  // attempt = { score, total, ts, questions: [...], answers: [...] }
+  const d = loadData();
+  if (!d.stats[lfId]) d.stats[lfId] = {};
+  const pct = (attempt.score / attempt.total) * 100;
+  const bestPct = d.stats[lfId].best ? (d.stats[lfId].best.score / d.stats[lfId].best.total) * 100 : -1;
+  d.stats[lfId].last = attempt;
+  if (pct > bestPct) {
+    d.stats[lfId].best = attempt;
+  }
+  saveData(d);
+}
+function clearPaused(lfId) {
+  const d = loadData();
+  delete d.paused[lfId];
+  saveData(d);
+}
+function getPaused(lfId) {
+  return loadData().paused[lfId] || null;
+}
+function savePaused(lfId, snapshot) {
+  const d = loadData();
+  d.paused[lfId] = snapshot;
+  saveData(d);
+}
+
+let state = {
+  lfId: null,
+  block: null,
+  questions: [],
+  index: 0,
+  answers: [],
+  currentSelection: null
+};
+
+/* =====================================================================
+   UTILITIES
+   ===================================================================== */
+function shuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+function show(id) {
+  ["screen-select","screen-quiz","screen-result"].forEach(s => {
+    document.getElementById(s).classList.toggle("hidden", s !== id);
+  });
+}
+function normalize(s) {
+  return s.trim().toLowerCase()
+    .replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss")
+    .replace(/[.,;:!?-]/g,"");
+}
+function formatDate(ts) {
+  const d = new Date(ts);
+  const pad = n => n.toString().padStart(2,"0");
+  return `${pad(d.getDate())}.${pad(d.getMonth()+1)}.${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/* =====================================================================
+   THEME
+   ===================================================================== */
+function applyTheme(theme) {
+  document.documentElement.setAttribute("data-theme", theme);
+  const icon = document.getElementById("theme-icon");
+  const label = document.getElementById("theme-label");
+  if (theme === "dark") {
+    icon.textContent = "☾";
+    label.textContent = "Dunkel";
+  } else {
+    icon.textContent = "☀";
+    label.textContent = "Hell";
+  }
+}
+function toggleTheme() {
+  const current = document.documentElement.getAttribute("data-theme") || "light";
+  const next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+  try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
+}
+(function initTheme() {
+  let stored = "light";
+  try { stored = localStorage.getItem(THEME_KEY) || "light"; } catch (e) {}
+  applyTheme(stored);
+})();
+
+/* =====================================================================
+   ACCENT COLOR SWITCHING
+   ===================================================================== */
+function setAccentForBlock(block) {
+  const accentVar = BLOCK_ACCENT_VAR[block];
+  const softVar = BLOCK_ACCENT_SOFT_VAR[block];
+  document.documentElement.style.setProperty("--accent", `var(${accentVar})`);
+  document.documentElement.style.setProperty("--accent-soft", `var(${softVar})`);
+}
+function resetAccent() {
+  document.documentElement.style.setProperty("--accent", `var(--accent-grund)`);
+  document.documentElement.style.setProperty("--accent-soft", `var(--accent-grund-soft)`);
+}
+
+/* =====================================================================
+   LERNFELD SELECTOR
+   ===================================================================== */
+function renderLernfelder() {
+  resetAccent();
+  const container = document.getElementById("lf-sections");
+  const data = loadData();
+  container.innerHTML = "";
+
+  ["grund","fach1","fach2"].forEach(block => {
+    const section = document.createElement("div");
+    section.className = `lf-section ${block}`;
+    const title = document.createElement("div");
+    title.className = "lf-section-title";
+    title.textContent = BLOCK_LABELS[block];
+    section.appendChild(title);
+
+    const grid = document.createElement("div");
+    grid.className = "lf-grid";
+
+    LERNFELDER.filter(lf => lf.block === block).forEach(lf => {
+      const btn = document.createElement("div");
+      btn.className = `lf-card ${block}`;
+      const count = lf.available && QUESTIONS[lf.id] ? QUESTIONS[lf.id].length : 0;
+      const stats = data.stats[lf.id];
+      const paused = data.paused[lf.id];
+
+      let inner = `
+        <div class="lf-num">${lf.num}</div>
+        <div class="lf-title">${lf.title}</div>
+        <div class="lf-meta">${lf.available ? count + " Fragen im Pool" : "in Vorbereitung"}</div>
+      `;
+
+      if (stats && (stats.best || stats.last)) {
+        inner += `<div class="lf-stats">`;
+        if (stats.best) {
+          const pct = Math.round((stats.best.score / stats.best.total) * 100);
+          inner += `<button class="lf-stat best clickable" data-action="view-best" data-lf="${lf.id}"><span class="stat-label">Bestleistung:</span> ${pct}% (${stats.best.score}/${stats.best.total})</button>`;
+        }
+        if (stats.last) {
+          const pct = Math.round((stats.last.score / stats.last.total) * 100);
+          inner += `<button class="lf-stat clickable" data-action="view-last" data-lf="${lf.id}"><span class="stat-label">Letzter Versuch:</span> ${pct}% · ${formatDate(stats.last.ts)}</button>`;
+        }
+        inner += `</div>`;
+      }
+
+      if (paused) {
+        inner += `<div class="resume-banner">▶ Pausiert bei Frage ${paused.index + 1} von ${paused.questions.length}</div>`;
+      }
+
+      btn.innerHTML = inner;
+
+      btn.addEventListener("click", (e) => {
+        // If user clicked an inner stat button, handle that
+        const statBtn = e.target.closest(".lf-stat");
+        if (statBtn) {
+          e.stopPropagation();
+          const action = statBtn.dataset.action;
+          const lfId = statBtn.dataset.lf;
+          if (action === "view-best") showStoredAttempt(lfId, "best");
+          if (action === "view-last") showStoredAttempt(lfId, "last");
+          return;
+        }
+        if (!lf.available) return;
+        // If paused, ask whether to resume or start fresh
+        if (paused) {
+          if (confirm(`Es gibt einen pausierten Versuch (Frage ${paused.index + 1} von ${paused.questions.length}). Fortsetzen?\n\nOK = Fortsetzen\nAbbrechen = Neu starten`)) {
+            resumeQuiz(lf.id);
+            return;
+          } else {
+            clearPaused(lf.id);
+          }
+        }
+        startQuiz(lf.id);
+      });
+
+      grid.appendChild(btn);
+    });
+
+    section.appendChild(grid);
+    container.appendChild(section);
+  });
+}
+
+/* =====================================================================
+   VIEW STORED ATTEMPT (clicking on Bestleistung or Letzter Versuch)
+   ===================================================================== */
+function showStoredAttempt(lfId, which) {
+  const data = loadData();
+  const attempt = data.stats[lfId] && data.stats[lfId][which];
+  if (!attempt) return;
+  const lf = LERNFELDER.find(l => l.id === lfId);
+  state.lfId = lfId;
+  state.block = lf.block;
+  setAccentForBlock(lf.block);
+  state.questions = attempt.questions;
+  state.answers = attempt.answers;
+  renderResultsFromStored(attempt, which);
+}
+
+function renderResultsFromStored(attempt, which) {
+  const total = attempt.total;
+  const score = attempt.score;
+
+  document.getElementById("r-score").textContent = score;
+  document.getElementById("r-total").textContent = total;
+  document.getElementById("r-label").textContent = which === "best" ? "Bestleistung" : "Letzter Versuch";
+  document.getElementById("r-message").textContent = scoreMessage(score, total);
+  document.getElementById("r-meta").textContent = formatDate(attempt.ts);
+
+  renderReviewList(attempt.questions, attempt.answers);
+  // Hide retry button when just viewing stored attempt - or keep it? Keep it, it makes sense to allow restart
+  document.getElementById("btn-retry").textContent = "Neue Runde dieses Lernfeldes";
+  show("screen-result");
+}
+
+/* =====================================================================
+   QUIZ FLOW
+   ===================================================================== */
+function startQuiz(lfId) {
+  const pool = QUESTIONS[lfId] || [];
+  if (pool.length === 0) return;
+  const lf = LERNFELDER.find(l => l.id === lfId);
+
+  const numSel = document.getElementById("num-questions").value;
+  const num = numSel === "all" ? pool.length : Math.min(parseInt(numSel,10), pool.length);
+
+  const picked = shuffle(pool).slice(0, num).map(q => {
+    const copy = JSON.parse(JSON.stringify(q));
+    if (copy.options && (copy.type === "mc" || copy.type === "multi")) {
+      const indexed = copy.options.map((opt, i) => ({ opt, i }));
+      const shuffled = shuffle(indexed);
+      copy.options = shuffled.map(x => x.opt);
+      const indexMap = shuffled.map(x => x.i);
+      if (copy.type === "mc") {
+        copy.correct = indexMap.indexOf(copy.correct);
+      } else {
+        copy.correct = copy.correct.map(c => indexMap.indexOf(c)).sort((a,b)=>a-b);
+      }
+    }
+    return copy;
+  });
+
+  state = {
+    lfId,
+    block: lf.block,
+    questions: picked,
+    index: 0,
+    answers: [],
+    currentSelection: null
+  };
+  setAccentForBlock(lf.block);
+  show("screen-quiz");
+  renderQuestion();
+}
+
+function resumeQuiz(lfId) {
+  const paused = getPaused(lfId);
+  if (!paused) { startQuiz(lfId); return; }
+  const lf = LERNFELDER.find(l => l.id === lfId);
+  state = {
+    lfId,
+    block: lf.block,
+    questions: paused.questions,
+    index: paused.index,
+    answers: paused.answers,
+    currentSelection: null
+  };
+  setAccentForBlock(lf.block);
+  show("screen-quiz");
+  renderQuestion();
+}
+
+function pauseQuiz() {
+  // Save current progress and return to overview
+  savePaused(state.lfId, {
+    questions: state.questions,
+    index: state.index,
+    answers: state.answers,
+    ts: Date.now()
+  });
+  resetAccent();
+  renderLernfelder();
+  show("screen-select");
+}
+
+function renderQuestion() {
+  const q = state.questions[state.index];
+  const total = state.questions.length;
+
+  document.getElementById("progress-fill").style.width = `${(state.index / total) * 100}%`;
+  document.getElementById("q-counter").textContent = `Frage ${state.index + 1} von ${total}`;
+
+  const typeMap = { mc: "MC", multi: "MC+", fill: "Lücke", tf: "Wahr/Falsch" };
+  document.getElementById("q-type").textContent = typeMap[q.type];
+
+  document.getElementById("q-text").textContent = q.q;
+
+  document.getElementById("feedback").classList.add("hidden");
+  document.getElementById("btn-check").classList.remove("hidden");
+  document.getElementById("btn-check").disabled = true;
+  document.getElementById("btn-next").classList.add("hidden");
+
+  const body = document.getElementById("q-body");
+  body.innerHTML = "";
+  state.currentSelection = null;
+
+  if (q.type === "mc") {
+    const wrap = document.createElement("div");
+    wrap.className = "options";
+    q.options.forEach((opt, i) => {
+      const div = document.createElement("button");
+      div.className = "option";
+      div.type = "button";
+      div.innerHTML = `<span class="marker">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+      div.addEventListener("click", () => {
+        if (div.classList.contains("disabled")) return;
+        wrap.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+        div.classList.add("selected");
+        state.currentSelection = i;
+        document.getElementById("btn-check").disabled = false;
+      });
+      wrap.appendChild(div);
+    });
+    body.appendChild(wrap);
+  }
+  else if (q.type === "multi") {
+    const wrap = document.createElement("div");
+    wrap.className = "options";
+    state.currentSelection = [];
+    q.options.forEach((opt, i) => {
+      const div = document.createElement("button");
+      div.className = "option multi";
+      div.type = "button";
+      div.innerHTML = `<span class="marker">${String.fromCharCode(65+i)}</span><span>${opt}</span>`;
+      div.addEventListener("click", () => {
+        if (div.classList.contains("disabled")) return;
+        const idx = state.currentSelection.indexOf(i);
+        if (idx >= 0) { state.currentSelection.splice(idx,1); div.classList.remove("selected"); }
+        else { state.currentSelection.push(i); div.classList.add("selected"); }
+        document.getElementById("btn-check").disabled = state.currentSelection.length === 0;
+      });
+      wrap.appendChild(div);
+    });
+    body.appendChild(wrap);
+  }
+  else if (q.type === "fill") {
+    const inp = document.createElement("input");
+    inp.type = "text";
+    inp.className = "fill-input";
+    inp.placeholder = "Antwort hier eingeben...";
+    inp.autocomplete = "off";
+    inp.addEventListener("input", () => {
+      state.currentSelection = inp.value;
+      document.getElementById("btn-check").disabled = inp.value.trim() === "";
+    });
+    inp.addEventListener("keydown", e => {
+      if (e.key === "Enter" && !document.getElementById("btn-check").disabled) {
+        document.getElementById("btn-check").click();
+      }
+    });
+    body.appendChild(inp);
+    setTimeout(() => inp.focus(), 50);
+  }
+  else if (q.type === "tf") {
+    const wrap = document.createElement("div");
+    wrap.className = "options";
+    ["Wahr", "Falsch"].forEach((label, i) => {
+      const div = document.createElement("button");
+      div.className = "option";
+      div.type = "button";
+      div.innerHTML = `<span class="marker">${i===0?"W":"F"}</span><span>${label}</span>`;
+      div.addEventListener("click", () => {
+        if (div.classList.contains("disabled")) return;
+        wrap.querySelectorAll(".option").forEach(o => o.classList.remove("selected"));
+        div.classList.add("selected");
+        state.currentSelection = (i === 0);
+        document.getElementById("btn-check").disabled = false;
+      });
+      wrap.appendChild(div);
+    });
+    body.appendChild(wrap);
+  }
+}
+
+function checkAnswer() {
+  const q = state.questions[state.index];
+  let correct = false;
+  let userAnswer = state.currentSelection;
+  const body = document.getElementById("q-body");
+
+  if (q.type === "mc") {
+    correct = state.currentSelection === q.correct;
+    body.querySelectorAll(".option").forEach((o, i) => {
+      o.classList.add("disabled");
+      o.classList.remove("selected");
+      if (i === q.correct) o.classList.add("correct");
+      else if (i === state.currentSelection) o.classList.add("wrong");
+    });
+  }
+  else if (q.type === "multi") {
+    const sel = (state.currentSelection || []).slice().sort((a,b)=>a-b);
+    const cor = q.correct.slice().sort((a,b)=>a-b);
+    correct = sel.length === cor.length && sel.every((v,i) => v === cor[i]);
+    userAnswer = sel;
+    body.querySelectorAll(".option").forEach((o, i) => {
+      o.classList.add("disabled");
+      o.classList.remove("selected");
+      const isCorrect = cor.includes(i);
+      const wasSelected = sel.includes(i);
+      if (isCorrect) o.classList.add("correct");
+      else if (wasSelected) o.classList.add("wrong");
+    });
+  }
+  else if (q.type === "fill") {
+    const userText = (state.currentSelection || "").trim();
+    userAnswer = userText;
+    correct = q.answers.some(a => normalize(a) === normalize(userText));
+    const inp = body.querySelector(".fill-input");
+    inp.disabled = true;
+    inp.classList.add(correct ? "correct" : "wrong");
+  }
+  else if (q.type === "tf") {
+    correct = state.currentSelection === q.correct;
+    body.querySelectorAll(".option").forEach((o, i) => {
+      o.classList.add("disabled");
+      o.classList.remove("selected");
+      const optBool = (i === 0);
+      if (optBool === q.correct) o.classList.add("correct");
+      else if (optBool === state.currentSelection && !correct) o.classList.add("wrong");
+    });
+  }
+
+  state.answers.push({
+    qText: q.q,
+    type: q.type,
+    correct,
+    userAnswer,
+    correctAnswer: q.correct,
+    correctAnswerText: getCorrectAnswerText(q),
+    explain: q.explain,
+    source: q.source,
+    options: q.options || null,
+    answers: q.answers || null
+  });
+
+  const fb = document.getElementById("feedback");
+  fb.className = "feedback " + (correct ? "correct" : "wrong");
+  let correctAnsText = "";
+  if (!correct) {
+    correctAnsText = `<br><strong>Richtige Antwort:</strong> ${getCorrectAnswerText(q)}`;
+  }
+  fb.innerHTML = `<strong>${correct ? "Richtig." : "Nicht ganz."}</strong>${correctAnsText}<br>${q.explain}<div class="source">${q.source}</div>`;
+  fb.classList.remove("hidden");
+
+  document.getElementById("btn-check").classList.add("hidden");
+  document.getElementById("btn-next").classList.remove("hidden");
+  document.getElementById("btn-next").textContent = state.index + 1 >= state.questions.length ? "Auswertung" : "Weiter";
+}
+
+function getCorrectAnswerText(q) {
+  if (q.type === "mc") return q.options[q.correct];
+  if (q.type === "multi") return q.correct.map(i => q.options[i]).join(", ");
+  if (q.type === "fill") return q.answers[0];
+  if (q.type === "tf") return q.correct ? "Wahr" : "Falsch";
+  return "";
+}
+
+function nextQuestion() {
+  state.index++;
+  if (state.index >= state.questions.length) {
+    showResults();
+  } else {
+    renderQuestion();
+  }
+}
+
+function scoreMessage(score, total) {
+  const pct = (score / total) * 100;
+  if (pct === 100) return "Bilderbuchergebnis. Dieses Lernfeld sitzt.";
+  if (pct >= 80) return "Solide Leistung. Die markierten Stellen kurz nacharbeiten.";
+  if (pct >= 60) return "Grundlagen sind da - es gibt aber noch ein paar weiße Flecken.";
+  if (pct >= 40) return "Halbe Strecke. Die Quellenangaben unten zeigen, wo sich ein zweiter Blick lohnt.";
+  return "Hier lohnt sich noch eine Runde durch das Lehrbuch.";
+}
+
+function renderReviewList(questions, answers) {
+  const list = document.getElementById("review-list");
+  list.innerHTML = "<h3>Übersicht</h3>";
+  answers.forEach((a, i) => {
+    const div = document.createElement("div");
+    div.className = "review-item " + (a.correct ? "right" : "wrong");
+    let correctAnsBlock = "";
+    if (!a.correct) {
+      correctAnsBlock = `<div class="review-correct-answer"><strong>Richtige Antwort:</strong> ${a.correctAnswerText}</div>`;
+    }
+    div.innerHTML = `
+      <div class="review-head">
+        <div class="review-q">${i+1}. ${a.qText}</div>
+        <div class="review-status">${a.correct ? "✓ richtig" : "✗ falsch"}</div>
+      </div>
+      ${correctAnsBlock}
+      <div class="review-explain">${a.explain}</div>
+      <div class="review-source">${a.source}</div>
+    `;
+    div.tabIndex = 0;
+    list.appendChild(div);
+  });
+}
+
+function showResults() {
+  const total = state.questions.length;
+  const score = state.answers.filter(a => a.correct).length;
+
+  document.getElementById("r-score").textContent = score;
+  document.getElementById("r-total").textContent = total;
+  document.getElementById("r-label").textContent = "Ergebnis";
+  document.getElementById("r-message").textContent = scoreMessage(score, total);
+  document.getElementById("r-meta").textContent = formatDate(Date.now());
+  document.getElementById("btn-retry").textContent = "Nochmal mit neuen Fragen";
+
+  renderReviewList(state.questions, state.answers);
+
+  // Persist this attempt
+  const attempt = {
+    score,
+    total,
+    ts: Date.now(),
+    questions: state.questions,
+    answers: state.answers
+  };
+  recordAttempt(state.lfId, attempt);
+  clearPaused(state.lfId);
+
+  show("screen-result");
+}
+
+/* =====================================================================
+   EVENT WIRING
+   ===================================================================== */
+document.getElementById("btn-check").addEventListener("click", checkAnswer);
+document.getElementById("btn-next").addEventListener("click", nextQuestion);
+document.getElementById("btn-abort").addEventListener("click", pauseQuiz);
+document.getElementById("btn-back").addEventListener("click", () => {
+  resetAccent();
+  renderLernfelder();
+  show("screen-select");
+});
+document.getElementById("btn-retry").addEventListener("click", () => {
+  if (state.lfId) startQuiz(state.lfId);
+});
+document.getElementById("btn-reset").addEventListener("click", () => {
+  if (confirm("Alle Fortschritte (Bestleistungen, letzte Versuche und pausierte Quizze) löschen?")) {
+    try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
+    renderLernfelder();
+  }
+});
+document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
+
+renderLernfelder();
+show("screen-select");
+</script>
+</body>
+</html>
