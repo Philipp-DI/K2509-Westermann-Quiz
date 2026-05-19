@@ -9,7 +9,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,800&family=JetBrains+Mono:wght@400;600&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root {
-    /* Base palette (light mode) */
     --bg: #faf7f2;
     --bg-card: #ffffff;
     --bg-card-hover: #fcfaf6;
@@ -20,15 +19,13 @@
     --border-strong: #d4ccc0;
     --shadow: 0 1px 2px rgba(0,0,0,.04), 0 4px 16px rgba(0,0,0,.06);
 
-    /* Per-block accent colors (match book covers) */
-    --accent-grund: #1e5a96;       /* LF 1-5: Blue */
+    --accent-grund: #1e5a96;
     --accent-grund-soft: #e1ecf6;
-    --accent-fach1: #7a2238;       /* LF 6-9: Deep red, almost purple */
+    --accent-fach1: #7a2238;
     --accent-fach1-soft: #f3e0e5;
-    --accent-fach2: #2d6a3a;       /* LF 10-12: Green */
+    --accent-fach2: #2d6a3a;
     --accent-fach2-soft: #dcecdf;
 
-    /* Active accent - reassigned per quiz */
     --accent: var(--accent-grund);
     --accent-soft: var(--accent-grund-soft);
 
@@ -80,14 +77,14 @@
   .container { max-width: 760px; margin: 0 auto; }
 
   /* ===== HEADER ===== */
-  header {
-    margin-bottom: 48px;
-    padding-bottom: 32px;
+  header.app-header {
+    margin-bottom: 40px;
+    padding-bottom: 28px;
     border-bottom: 1px solid var(--border);
     position: relative;
   }
-  header .header-content { text-align: center; }
-  header .eyebrow {
+  header.app-header .header-content { text-align: center; }
+  header.app-header .eyebrow {
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     letter-spacing: 0.2em;
@@ -95,7 +92,7 @@
     color: var(--accent);
     margin-bottom: 12px;
   }
-  header h1 {
+  header.app-header h1 {
     font-family: 'Fraunces', serif;
     font-weight: 800;
     font-size: clamp(34px, 5.5vw, 52px);
@@ -103,17 +100,16 @@
     letter-spacing: -0.02em;
     margin-bottom: 8px;
   }
-  header h1 em {
+  header.app-header h1 em {
     font-style: italic;
     color: var(--accent);
     font-weight: 400;
   }
-  header .sub {
+  header.app-header .sub {
     color: var(--ink-soft);
     font-size: 15px;
   }
 
-  /* Dark mode toggle */
   .theme-toggle {
     position: absolute;
     top: 0;
@@ -136,6 +132,47 @@
     border-color: var(--border-strong);
   }
 
+  /* ===== GLOBAL AVERAGE BANNER ===== */
+  .global-stat {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    box-shadow: var(--shadow);
+  }
+  .global-stat .gs-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .global-stat .gs-value {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.02em;
+  }
+  .global-stat .gs-meta {
+    font-size: 13px;
+    color: var(--ink-soft);
+    text-align: right;
+  }
+  .global-stat.empty .gs-value {
+    color: var(--ink-faint);
+    font-size: 22px;
+    font-style: italic;
+    font-weight: 400;
+  }
+
   /* ===== CARDS ===== */
   .card {
     background: var(--bg-card);
@@ -146,7 +183,7 @@
     box-shadow: var(--shadow);
   }
 
-  /* ===== LERNFELD SELECTOR ===== */
+  /* ===== LERNFELD SELECTOR (overview) ===== */
   .lf-section { margin-bottom: 32px; }
   .lf-section-title {
     font-family: 'JetBrains Mono', monospace;
@@ -177,17 +214,19 @@
     color: inherit;
     box-shadow: var(--shadow);
     border-top: 3px solid var(--card-accent, var(--accent-grund));
+    display: flex;
+    flex-direction: column;
   }
   .lf-card.grund { --card-accent: var(--accent-grund); }
   .lf-card.fach1 { --card-accent: var(--accent-fach1); }
   .lf-card.fach2 { --card-accent: var(--accent-fach2); }
 
-  .lf-card:hover:not(:disabled) {
+  .lf-card:hover:not(.disabled) {
     transform: translateY(-2px);
     background: var(--bg-card-hover);
     box-shadow: 0 4px 16px rgba(0,0,0,.08);
   }
-  .lf-card:disabled {
+  .lf-card.disabled {
     opacity: 0.4;
     cursor: not-allowed;
   }
@@ -227,6 +266,9 @@
     background: none;
     border: none;
     padding: 2px 0;
+    cursor: default;
+  }
+  .lf-stat.clickable {
     cursor: pointer;
     font-family: 'JetBrains Mono', monospace;
     transition: color 0.15s ease;
@@ -247,6 +289,234 @@
     display: flex;
     align-items: center;
     gap: 6px;
+  }
+
+  /* ===== LF-DETAIL SCREEN ===== */
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-soft);
+    flex-wrap: wrap;
+  }
+  .breadcrumb a {
+    color: var(--ink-soft);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.15s ease;
+    background: none;
+    border: none;
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0;
+  }
+  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb .current { color: var(--accent); font-weight: 600; }
+  .breadcrumb .sep { opacity: 0.4; }
+
+  .lf-overview-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    border-radius: 12px;
+    padding: 28px 32px;
+    margin-bottom: 24px;
+    box-shadow: var(--shadow);
+  }
+  .lf-overview-card .lf-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .lf-overview-card h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.2;
+    margin-bottom: 8px;
+  }
+  .lf-overview-card .lf-overview-meta {
+    color: var(--ink-soft);
+    font-size: 14px;
+  }
+  .lf-overview-card .lf-overview-avg {
+    margin-top: 16px;
+    padding-top: 16px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .lf-overview-card .lf-overview-avg .avg-val {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 24px;
+    color: var(--correct);
+    letter-spacing: -0.02em;
+  }
+  .lf-overview-card .lf-overview-avg .avg-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+
+  .full-lf-card {
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    transition: all 0.15s ease;
+    width: 100%;
+    font-family: inherit;
+    text-align: left;
+    box-shadow: var(--shadow);
+  }
+  .full-lf-card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0,0,0,.12);
+  }
+  .full-lf-card .full-text { flex: 1; }
+  .full-lf-card .full-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 4px;
+  }
+  .full-lf-card .full-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 1.3;
+  }
+  .full-lf-card .full-stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    opacity: 0.75;
+    text-align: right;
+    line-height: 1.6;
+    white-space: nowrap;
+  }
+
+  .divider-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 24px 0 16px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .divider-label::before,
+  .divider-label::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .subchapter-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 12px;
+  }
+  .subchapter-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px 18px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    font-family: inherit;
+    color: inherit;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+  }
+  .subchapter-card:hover:not(.disabled) {
+    transform: translateY(-1px);
+    background: var(--accent-soft);
+  }
+  .subchapter-card.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .subchapter-card .sub-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .subchapter-card .sub-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--accent);
+    font-weight: 600;
+  }
+  .subchapter-card .sub-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+  }
+  .subchapter-card .sub-title {
+    font-family: 'Source Sans 3', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+  .subchapter-card .sub-stats {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .subchapter-card .sub-stat {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-soft);
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 2px 0;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .subchapter-card .sub-stat:hover { color: var(--accent); text-decoration: underline; }
+  .subchapter-card .sub-stat.best { color: var(--correct); }
+  .subchapter-card .sub-stat .stat-label { color: var(--ink-faint); }
+  .subchapter-card .resume-banner {
+    margin-top: 10px;
+    padding: 6px 8px;
+    background: var(--accent-soft);
+    border-radius: 4px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    font-weight: 600;
   }
 
   /* ===== SETTINGS BAR ===== */
@@ -309,7 +579,6 @@
     font-size: 10px;
     letter-spacing: 0.1em;
   }
-  /* Readable question text - Source Sans, not serif */
   .q-text {
     font-family: 'Source Sans 3', sans-serif;
     font-weight: 600;
@@ -494,6 +763,13 @@
     color: var(--ink-faint);
     margin-bottom: 32px;
   }
+  .result-scope {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    letter-spacing: 0.05em;
+  }
 
   .review-list {
     margin-top: 24px;
@@ -576,14 +852,18 @@
     .btn-row { flex-direction: column-reverse; }
     .btn { width: 100%; }
     .theme-toggle { position: static; margin: 0 auto 16px; }
-    header .header-content { text-align: center; }
+    header.app-header .header-content { text-align: center; }
+    .global-stat { flex-direction: column; align-items: flex-start; }
+    .global-stat .gs-meta { text-align: left; }
+    .lf-overview-card { padding: 20px; }
+    .lf-overview-card h3 { font-size: 22px; }
   }
 </style>
 </head>
 <body>
 <div class="container">
 
-  <header>
+  <header class="app-header">
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Theme umschalten">
       <span id="theme-icon">☀</span><span id="theme-label">Hell</span>
     </button>
@@ -594,8 +874,16 @@
     </div>
   </header>
 
-  <!-- ============ LERNFELD SELECTOR ============ -->
+  <!-- ============ OVERVIEW SCREEN ============ -->
   <div id="screen-select">
+    <div class="global-stat" id="global-stat">
+      <div>
+        <div class="gs-label">Durchschnitt deiner Bestleistungen</div>
+        <div class="gs-value" id="gs-value">--</div>
+      </div>
+      <div class="gs-meta" id="gs-meta"></div>
+    </div>
+
     <div class="settings">
       <label>
         Fragen pro Runde:
@@ -614,8 +902,31 @@
     <div id="lf-sections"></div>
   </div>
 
+  <!-- ============ LF-DETAIL SCREEN ============ -->
+  <div id="screen-lf-detail" class="hidden">
+    <div class="breadcrumb">
+      <button type="button" id="bc-back-overview">Übersicht</button>
+      <span class="sep">/</span>
+      <span class="current" id="bc-lf-current">LF</span>
+    </div>
+
+    <div class="lf-overview-card" id="lf-detail-card"></div>
+
+    <button class="full-lf-card" id="btn-full-lf"></button>
+
+    <div id="lf-detail-subchapters"></div>
+  </div>
+
   <!-- ============ QUIZ SCREEN ============ -->
   <div id="screen-quiz" class="hidden">
+    <div class="breadcrumb" id="quiz-breadcrumb">
+      <button type="button" id="bc-back-overview-q">Übersicht</button>
+      <span class="sep">/</span>
+      <button type="button" id="bc-back-lf-q">LF</button>
+      <span class="sep">/</span>
+      <span class="current" id="bc-quiz-current">Quiz</span>
+    </div>
+
     <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
     <div class="card">
       <div class="q-header">
@@ -635,8 +946,17 @@
 
   <!-- ============ RESULT SCREEN ============ -->
   <div id="screen-result" class="hidden">
+    <div class="breadcrumb" id="result-breadcrumb">
+      <button type="button" id="bc-back-overview-r">Übersicht</button>
+      <span class="sep">/</span>
+      <button type="button" id="bc-back-lf-r">LF</button>
+      <span class="sep">/</span>
+      <span class="current" id="bc-result-current">Ergebnis</span>
+    </div>
+
     <div class="card">
       <div class="result-display">
+        <div class="result-scope" id="r-scope"></div>
         <div class="result-score"><span id="r-score">0</span><span class="total">/<span id="r-total">10</span></span></div>
         <div class="result-label" id="r-label">Ergebnis</div>
         <div class="result-message" id="r-message"></div>
@@ -651,7 +971,7 @@
   </div>
 
   <footer>
-    Quellen: Westermann · IT-Berufe · Grundstufe (2020) &amp; Fachstufe (2022/2023) · Offline-fähig · v0.2
+    Quellen: Westermann · IT-Berufe · Grundstufe (2020) &amp; Fachstufe (2022/2023) · Offline-fähig · v0.4
   </footer>
 
 </div>
@@ -659,599 +979,335 @@
 <script>
 /* =====================================================================
    QUESTION POOL
-   Each question references the source: e.g. "LF 1, Kap. 1.3.4"
-   Question types:
-     - mc       Multiple choice, exactly one correct
-     - multi    Multiple choice, multiple correct
-     - fill     Fill in the blank (case-insensitive, trim whitespace)
-     - tf       True/False
+   Two shapes supported per LF:
+     a) Flat:        { questions: [...] }
+     b) Sub-chapter: { subchapters: { "2.1": { title, questions: [...] }, ... } }
    ===================================================================== */
 
 const QUESTIONS = {
   /* ============================================================
-     LERNFELD 1 - Das Unternehmen und die eigene Rolle
+     LF 1 - flat (legacy structure, untouched)
      ============================================================ */
-  "LF1": [
-    {
-      type: "mc",
-      q: "Welches Gesetz regelt die rechtlichen Rahmenbedingungen der dualen Berufsausbildung in Deutschland?",
-      options: [
-        "Berufsbildungsgesetz (BBiG)",
-        "Bürgerliches Gesetzbuch (BGB)",
-        "Handelsgesetzbuch (HGB)",
-        "Arbeitsschutzgesetz (ArbSchG)"
-      ],
-      correct: 0,
-      explain: "Das BBiG legt die Grundlagen der Berufsausbildung fest, darunter die Mindestbestandteile des Ausbildungsvertrags (§ 11) sowie die Rechte und Pflichten von Ausbildenden und Auszubildenden (§§ 13-17).",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Stelle ist als zentrale Organisation der Berufsausbildung u.a. für die Zulassung von Ausbildungsbetrieben und die Abschlussprüfung zuständig?",
-      options: [
-        "Arbeitsagentur",
-        "Industrie- und Handelskammer (IHK)",
-        "Berufsschule",
-        "Bundesinstitut für Berufsbildung (BIBB)"
-      ],
-      correct: 1,
-      explain: "Die IHK ist die zentrale Organisation der Berufsausbildung. Sie ist für die Zulassung der Betriebe, die Beratung aller Ausbildungsbeteiligten und die Abschlussprüfung zuständig.",
-      source: "LF 1, Kap. 1.2"
-    },
-    {
-      type: "tf",
-      q: "Die Probezeit in einer Berufsausbildung muss mindestens einen Monat und darf höchstens vier Monate betragen.",
-      correct: true,
-      explain: "Korrekt. Die Probezeit ist im BBiG geregelt: Sie liegt zwischen einem und vier Monaten. Innerhalb dieser Zeit kann das Ausbildungsverhältnis fristlos und ohne Angabe von Gründen gekündigt werden.",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "multi",
-      q: "Welche der folgenden Angaben gehören laut § 11 BBiG zu den Pflichtbestandteilen eines Berufsausbildungsvertrags? (Mehrfachauswahl)",
-      options: [
-        "Beginn und Dauer der Berufsausbildung",
-        "Dauer der Probezeit",
-        "Die kalkulierten Kosten der Ausbildung",
-        "Höhe und Zahlung der Vergütung",
-        "Dauer des Urlaubs"
-      ],
-      correct: [0, 1, 3, 4],
-      explain: "§ 11 BBiG schreibt u.a. vor: Art/Gliederung/Ziel, Beginn und Dauer, Ausbildungsmaßnahmen außerhalb der Stätte, tägliche Ausbildungszeit, Probezeit, Vergütung, Urlaub, Kündigungsvoraussetzungen sowie Tarifhinweise. Die kalkulierten Kosten der Ausbildung gehören nicht dazu.",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "mc",
-      q: "Ein Auszubildender ist 17 Jahre alt. Wie viele Urlaubstage stehen ihm laut JArbSchG mindestens zu?",
-      options: [
-        "20 Werktage",
-        "25 Werktage",
-        "27 Werktage",
-        "30 Werktage"
-      ],
-      correct: 2,
-      explain: "Das Jugendarbeitsschutzgesetz staffelt den Mindesturlaub nach Alter: unter 16 Jahre → 30 Tage, unter 17 → 27 Tage, unter 18 → 25 Tage. Ein 17-Jähriger fällt also unter die mittlere Stufe mit 27 Tagen.",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "fill",
-      q: "Wie heißt die gewählte Interessenvertretung speziell für Auszubildende und Jugendliche im Betrieb? (Abkürzung mit drei Buchstaben)",
-      answers: ["JAV"],
-      explain: "Die Jugend- und Auszubildendenvertretung (JAV) wird zusätzlich zum Betriebsrat gewählt. Sie wacht über die Einhaltung von BBiG, JArbSchG und Tarifverträgen. Voraussetzung: mindestens fünf wahlberechtigte Jugendliche oder Azubis im Betrieb.",
-      source: "LF 1, Kap. 1.2.2"
-    },
-    {
-      type: "mc",
-      q: "Welche Rechtsform ist eine Kapitalgesellschaft, bei der das Mindeststammkapital 25.000 € beträgt und die Haftung auf das Gesellschaftsvermögen beschränkt ist?",
-      options: [
-        "Offene Handelsgesellschaft (OHG)",
-        "Kommanditgesellschaft (KG)",
-        "Gesellschaft mit beschränkter Haftung (GmbH)",
-        "Gesellschaft bürgerlichen Rechts (GbR)"
-      ],
-      correct: 2,
-      explain: "Die GmbH ist eine Kapitalgesellschaft (juristische Person) mit Mindeststammkapital von 25.000 €, von denen 50% sofort eingezahlt werden müssen. Die Haftung ist auf das Gesellschaftsvermögen beschränkt - das Privatvermögen der Gesellschafter ist geschützt.",
-      source: "LF 1, Kap. 1.3.4"
-    },
-    {
-      type: "mc",
-      q: "Was ist die sogenannte 1-Euro-GmbH bzw. Mini-GmbH offiziell für eine Rechtsform?",
-      options: [
-        "GmbH light",
-        "Unternehmergesellschaft (UG) (haftungsbeschränkt)",
-        "Einzelunternehmen mit Sondersatzung",
-        "Kommanditgesellschaft auf Aktien (KGaA)"
-      ],
-      correct: 1,
-      explain: "Die UG (haftungsbeschränkt) wurde durch das MoMiG eingeführt, um Gründungen zu erleichtern. Sie kann bereits mit 1 € Stammkapital gegründet werden, muss aber 25% des Jahresgewinns als Rücklage einbehalten, bis 25.000 € erreicht sind. Sacheinlagen sind ausgeschlossen.",
-      source: "LF 1, Kap. 1.3.4"
-    },
-    {
-      type: "tf",
-      q: "Eine GbR (Gesellschaft bürgerlichen Rechts) muss zwingend ins Handelsregister eingetragen werden, um wirksam zu entstehen.",
-      correct: false,
-      explain: "Falsch. Die GbR ist die einfachste Form einer Mehrpersonengesellschaft und benötigt keine Handelsregistereintragung. Erst wenn ein Unternehmen kaufmännisch eingerichtet ist oder eine Firma führen will, wird die Eintragung relevant - dann gilt das HGB.",
-      source: "LF 1, Kap. 1.3.4"
-    },
-    {
-      type: "fill",
-      q: "Welche Art von Vollmacht ist die umfassendste handelsrechtliche Vollmacht und muss zwingend ins Handelsregister eingetragen werden?",
-      answers: ["Prokura"],
-      explain: "Die Prokura (§§ 48-53 HGB) umfasst alle gewöhnlichen und außergewöhnlichen Geschäfte und Rechtshandlungen eines Handelsgewerbes. Sie wird mit dem Zusatz \"ppa.\" (per procura) gezeichnet und entsteht erst mit der Eintragung ins Handelsregister.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "mc",
-      q: "Welche Organisationsform ist als Weiterentwicklung des Mehrliniensystems zu verstehen, bei der jede Stelle von zwei gleichberechtigten Instanzen geführt wird (z.B. produkt- und funktionsorientiert)?",
-      options: [
-        "Stablinienorganisation",
-        "Einliniensystem",
-        "Matrixorganisation",
-        "Divisionale Organisation"
-      ],
-      correct: 2,
-      explain: "Die Matrixorganisation kombiniert zwei Leitungsdimensionen, z.B. Produkte und Funktionen. Stärke: zwei Kernkompetenzen führen zu besserem Ergebnis. Schwäche: Streitigkeiten in den Zuständigkeiten, Teamarbeit ist erfolgskritisch.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "multi",
-      q: "Welche der genannten Punkte zählen zu den volkswirtschaftlichen Produktionsfaktoren? (Mehrfachauswahl)",
-      options: [
-        "Arbeit",
-        "Boden",
-        "Kapital",
-        "Konsumgüter",
-        "Steuern"
-      ],
-      correct: [0, 1, 2],
-      explain: "Die drei klassischen volkswirtschaftlichen Produktionsfaktoren sind Arbeit, Boden und Kapital. Haushalte stellen diese den Unternehmen zur Verfügung, dafür erhalten sie Einkommen (Löhne, Mieten, Zinsen).",
-      source: "LF 1, Kap. 1.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Aussage zum autoritären Führungsstil ist korrekt?",
-      options: [
-        "Mitarbeiter werden am Entscheidungsprozess beteiligt.",
-        "Vorgesetzte treffen alle Entscheidungen allein.",
-        "Die Kontrolle bezieht sich primär auf Arbeitsergebnisse.",
-        "Es wird ein partnerschaftliches Arbeiten erwartet."
-      ],
-      correct: 1,
-      explain: "Beim autoritären Führungsstil treffen Vorgesetzte alle Entscheidungen allein. Mitarbeiter erhalten Weisungen und Einzelanordnungen, ihre Tätigkeiten werden laufend überprüft. Die anderen Aussagen beschreiben den kooperativen Führungsstil.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "tf",
-      q: "Flache Hierarchien führen tendenziell zu schnelleren Entscheidungs- und Informationswegen sowie höherer Mitarbeitermotivation.",
-      correct: true,
-      explain: "Korrekt. Je flacher die Hierarchie, desto schneller Entscheidungs- und Informationswege, desto motivierter die Mitarbeiter und desto höher die Innovationsleistung. Mitarbeiter übernehmen mehr Selbstverantwortung.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "fill",
-      q: "Wie heißt das öffentliche Verzeichnis, in das Einzelkaufleute, Personen- und Kapitalgesellschaften ihre wesentlichen Rechtsverhältnisse eintragen lassen müssen?",
-      answers: ["Handelsregister"],
-      explain: "Das Handelsregister hat eine Publikationsfunktion: Jeder kann zu Informationszwecken Einsicht nehmen. Durch die Eintragung erlangt die Firma die Kaufmannseigenschaft und unterliegt dem HGB. Abteilung A für Einzelkaufleute/Personengesellschaften, Abteilung B für Kapitalgesellschaften.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "mc",
-      q: "Was beschreibt der Begriff Jobrotation?",
-      options: [
-        "Die Erweiterung der Aufgaben um ähnliche Tätigkeiten gleichen Schwierigkeitsgrads",
-        "Den systematischen Arbeitsplatzwechsel zur Vertiefung von Fachkenntnissen",
-        "Die Übernahme anspruchsvollerer Aufgaben (Aufstieg)",
-        "Die Verlagerung von Aufgaben an externe Dienstleister"
-      ],
-      correct: 1,
-      explain: "Jobrotation ist der systematische Arbeitsplatzwechsel. Ziel: Vertiefung von Fachkenntnissen, Vermeidung von Monotonie und einseitiger Belastung. Job Enlargement dagegen ist die Erweiterung um gleichwertige Aufgaben am selben Arbeitsplatz.",
-      source: "LF 1, Kap. 1.2.3"
-    },
-    {
-      type: "mc",
-      q: "Welche der vier IT-Ausbildungsberufe gehören zu den eher kaufmännisch orientierten Berufen?",
-      options: [
-        "Fachinformatiker und IT-Systemelektroniker",
-        "IT-Systemelektroniker und Kaufleute für IT-Systemmanagement",
-        "Kaufleute für IT-Systemmanagement und Kaufleute für Digitalisierungsmanagement",
-        "Fachinformatiker und Kaufleute für Digitalisierungsmanagement"
-      ],
-      correct: 2,
-      explain: "Die kaufmännisch orientierten IT-Berufe sind die Kaufleute für IT-Systemmanagement und die Kaufleute für Digitalisierungsmanagement. Bei ihnen steht ab LF 7-9 die Projektarbeit von Beschaffung bis Bereitstellung im Mittelpunkt - bei den technischen Berufen dagegen die technische Systembereitstellung.",
-      source: "LF 1, Kap. 1.1"
-    },
-    {
-      type: "fill",
-      q: "Welcher europäische Karriere-Pass dient als datensicheres, werbefreies und mehrsprachiges Portal für Bewerbungen innerhalb Europas?",
-      answers: ["Europass"],
-      explain: "Der Europass ist das europäische Karrieremanagement-Portal mit zahlreichen Funktionen - datensicher, werbefrei und mehrsprachig. Daneben fördert Erasmus+ den Lebens- und Arbeitsaustausch in Europa.",
-      source: "LF 1, Kap. 1.2.3"
-    },
-    {
-      type: "tf",
-      q: "Auszubildende dürfen während ihrer Ausbildung bis zu einem Viertel der Ausbildungsdauer im Ausland eingesetzt werden.",
-      correct: true,
-      explain: "Korrekt. Bis zu 25% der Ausbildungsdauer können im Ausland absolviert werden. Solche Maßnahmen sollten in den Vertrag aufgenommen werden - die IHK und Stellen wie berufsbildung-ohne-grenzen.de informieren dazu.",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Funktion erfüllt eine Stabsstelle in der Aufbauorganisation?",
-      options: [
-        "Sie besitzt umfassende Anordnungs- und Entscheidungsbefugnis gegenüber nachgeordneten Stellen.",
-        "Sie ist die ausführende Stelle ohne Leitungsbefugnis.",
-        "Sie unterstützt eine Instanz beratend, ohne eigene Leitungs- und Entscheidungsbefugnis.",
-        "Sie ist eine externe Stelle, die per Outsourcing eingebunden ist."
-      ],
-      correct: 2,
-      explain: "Stabsstellen haben eine beratungs- und entscheidungsvorbereitende Funktion. Sie sind eine Hilfsstelle für eine Instanz, besitzen aber keine eigenen Leitungs- oder Entscheidungsbefugnisse.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "multi",
-      q: "Welche Grundprinzipien sollten bei der Stellenbildung beachtet werden? (Mehrfachauswahl)",
-      options: [
-        "Arbeitsteilung",
-        "Überschaubarkeit",
-        "Maximierung der Stellenanzahl",
-        "Angemessenheit",
-        "Anonymität"
-      ],
-      correct: [0, 1, 3],
-      explain: "Die drei Grundprinzipien der Stellenbildung: Arbeitsteilung (auch Outsourcing prüfen), Überschaubarkeit (Stelleninhaber nicht überfordern - zeitlich, sachlich, in Abhängigkeiten) und Angemessenheit (zur Leistungsfähigkeit passend, ggf. mit Qualifizierung).",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "mc",
-      q: "Stellenausschreibungen müssen nach dem Allgemeinen Gleichbehandlungsgesetz (AGG) geschlechtsneutral erfolgen. Wofür steht das \"d\" im Zusatz \"(m/w/d)\"?",
-      options: [
-        "deutsch",
-        "divers",
-        "duales Studium",
-        "doktoriert"
-      ],
-      correct: 1,
-      explain: "Das \"d\" steht für divers (alternativ \"i\" für intersexuell). Das AGG verlangt geschlechtsneutrale Ausschreibungen - die Ergänzung trägt der Anerkennung weiterer Geschlechtsidentitäten Rechnung.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "tf",
-      q: "Bei einer Krankheit eines Auszubildenden ist spätestens am dritten Tag eine ärztliche Bescheinigung beim Ausbildenden vorzulegen.",
-      correct: true,
-      explain: "Korrekt. Die Benachrichtigungspflicht (§ 13 BBiG) verlangt: unverzüglich Nachricht über das Fernbleiben unter Angabe von Gründen und bei Krankheit oder Unfall spätestens am dritten Tag eine ärztliche Bescheinigung.",
-      source: "LF 1, Kap. 1.2.1"
-    },
-    {
-      type: "fill",
-      q: "Wie nennt man das volkswirtschaftliche Modell, das den Austausch zwischen Haushalten und Unternehmen darstellt - Faktorleistungen gegen Einkommen und Konsumausgaben gegen Konsumgüter?",
-      answers: ["Wirtschaftskreislauf", "einfacher Wirtschaftskreislauf"],
-      explain: "Der einfache Wirtschaftskreislauf zeigt den modellhaften Geldfluss: Haushalte stellen Arbeit, Boden und Kapital bereit und erhalten dafür Einkommen. Mit dem Einkommen kaufen sie Konsumgüter, das Geld fließt zu den Unternehmen zurück.",
-      source: "LF 1, Kap. 1.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Aussage zum Management by Objectives (MbO) trifft zu?",
-      options: [
-        "Vorgesetzte legen alle Entscheidungen ohne Beteiligung der Mitarbeiter fest.",
-        "Mitarbeiter und Vorgesetzte vereinbaren gemeinsam Ziele, deren Erreichung überprüft wird.",
-        "Aufgaben werden ohne Abstimmung an externe Firmen ausgelagert.",
-        "Hierarchien werden bewusst maximal vertieft."
-      ],
-      correct: 1,
-      explain: "Beim MbO bringen sich Mitarbeiter besser ein, Verantwortlichkeiten sind klar und überprüfbar geregelt, Motivation und Mitwirkung steigen, das Management wird entlastet. Nachteil: Zielvereinbarung und -kontrolle kosten Zeit, andere Aufgaben können aus dem Blickfeld geraten.",
-      source: "LF 1, Kap. 1.3.3"
-    },
-    {
-      type: "mc",
-      q: "Was beschreibt der Begriff Wertschöpfung in einem Unternehmen?",
-      options: [
-        "Den gesamten Umsatzerlös eines Geschäftsjahres",
-        "Die Differenz zwischen Umsatzerlös und Vorleistungen abzüglich Abschreibungen",
-        "Den Gewinn vor Steuern",
-        "Die Summe aller Löhne und Gehälter im Unternehmen"
-      ],
-      correct: 1,
-      explain: "Wertschöpfung ist der Mehrwert, den ein Unternehmen durch seine Leistung schafft: Umsatzerlös minus Vorleistungen (Material, Fremdleistungen) minus Abschreibungen. Die Wertschöpfung wird auf Eigentümer/Darlehen, Steuern und Mitarbeiter (Löhne, Sozialabgaben, Prämien) verteilt.",
-      source: "LF 1, Kap. 1.3.5"
-    }
-  ],
+  "LF1": {
+    questions: [
+      { type: "mc", q: "Welches Gesetz regelt die rechtlichen Rahmenbedingungen der dualen Berufsausbildung in Deutschland?",
+        options: ["Berufsbildungsgesetz (BBiG)","Bürgerliches Gesetzbuch (BGB)","Handelsgesetzbuch (HGB)","Arbeitsschutzgesetz (ArbSchG)"],
+        correct: 0,
+        explain: "Das BBiG legt die Grundlagen der Berufsausbildung fest, darunter die Mindestbestandteile des Ausbildungsvertrags (§ 11) sowie die Rechte und Pflichten von Ausbildenden und Auszubildenden (§§ 13-17).",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "mc", q: "Welche Stelle ist als zentrale Organisation der Berufsausbildung u.a. für die Zulassung von Ausbildungsbetrieben und die Abschlussprüfung zuständig?",
+        options: ["Arbeitsagentur","Industrie- und Handelskammer (IHK)","Berufsschule","Bundesinstitut für Berufsbildung (BIBB)"],
+        correct: 1,
+        explain: "Die IHK ist die zentrale Organisation der Berufsausbildung. Sie ist für die Zulassung der Betriebe, die Beratung aller Ausbildungsbeteiligten und die Abschlussprüfung zuständig.",
+        source: "LF 1, Kap. 1.2" },
+      { type: "tf", q: "Die Probezeit in einer Berufsausbildung muss mindestens einen Monat und darf höchstens vier Monate betragen.",
+        correct: true,
+        explain: "Korrekt. Die Probezeit ist im BBiG geregelt: Sie liegt zwischen einem und vier Monaten. Innerhalb dieser Zeit kann das Ausbildungsverhältnis fristlos und ohne Angabe von Gründen gekündigt werden.",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "multi", q: "Welche der folgenden Angaben gehören laut § 11 BBiG zu den Pflichtbestandteilen eines Berufsausbildungsvertrags? (Mehrfachauswahl)",
+        options: ["Beginn und Dauer der Berufsausbildung","Dauer der Probezeit","Die kalkulierten Kosten der Ausbildung","Höhe und Zahlung der Vergütung","Dauer des Urlaubs"],
+        correct: [0, 1, 3, 4],
+        explain: "§ 11 BBiG schreibt u.a. vor: Art/Gliederung/Ziel, Beginn und Dauer, Ausbildungsmaßnahmen außerhalb der Stätte, tägliche Ausbildungszeit, Probezeit, Vergütung, Urlaub, Kündigungsvoraussetzungen sowie Tarifhinweise. Die kalkulierten Kosten der Ausbildung gehören nicht dazu.",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "mc", q: "Ein Auszubildender ist 17 Jahre alt. Wie viele Urlaubstage stehen ihm laut JArbSchG mindestens zu?",
+        options: ["20 Werktage","25 Werktage","27 Werktage","30 Werktage"],
+        correct: 2,
+        explain: "Das Jugendarbeitsschutzgesetz staffelt den Mindesturlaub nach Alter: unter 16 Jahre → 30 Tage, unter 17 → 27 Tage, unter 18 → 25 Tage. Ein 17-Jähriger fällt also unter die mittlere Stufe mit 27 Tagen.",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "fill", q: "Wie heißt die gewählte Interessenvertretung speziell für Auszubildende und Jugendliche im Betrieb? (Abkürzung mit drei Buchstaben)",
+        answers: ["JAV"],
+        explain: "Die Jugend- und Auszubildendenvertretung (JAV) wird zusätzlich zum Betriebsrat gewählt. Sie wacht über die Einhaltung von BBiG, JArbSchG und Tarifverträgen. Voraussetzung: mindestens fünf wahlberechtigte Jugendliche oder Azubis im Betrieb.",
+        source: "LF 1, Kap. 1.2.2" },
+      { type: "mc", q: "Welche Rechtsform ist eine Kapitalgesellschaft, bei der das Mindeststammkapital 25.000 € beträgt und die Haftung auf das Gesellschaftsvermögen beschränkt ist?",
+        options: ["Offene Handelsgesellschaft (OHG)","Kommanditgesellschaft (KG)","Gesellschaft mit beschränkter Haftung (GmbH)","Gesellschaft bürgerlichen Rechts (GbR)"],
+        correct: 2,
+        explain: "Die GmbH ist eine Kapitalgesellschaft (juristische Person) mit Mindeststammkapital von 25.000 €, von denen 50% sofort eingezahlt werden müssen. Die Haftung ist auf das Gesellschaftsvermögen beschränkt - das Privatvermögen der Gesellschafter ist geschützt.",
+        source: "LF 1, Kap. 1.3.4" },
+      { type: "mc", q: "Was ist die sogenannte 1-Euro-GmbH bzw. Mini-GmbH offiziell für eine Rechtsform?",
+        options: ["GmbH light","Unternehmergesellschaft (UG) (haftungsbeschränkt)","Einzelunternehmen mit Sondersatzung","Kommanditgesellschaft auf Aktien (KGaA)"],
+        correct: 1,
+        explain: "Die UG (haftungsbeschränkt) wurde durch das MoMiG eingeführt, um Gründungen zu erleichtern. Sie kann bereits mit 1 € Stammkapital gegründet werden, muss aber 25% des Jahresgewinns als Rücklage einbehalten, bis 25.000 € erreicht sind. Sacheinlagen sind ausgeschlossen.",
+        source: "LF 1, Kap. 1.3.4" },
+      { type: "tf", q: "Eine GbR (Gesellschaft bürgerlichen Rechts) muss zwingend ins Handelsregister eingetragen werden, um wirksam zu entstehen.",
+        correct: false,
+        explain: "Falsch. Die GbR ist die einfachste Form einer Mehrpersonengesellschaft und benötigt keine Handelsregistereintragung. Erst wenn ein Unternehmen kaufmännisch eingerichtet ist oder eine Firma führen will, wird die Eintragung relevant - dann gilt das HGB.",
+        source: "LF 1, Kap. 1.3.4" },
+      { type: "fill", q: "Welche Art von Vollmacht ist die umfassendste handelsrechtliche Vollmacht und muss zwingend ins Handelsregister eingetragen werden?",
+        answers: ["Prokura"],
+        explain: "Die Prokura (§§ 48-53 HGB) umfasst alle gewöhnlichen und außergewöhnlichen Geschäfte und Rechtshandlungen eines Handelsgewerbes. Sie wird mit dem Zusatz \"ppa.\" (per procura) gezeichnet und entsteht erst mit der Eintragung ins Handelsregister.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "mc", q: "Welche Organisationsform ist als Weiterentwicklung des Mehrliniensystems zu verstehen, bei der jede Stelle von zwei gleichberechtigten Instanzen geführt wird (z.B. produkt- und funktionsorientiert)?",
+        options: ["Stablinienorganisation","Einliniensystem","Matrixorganisation","Divisionale Organisation"],
+        correct: 2,
+        explain: "Die Matrixorganisation kombiniert zwei Leitungsdimensionen, z.B. Produkte und Funktionen. Stärke: zwei Kernkompetenzen führen zu besserem Ergebnis. Schwäche: Streitigkeiten in den Zuständigkeiten, Teamarbeit ist erfolgskritisch.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "multi", q: "Welche der genannten Punkte zählen zu den volkswirtschaftlichen Produktionsfaktoren? (Mehrfachauswahl)",
+        options: ["Arbeit","Boden","Kapital","Konsumgüter","Steuern"],
+        correct: [0, 1, 2],
+        explain: "Die drei klassischen volkswirtschaftlichen Produktionsfaktoren sind Arbeit, Boden und Kapital. Haushalte stellen diese den Unternehmen zur Verfügung, dafür erhalten sie Einkommen (Löhne, Mieten, Zinsen).",
+        source: "LF 1, Kap. 1.4.1" },
+      { type: "mc", q: "Welche Aussage zum autoritären Führungsstil ist korrekt?",
+        options: ["Mitarbeiter werden am Entscheidungsprozess beteiligt.","Vorgesetzte treffen alle Entscheidungen allein.","Die Kontrolle bezieht sich primär auf Arbeitsergebnisse.","Es wird ein partnerschaftliches Arbeiten erwartet."],
+        correct: 1,
+        explain: "Beim autoritären Führungsstil treffen Vorgesetzte alle Entscheidungen allein. Mitarbeiter erhalten Weisungen und Einzelanordnungen, ihre Tätigkeiten werden laufend überprüft. Die anderen Aussagen beschreiben den kooperativen Führungsstil.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "tf", q: "Flache Hierarchien führen tendenziell zu schnelleren Entscheidungs- und Informationswegen sowie höherer Mitarbeitermotivation.",
+        correct: true,
+        explain: "Korrekt. Je flacher die Hierarchie, desto schneller Entscheidungs- und Informationswege, desto motivierter die Mitarbeiter und desto höher die Innovationsleistung. Mitarbeiter übernehmen mehr Selbstverantwortung.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "fill", q: "Wie heißt das öffentliche Verzeichnis, in das Einzelkaufleute, Personen- und Kapitalgesellschaften ihre wesentlichen Rechtsverhältnisse eintragen lassen müssen?",
+        answers: ["Handelsregister"],
+        explain: "Das Handelsregister hat eine Publikationsfunktion: Jeder kann zu Informationszwecken Einsicht nehmen. Durch die Eintragung erlangt die Firma die Kaufmannseigenschaft und unterliegt dem HGB. Abteilung A für Einzelkaufleute/Personengesellschaften, Abteilung B für Kapitalgesellschaften.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "mc", q: "Was beschreibt der Begriff Jobrotation?",
+        options: ["Die Erweiterung der Aufgaben um ähnliche Tätigkeiten gleichen Schwierigkeitsgrads","Den systematischen Arbeitsplatzwechsel zur Vertiefung von Fachkenntnissen","Die Übernahme anspruchsvollerer Aufgaben (Aufstieg)","Die Verlagerung von Aufgaben an externe Dienstleister"],
+        correct: 1,
+        explain: "Jobrotation ist der systematische Arbeitsplatzwechsel. Ziel: Vertiefung von Fachkenntnissen, Vermeidung von Monotonie und einseitiger Belastung. Job Enlargement dagegen ist die Erweiterung um gleichwertige Aufgaben am selben Arbeitsplatz.",
+        source: "LF 1, Kap. 1.2.3" },
+      { type: "mc", q: "Welche der vier IT-Ausbildungsberufe gehören zu den eher kaufmännisch orientierten Berufen?",
+        options: ["Fachinformatiker und IT-Systemelektroniker","IT-Systemelektroniker und Kaufleute für IT-Systemmanagement","Kaufleute für IT-Systemmanagement und Kaufleute für Digitalisierungsmanagement","Fachinformatiker und Kaufleute für Digitalisierungsmanagement"],
+        correct: 2,
+        explain: "Die kaufmännisch orientierten IT-Berufe sind die Kaufleute für IT-Systemmanagement und die Kaufleute für Digitalisierungsmanagement. Bei ihnen steht ab LF 7-9 die Projektarbeit von Beschaffung bis Bereitstellung im Mittelpunkt - bei den technischen Berufen dagegen die technische Systembereitstellung.",
+        source: "LF 1, Kap. 1.1" },
+      { type: "fill", q: "Welcher europäische Karriere-Pass dient als datensicheres, werbefreies und mehrsprachiges Portal für Bewerbungen innerhalb Europas?",
+        answers: ["Europass"],
+        explain: "Der Europass ist das europäische Karrieremanagement-Portal mit zahlreichen Funktionen - datensicher, werbefrei und mehrsprachig. Daneben fördert Erasmus+ den Lebens- und Arbeitsaustausch in Europa.",
+        source: "LF 1, Kap. 1.2.3" },
+      { type: "tf", q: "Auszubildende dürfen während ihrer Ausbildung bis zu einem Viertel der Ausbildungsdauer im Ausland eingesetzt werden.",
+        correct: true,
+        explain: "Korrekt. Bis zu 25% der Ausbildungsdauer können im Ausland absolviert werden. Solche Maßnahmen sollten in den Vertrag aufgenommen werden - die IHK und Stellen wie berufsbildung-ohne-grenzen.de informieren dazu.",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "mc", q: "Welche Funktion erfüllt eine Stabsstelle in der Aufbauorganisation?",
+        options: ["Sie besitzt umfassende Anordnungs- und Entscheidungsbefugnis gegenüber nachgeordneten Stellen.","Sie ist die ausführende Stelle ohne Leitungsbefugnis.","Sie unterstützt eine Instanz beratend, ohne eigene Leitungs- und Entscheidungsbefugnis.","Sie ist eine externe Stelle, die per Outsourcing eingebunden ist."],
+        correct: 2,
+        explain: "Stabsstellen haben eine beratungs- und entscheidungsvorbereitende Funktion. Sie sind eine Hilfsstelle für eine Instanz, besitzen aber keine eigenen Leitungs- oder Entscheidungsbefugnisse.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "multi", q: "Welche Grundprinzipien sollten bei der Stellenbildung beachtet werden? (Mehrfachauswahl)",
+        options: ["Arbeitsteilung","Überschaubarkeit","Maximierung der Stellenanzahl","Angemessenheit","Anonymität"],
+        correct: [0, 1, 3],
+        explain: "Die drei Grundprinzipien der Stellenbildung: Arbeitsteilung (auch Outsourcing prüfen), Überschaubarkeit (Stelleninhaber nicht überfordern - zeitlich, sachlich, in Abhängigkeiten) und Angemessenheit (zur Leistungsfähigkeit passend, ggf. mit Qualifizierung).",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "mc", q: "Stellenausschreibungen müssen nach dem Allgemeinen Gleichbehandlungsgesetz (AGG) geschlechtsneutral erfolgen. Wofür steht das \"d\" im Zusatz \"(m/w/d)\"?",
+        options: ["deutsch","divers","duales Studium","doktoriert"],
+        correct: 1,
+        explain: "Das \"d\" steht für divers (alternativ \"i\" für intersexuell). Das AGG verlangt geschlechtsneutrale Ausschreibungen - die Ergänzung trägt der Anerkennung weiterer Geschlechtsidentitäten Rechnung.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "tf", q: "Bei einer Krankheit eines Auszubildenden ist spätestens am dritten Tag eine ärztliche Bescheinigung beim Ausbildenden vorzulegen.",
+        correct: true,
+        explain: "Korrekt. Die Benachrichtigungspflicht (§ 13 BBiG) verlangt: unverzüglich Nachricht über das Fernbleiben unter Angabe von Gründen und bei Krankheit oder Unfall spätestens am dritten Tag eine ärztliche Bescheinigung.",
+        source: "LF 1, Kap. 1.2.1" },
+      { type: "fill", q: "Wie nennt man das volkswirtschaftliche Modell, das den Austausch zwischen Haushalten und Unternehmen darstellt - Faktorleistungen gegen Einkommen und Konsumausgaben gegen Konsumgüter?",
+        answers: ["Wirtschaftskreislauf", "einfacher Wirtschaftskreislauf"],
+        explain: "Der einfache Wirtschaftskreislauf zeigt den modellhaften Geldfluss: Haushalte stellen Arbeit, Boden und Kapital bereit und erhalten dafür Einkommen. Mit dem Einkommen kaufen sie Konsumgüter, das Geld fließt zu den Unternehmen zurück.",
+        source: "LF 1, Kap. 1.4.1" },
+      { type: "mc", q: "Welche Aussage zum Management by Objectives (MbO) trifft zu?",
+        options: ["Vorgesetzte legen alle Entscheidungen ohne Beteiligung der Mitarbeiter fest.","Mitarbeiter und Vorgesetzte vereinbaren gemeinsam Ziele, deren Erreichung überprüft wird.","Aufgaben werden ohne Abstimmung an externe Firmen ausgelagert.","Hierarchien werden bewusst maximal vertieft."],
+        correct: 1,
+        explain: "Beim MbO bringen sich Mitarbeiter besser ein, Verantwortlichkeiten sind klar und überprüfbar geregelt, Motivation und Mitwirkung steigen, das Management wird entlastet. Nachteil: Zielvereinbarung und -kontrolle kosten Zeit, andere Aufgaben können aus dem Blickfeld geraten.",
+        source: "LF 1, Kap. 1.3.3" },
+      { type: "mc", q: "Was beschreibt der Begriff Wertschöpfung in einem Unternehmen?",
+        options: ["Den gesamten Umsatzerlös eines Geschäftsjahres","Die Differenz zwischen Umsatzerlös und Vorleistungen abzüglich Abschreibungen","Den Gewinn vor Steuern","Die Summe aller Löhne und Gehälter im Unternehmen"],
+        correct: 1,
+        explain: "Wertschöpfung ist der Mehrwert, den ein Unternehmen durch seine Leistung schafft: Umsatzerlös minus Vorleistungen (Material, Fremdleistungen) minus Abschreibungen. Die Wertschöpfung wird auf Eigentümer/Darlehen, Steuern und Mitarbeiter (Löhne, Sozialabgaben, Prämien) verteilt.",
+        source: "LF 1, Kap. 1.3.5" }
+    ]
+  },
 
   /* ============================================================
-     LERNFELD 2 - Arbeitsplätze nach Kundenwunsch ausstatten
+     LF 2 - sub-chapter structure
+     Existing 30 questions distributed to their proper sub-chapters.
+     Sub-chapter pools will be topped up in Build 2.
      ============================================================ */
-  "LF2": [
-    {
-      type: "mc",
-      q: "Welches Prinzip beschreibt die grundlegende Arbeitsweise eines Computers?",
-      options: [
-        "EVA-Prinzip (Eingabe - Verarbeitung - Ausgabe)",
-        "AVE-Prinzip (Ausgabe - Verarbeitung - Eingabe)",
-        "REV-Prinzip (Rechnen - Eingeben - Verarbeiten)",
-        "IPO-Prinzip (Input - Programm - Output)"
-      ],
-      correct: 0,
-      explain: "Das EVA-Prinzip beschreibt die drei Grundfunktionen eines Computers: Eingabe der Daten, Verarbeitung in der Zentraleinheit, Ausgabe der Ergebnisse. Für einen funktionierenden Computer werden mindestens eine Zentraleinheit, eine Eingabe- und eine Ausgabeeinheit benötigt.",
-      source: "LF 2, Kap. 2.1.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Aussage zum Arbeitsspeicher (RAM) ist korrekt?",
-      options: [
-        "Der RAM behält seinen Inhalt auch nach dem Ausschalten des Computers.",
-        "Der RAM ist ein flüchtiger Speicher und verliert seinen Inhalt beim Ausschalten.",
-        "Der RAM dient zur dauerhaften Speicherung des Betriebssystems.",
-        "Der RAM ersetzt vollständig die Festplatte."
-      ],
-      correct: 1,
-      explain: "RAM (Random Access Memory) ist ein flüchtiger Speicher - alle Daten werden beim Ausschalten gelöscht. Während des Betriebs hält der RAM Programme und Daten bereit, auf die die CPU direkt zugreifen kann. Im Gegensatz dazu speichert das ROM auf dem Mainboard das BIOS/UEFI dauerhaft.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "fill",
-      q: "Wie heißt das Basisprogramm auf dem Mainboard, das den Startvorgang des Computers ausführt und das Betriebssystem von der Festplatte lädt? (heute meist als UEFI bezeichnet)",
-      answers: ["BIOS", "Basic Input Output System", "Basic-Input-Output-System"],
-      explain: "Das BIOS (Basic Input Output System) ist auf einem ROM-Chip des Mainboards gespeichert und führt den Startvorgang aus. Es ruft das eigentliche Betriebssystem von der Festplatte auf. Heute wird BIOS überwiegend durch UEFI ersetzt, das mehr Funktionen und höhere Sicherheit bietet.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "tf",
-      q: "DDR4-RAM-Module sind abwärtskompatibel und können in Mainboards eingesetzt werden, die für DDR3-RAM ausgelegt sind.",
-      correct: false,
-      explain: "Falsch. Die verschiedenen DDR-Generationen sind untereinander nicht kompatibel. DDR4 passt weder physikalisch noch elektrisch in DDR3-Slots. Beim Aufrüsten muss daher genau geprüft werden, welche RAM-Generation das Mainboard unterstützt.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Festplattentechnologie ist energieeffizienter, deutlich schneller bei Bootvorgängen und Datentransfer, aber pro GB teurer als die ältere Alternative?",
-      options: [
-        "HDD (Hard Disk Drive)",
-        "SSD (Solid State Drive)",
-        "eMMC (embedded Multimedia Card)",
-        "Magnetband-Speicher"
-      ],
-      correct: 1,
-      explain: "SSDs nutzen Flash-Speicher ohne bewegliche Teile - daher leise, schneller Datentransfer, schnelles Booten und geringerer Energieverbrauch. Nachteil: höherer Preis pro GB im Vergleich zur klassischen HDD. Aus energetischen Gründen sind SSDs vorzuziehen.",
-      source: "LF 2, Kap. 2.4.3"
-    },
-    {
-      type: "multi",
-      q: "Welche der folgenden Komponenten gehören zur Zentraleinheit eines Computers im engeren Sinne? (Mehrfachauswahl)",
-      options: [
-        "CPU (Prozessor)",
-        "Tastatur",
-        "Arbeitsspeicher (RAM)",
-        "Mainboard mit Chipsatz",
-        "Monitor"
-      ],
-      correct: [0, 2, 3],
-      explain: "Die Zentraleinheit umfasst Mainboard, CPU und Arbeitsspeicher - alles, was zur direkten Datenverarbeitung gehört. Tastatur und Monitor sind Peripheriegeräte (für Eingabe bzw. Ausgabe), gehören also nicht zur Zentraleinheit.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welches Dokument wird vom Auftraggeber erstellt und beschreibt die Anforderungen mit den Fragen \"Was?\" und \"Wofür?\"?",
-      options: [
-        "Pflichtenheft",
-        "Lastenheft",
-        "Werkvertrag",
-        "Sollkonzept"
-      ],
-      correct: 1,
-      explain: "Das Lastenheft (User Specification) wird vom Auftraggeber/Kunden erstellt und beschreibt die Gesamtheit der Forderungen - das Was und Wofür. Es ist allgemein verständlich und ergebnisorientiert. Das Pflichtenheft erstellt der Auftragnehmer als Antwort darauf (Wie und Womit).",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "mc",
-      q: "Wer erstellt das Pflichtenheft und welche Fragen beantwortet es?",
-      options: [
-        "Der Auftraggeber - es beantwortet \"Was?\" und \"Wofür?\"",
-        "Der Auftragnehmer - es beantwortet \"Wie?\" und \"Womit?\"",
-        "Eine externe Zertifizierungsstelle - es beantwortet \"Wann?\" und \"Wo?\"",
-        "Der Projektmanager des Kunden - es beantwortet \"Wer?\" und \"Warum?\""
-      ],
-      correct: 1,
-      explain: "Das Pflichtenheft (Functional Specification) wird vom Auftragnehmer auf Basis des Lastenhefts erstellt. Es enthält die konkreten Realisierungsvorgaben - das Wie und Womit - und ist Grundlage für den Kundenvertrag und den späteren Abnahmekatalog.",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "fill",
-      q: "In welcher DIN-Norm zum Projektmanagement sind die Begriffe Lasten- und Pflichtenheft definiert?",
-      answers: ["DIN 69901-5", "DIN 69901", "DIN 69905"],
-      explain: "Die DIN 69901-5 (Projektmanagement, Begriffe) definiert Lasten- und Pflichtenheft. Wichtig: Die Norm legt die Begriffe fest, nicht aber die konkrete Gliederung oder die Inhalte - jedes Unternehmen hat hier seinen eigenen Standard.",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "multi",
-      q: "Welche Eigenschaften zeichnen Thin Clients aus? (Mehrfachauswahl)",
-      options: [
-        "Einfache Systemadministration",
-        "Hoher Energieverbrauch",
-        "Schnelle Betriebsbereitschaft",
-        "Geringe Betriebskosten",
-        "Volle lokale Datenverarbeitung"
-      ],
-      correct: [0, 2, 3],
-      explain: "Thin Clients bieten einfache Administration, schnelle Betriebsbereitschaft, geringe Betriebskosten und geringen Energieverbrauch - sie entsprechen damit der Forderung nach Green-IT. Die eigentliche Datenverarbeitung läuft serverseitig, nicht lokal auf dem Thin Client.",
-      source: "LF 2, Kap. 2.2.2"
-    },
-    {
-      type: "mc",
-      q: "Was bedeutet der Begriff \"Konfiguration\" im IT-Kontext?",
-      options: [
-        "Die reine Hardware-Ausstattung eines Computers",
-        "Die Zusammenstellung, Einstellungen und Abstimmung von Komponenten, Geräten und Programmen auf eine Anwendung",
-        "Die Anbindung eines Computers an das Netzwerk",
-        "Das Update von Treibern und Software"
-      ],
-      correct: 1,
-      explain: "Konfiguration bezeichnet die Zusammenstellung, Einstellungen und Abstimmungen von Komponenten, Geräten und Programmen in Bezug auf die Anwendungen. Je nach Einsatzzweck werden Geräte und Komponenten zu einer maßgeschneiderten Konfiguration zusammengestellt.",
-      source: "LF 2, Kap. 2.1.1"
-    },
-    {
-      type: "tf",
-      q: "Die Festplatte zählt zu den Peripheriegeräten eines Computers.",
-      correct: true,
-      explain: "Korrekt. Peripheriegeräte sind alle Geräte zur Eingabe, Ausgabe und Speicherung der Daten - die Festplatte gehört als externe Speichereinheit dazu. Zur Zentraleinheit zählen nur CPU, RAM und Mainboard.",
-      source: "LF 2, Kap. 2.1.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Prozessor-Reihe von Intel ist speziell für leistungsstarke Workstations und Server konzipiert (mit Performance-Stufen Bronze, Silver, Gold und Platinum)?",
-      options: [
-        "Intel Core i9",
-        "Intel Core i7",
-        "Intel Xeon",
-        "Intel Pentium"
-      ],
-      correct: 2,
-      explain: "Intel Xeon-Prozessoren sind für Workstations und Server ausgelegt - mit den Performance-Stufen Bronze, Silver, Gold und Platinum. Sie bieten mehr Cache, mehr Cores, ECC-Speicher-Unterstützung und höhere Zuverlässigkeit. Das AMD-Pendant für diesen Bereich ist der Ryzen Threadripper bzw. EPYC.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "fill",
-      q: "Wie heißt der Leitbegriff für eine Unternehmenskultur, die IT möglichst umweltschonend beschafft, einsetzt und entsorgt - mit ganzheitlicher Betrachtung von Beschaffung, Nutzung, Verwertung und Entsorgung?",
-      answers: ["Green-IT", "Green IT", "GreenIT"],
-      explain: "Green-IT zielt auf eine ganzheitliche, ressourcenschonende Betrachtung des IT-Lebenszyklus. Maßnahmen: schlanke Architektur, energieeffiziente Komponenten, Virtualisierung, längere Nutzungsdauer, Refurbished IT, BYOD-Konzepte. Überprüfbar durch Nachhaltigkeitsrichtlinien und -berichte.",
-      source: "LF 2, Kap. 2.3.2"
-    },
-    {
-      type: "multi",
-      q: "Welche der folgenden Speichertypen sind nichtflüchtig (behalten Daten ohne Stromversorgung)? (Mehrfachauswahl)",
-      options: [
-        "RAM (DDR4)",
-        "SSD",
-        "HDD",
-        "Cache-Speicher der CPU",
-        "ROM (mit BIOS/UEFI)"
-      ],
-      correct: [1, 2, 4],
-      explain: "Nichtflüchtig sind SSD und HDD (Massenspeicher) sowie das ROM mit dem BIOS/UEFI. RAM und der CPU-Cache sind flüchtige Speicher - sie verlieren ihren Inhalt beim Ausschalten.",
-      source: "LF 2, Kap. 2.4.1, 2.4.3"
-    },
-    {
-      type: "mc",
-      q: "Welche Vertragsart liegt vor, wenn ein Systemhaus IT-Hardware an einen Kunden liefert und das Eigentum übergeht?",
-      options: [
-        "Werkvertrag",
-        "Dienstleistungsvertrag",
-        "Kaufvertrag",
-        "Mietvertrag"
-      ],
-      correct: 2,
-      explain: "Der Kaufvertrag regelt die Übergabe von Eigentum gegen Bezahlung. Im IT-Bereich kommen außerdem der Werkvertrag (geschuldet wird ein konkretes Werk/Ergebnis, z.B. eine fertige Konfiguration) und der Dienstleistungsvertrag (geschuldet wird die Tätigkeit, nicht der Erfolg, z.B. Beratung, Support) zum Einsatz.",
-      source: "LF 2, Kap. 2.5, 2.9.4"
-    },
-    {
-      type: "mc",
-      q: "Was beschreibt der Begriff BYOD (Bring Your Own Device) im betrieblichen Kontext?",
-      options: [
-        "Die Pflicht des Arbeitgebers, jedem Mitarbeiter ein dienstliches Endgerät bereitzustellen",
-        "Mitarbeiter nutzen ihre privaten Geräte auch betrieblich, ggf. mit Zuschüssen des Arbeitgebers",
-        "Die zentrale Bestellung aller Geräte über einen einzigen Lieferanten",
-        "Die ausschließliche Verwendung von Open-Source-Software"
-      ],
-      correct: 1,
-      explain: "BYOD steht für die betriebliche Nutzung privater Geräte durch Mitarbeiter. Vorteil: Ressourceneinsparung, geringerer Beschaffungsaufwand, Mitarbeiterzufriedenheit. Mitarbeiter erhalten ggf. Zuschüsse. Herausforderung: IT-Sicherheit, Datenschutz und Trennung von privaten und betrieblichen Daten müssen geregelt sein.",
-      source: "LF 2, Kap. 2.3.2"
-    },
-    {
-      type: "tf",
-      q: "Single-Core-Prozessoren sind für anspruchsvolle Anwendungen wie 3D-Rendering, CAD und professionelle Videobearbeitung ausreichend.",
-      correct: false,
-      explain: "Falsch. Single-Core-Prozessoren reichen für Standardanwendungen (Office, Kommunikation, einfache Bildbearbeitung). Für 3D-Rendering, CAD, Videobearbeitung und professionelle Audio-/Bildbearbeitung sind Multi-Core-Prozessoren notwendig, da diese Anwendungen die Last auf mehrere Kerne verteilen können.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Kriterien werden in einem Lastenheft typischerweise unterschieden, um die Wichtigkeit von Anforderungen zu strukturieren?",
-      options: [
-        "A-, B- und C-Kriterien",
-        "Muss-, Kann- und Abgrenzungskriterien",
-        "Soll-, Wunsch- und Verbots-Kriterien",
-        "Prio-1-, Prio-2- und Prio-3-Kriterien"
-      ],
-      correct: 1,
-      explain: "Funktionale Anforderungen werden im Lastenheft typischerweise in Muss-Kriterien (zwingend), Kann-Kriterien (optional/Wunsch) und Abgrenzungskriterien (was ausdrücklich nicht zum Lieferumfang gehört) unterteilt. So lassen sich Prioritäten klar kommunizieren.",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "fill",
-      q: "Welches Akronym beschreibt eine Methode zur Zielformulierung mit den Eigenschaften Spezifisch, Messbar, Akzeptiert, Realistisch und Terminiert?",
-      answers: ["SMART"],
-      explain: "Die SMART-Methode hilft, Ziele präzise zu formulieren: Spezifisch (eindeutig), Messbar (mit Kennzahlen), Akzeptiert (von allen Beteiligten), Realistisch (machbar), Terminiert (mit Frist). Besonders im Pflichtenheft sollten Ziele SMART formuliert sein, um spätere Abnahmen zu erleichtern.",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "mc",
-      q: "Welche Anforderungstypen werden bei der Anforderungsanalyse üblicherweise unterschieden?",
-      options: [
-        "Externe und interne Anforderungen",
-        "Funktionale und nicht funktionale Anforderungen",
-        "Hardware- und Software-Anforderungen",
-        "Schriftliche und mündliche Anforderungen"
-      ],
-      correct: 1,
-      explain: "Funktionale Anforderungen beschreiben, WAS das System leisten soll (z.B. Druck, Datenexport). Nicht funktionale Anforderungen beschreiben, WIE es geleistet werden soll (z.B. Performance, Sicherheit, Verfügbarkeit, Benutzbarkeit, rechtliche/kulturelle/normative Vorgaben).",
-      source: "LF 2, Kap. 2.5.3, LF 5"
-    },
-    {
-      type: "multi",
-      q: "Welche der folgenden Punkte gehören typischerweise in ein Lastenheft? (Mehrfachauswahl)",
-      options: [
-        "Ausgangssituation und Zielsetzung",
-        "Funktionale Anforderungen (Muss-/Kann-/Abgrenzungskriterien)",
-        "Detaillierter Programmcode der Lösung",
-        "Lieferumfang",
-        "Abnahmekriterien"
-      ],
-      correct: [0, 1, 3, 4],
-      explain: "Typische Lastenheft-Bestandteile: Ausgangssituation/Zielsetzung, funktionale Anforderungen, nicht funktionale Anforderungen, Lebenszyklus des Gesamtsystems, Lieferumfang und Abnahmekriterien. Programmcode oder technische Lösungsdetails gehören NICHT ins Lastenheft - das würde die Lösungsfreiheit des Auftragnehmers einschränken.",
-      source: "LF 2, Kap. 2.5.3"
-    },
-    {
-      type: "mc",
-      q: "Welche Komponente auf dem Mainboard sorgt für die Kommunikation zwischen allen Hardware-Komponenten und bestimmt maßgeblich die Ausstattung und Leistung des Mainboards?",
-      options: [
-        "Die CPU (der Prozessor)",
-        "Das BIOS",
-        "Der Chipsatz",
-        "Der RAM-Slot"
-      ],
-      correct: 2,
-      explain: "Der Chipsatz organisiert über seine Controller den Datenverkehr zwischen CPU, RAM, Festplatten und Peripherie. Beim Mainboard-Kauf ist die Kompatibilität von Chipsatz, Prozessor und Sockel entscheidend - sie bestimmt, welche CPUs überhaupt eingesetzt werden können.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "tf",
-      q: "Bei der Beschaffung von IT-Systemen sind die Schutzziele Vertraulichkeit, Integrität und Verfügbarkeit unabhängig vom Arbeitsplatz pauschal anzuwenden.",
-      correct: false,
-      explain: "Falsch. Die Schutzziele sind grundsätzlich relevant, aber die Anforderungen müssen je nach Arbeitsplatz und Schutzbedarf differenziert betrachtet werden. Für Standardarbeitsplätze reichen Standardanforderungen (pauschal), für Spezialanforderungen ist eine Anforderungsanalyse oder ein Lasten-/Pflichtenheft nötig. Die Schutzbedarfsanalyse selbst wird in LF 4 vertieft.",
-      source: "LF 2, Kap. 2.3.4, vgl. LF 4"
-    },
-    {
-      type: "fill",
-      q: "Welche RAM-Variante korrigiert Speicherfehler selbstständig und wird daher häufig in Servern und hochwertigen Workstations eingesetzt? (Abkürzung)",
-      answers: ["ECC", "ECC-RAM", "ECC RAM"],
-      explain: "ECC (Error Correcting Code) RAM kann Speicherfehler erkennen und korrigieren. In gängigen Desktop-PCs und Notebooks wird unbuffered, unregistered RAM ohne ECC verwendet. Server und Workstations setzen auf das teurere \"fully buffered, registered ECC RAM\", um Datenintegrität sicherzustellen.",
-      source: "LF 2, Kap. 2.4.1"
-    },
-    {
-      type: "mc",
-      q: "Welche Aussage beschreibt die typische Reihenfolge im idealtypischen Ablauf bis zum Projektbeginn am besten?",
-      options: [
-        "Pflichtenheft (Auftraggeber) → Lastenheft (Auftragnehmer) → Vertrag",
-        "Lastenheft (Auftraggeber) → Pflichtenheft (Auftragnehmer) → Vertrag → Projektstart",
-        "Vertrag → Lastenheft → Pflichtenheft → Projektstart",
-        "Angebot → Bestellung → Lastenheft → Pflichtenheft"
-      ],
-      correct: 1,
-      explain: "Idealtypischer Ablauf: Auftraggeber erstellt das Lastenheft → übergibt es an den Auftragnehmer → dieser erstellt auf Basis des Lastenhefts das Pflichtenheft → Pflichtenheft wird Grundlage des Vertrags → nach Vertragsunterzeichnung startet das Projekt. Das Pflichtenheft kann während des Projekts noch ergänzt werden.",
-      source: "LF 2, Kap. 2.5.3"
+  "LF2": {
+    subchapters: {
+      "2.1": {
+        title: "Einführung in die IT zur Ausstattung von Arbeitsplätzen",
+        questions: [
+          { type: "mc", q: "Welches Prinzip beschreibt die grundlegende Arbeitsweise eines Computers?",
+            options: ["EVA-Prinzip (Eingabe - Verarbeitung - Ausgabe)","AVE-Prinzip (Ausgabe - Verarbeitung - Eingabe)","REV-Prinzip (Rechnen - Eingeben - Verarbeiten)","IPO-Prinzip (Input - Programm - Output)"],
+            correct: 0,
+            explain: "Das EVA-Prinzip beschreibt die drei Grundfunktionen eines Computers: Eingabe der Daten, Verarbeitung in der Zentraleinheit, Ausgabe der Ergebnisse. Für einen funktionierenden Computer werden mindestens eine Zentraleinheit, eine Eingabe- und eine Ausgabeeinheit benötigt.",
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "mc", q: "Was beschreibt der Begriff \"Konfiguration\" im IT-Kontext?",
+            options: ["Die reine Hardware-Ausstattung eines Computers","Die Zusammenstellung, Einstellungen und Abstimmung von Komponenten, Geräten und Programmen auf eine Anwendung","Die Anbindung eines Computers an das Netzwerk","Das Update von Treibern und Software"],
+            correct: 1,
+            explain: "Konfiguration bezeichnet die Zusammenstellung, Einstellungen und Abstimmungen von Komponenten, Geräten und Programmen in Bezug auf die Anwendungen. Je nach Einsatzzweck werden Geräte und Komponenten zu einer maßgeschneiderten Konfiguration zusammengestellt.",
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "tf", q: "Die Festplatte zählt zu den Peripheriegeräten eines Computers.",
+            correct: true,
+            explain: "Korrekt. Peripheriegeräte sind alle Geräte zur Eingabe, Ausgabe und Speicherung der Daten - die Festplatte gehört als externe Speichereinheit dazu. Zur Zentraleinheit zählen nur CPU, RAM und Mainboard.",
+            source: "LF 2, Kap. 2.1.1" }
+        ]
+      },
+      "2.2": {
+        title: "Leistungsportfolio im IT-Bereich präsentieren",
+        questions: [
+          { type: "multi", q: "Welche Eigenschaften zeichnen Thin Clients aus? (Mehrfachauswahl)",
+            options: ["Einfache Systemadministration","Hoher Energieverbrauch","Schnelle Betriebsbereitschaft","Geringe Betriebskosten","Volle lokale Datenverarbeitung"],
+            correct: [0, 2, 3],
+            explain: "Thin Clients bieten einfache Administration, schnelle Betriebsbereitschaft, geringe Betriebskosten und geringen Energieverbrauch - sie entsprechen damit der Forderung nach Green-IT. Die eigentliche Datenverarbeitung läuft serverseitig, nicht lokal auf dem Thin Client.",
+            source: "LF 2, Kap. 2.2.2" }
+        ]
+      },
+      "2.3": {
+        title: "Auswahlkriterien zu IT-Produkten unterscheiden",
+        questions: [
+          { type: "fill", q: "Wie heißt der Leitbegriff für eine Unternehmenskultur, die IT möglichst umweltschonend beschafft, einsetzt und entsorgt - mit ganzheitlicher Betrachtung von Beschaffung, Nutzung, Verwertung und Entsorgung?",
+            answers: ["Green-IT", "Green IT", "GreenIT"],
+            explain: "Green-IT zielt auf eine ganzheitliche, ressourcenschonende Betrachtung des IT-Lebenszyklus. Maßnahmen: schlanke Architektur, energieeffiziente Komponenten, Virtualisierung, längere Nutzungsdauer, Refurbished IT, BYOD-Konzepte. Überprüfbar durch Nachhaltigkeitsrichtlinien und -berichte.",
+            source: "LF 2, Kap. 2.3.2" },
+          { type: "mc", q: "Was beschreibt der Begriff BYOD (Bring Your Own Device) im betrieblichen Kontext?",
+            options: ["Die Pflicht des Arbeitgebers, jedem Mitarbeiter ein dienstliches Endgerät bereitzustellen","Mitarbeiter nutzen ihre privaten Geräte auch betrieblich, ggf. mit Zuschüssen des Arbeitgebers","Die zentrale Bestellung aller Geräte über einen einzigen Lieferanten","Die ausschließliche Verwendung von Open-Source-Software"],
+            correct: 1,
+            explain: "BYOD steht für die betriebliche Nutzung privater Geräte durch Mitarbeiter. Vorteil: Ressourceneinsparung, geringerer Beschaffungsaufwand, Mitarbeiterzufriedenheit. Mitarbeiter erhalten ggf. Zuschüsse. Herausforderung: IT-Sicherheit, Datenschutz und Trennung von privaten und betrieblichen Daten müssen geregelt sein.",
+            source: "LF 2, Kap. 2.3.2" },
+          { type: "tf", q: "Bei der Beschaffung von IT-Systemen sind die Schutzziele Vertraulichkeit, Integrität und Verfügbarkeit unabhängig vom Arbeitsplatz pauschal anzuwenden.",
+            correct: false,
+            explain: "Falsch. Die Schutzziele sind grundsätzlich relevant, aber die Anforderungen müssen je nach Arbeitsplatz und Schutzbedarf differenziert betrachtet werden. Für Standardarbeitsplätze reichen Standardanforderungen (pauschal), für Spezialanforderungen ist eine Anforderungsanalyse oder ein Lasten-/Pflichtenheft nötig. Die Schutzbedarfsanalyse selbst wird in LF 4 vertieft.",
+            source: "LF 2, Kap. 2.3.4, vgl. LF 4" }
+        ]
+      },
+      "2.4": {
+        title: "Komponenten eines Arbeitsplatzcomputers unterscheiden",
+        questions: [
+          { type: "mc", q: "Welche Aussage zum Arbeitsspeicher (RAM) ist korrekt?",
+            options: ["Der RAM behält seinen Inhalt auch nach dem Ausschalten des Computers.","Der RAM ist ein flüchtiger Speicher und verliert seinen Inhalt beim Ausschalten.","Der RAM dient zur dauerhaften Speicherung des Betriebssystems.","Der RAM ersetzt vollständig die Festplatte."],
+            correct: 1,
+            explain: "RAM (Random Access Memory) ist ein flüchtiger Speicher - alle Daten werden beim Ausschalten gelöscht. Während des Betriebs hält der RAM Programme und Daten bereit, auf die die CPU direkt zugreifen kann. Im Gegensatz dazu speichert das ROM auf dem Mainboard das BIOS/UEFI dauerhaft.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "fill", q: "Wie heißt das Basisprogramm auf dem Mainboard, das den Startvorgang des Computers ausführt und das Betriebssystem von der Festplatte lädt? (heute meist als UEFI bezeichnet)",
+            answers: ["BIOS", "Basic Input Output System", "Basic-Input-Output-System"],
+            explain: "Das BIOS (Basic Input Output System) ist auf einem ROM-Chip des Mainboards gespeichert und führt den Startvorgang aus. Es ruft das eigentliche Betriebssystem von der Festplatte auf. Heute wird BIOS überwiegend durch UEFI ersetzt, das mehr Funktionen und höhere Sicherheit bietet.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "tf", q: "DDR4-RAM-Module sind abwärtskompatibel und können in Mainboards eingesetzt werden, die für DDR3-RAM ausgelegt sind.",
+            correct: false,
+            explain: "Falsch. Die verschiedenen DDR-Generationen sind untereinander nicht kompatibel. DDR4 passt weder physikalisch noch elektrisch in DDR3-Slots. Beim Aufrüsten muss daher genau geprüft werden, welche RAM-Generation das Mainboard unterstützt.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "mc", q: "Welche Festplattentechnologie ist energieeffizienter, deutlich schneller bei Bootvorgängen und Datentransfer, aber pro GB teurer als die ältere Alternative?",
+            options: ["HDD (Hard Disk Drive)","SSD (Solid State Drive)","eMMC (embedded Multimedia Card)","Magnetband-Speicher"],
+            correct: 1,
+            explain: "SSDs nutzen Flash-Speicher ohne bewegliche Teile - daher leise, schneller Datentransfer, schnelles Booten und geringerer Energieverbrauch. Nachteil: höherer Preis pro GB im Vergleich zur klassischen HDD. Aus energetischen Gründen sind SSDs vorzuziehen.",
+            source: "LF 2, Kap. 2.4.3" },
+          { type: "multi", q: "Welche der folgenden Komponenten gehören zur Zentraleinheit eines Computers im engeren Sinne? (Mehrfachauswahl)",
+            options: ["CPU (Prozessor)","Tastatur","Arbeitsspeicher (RAM)","Mainboard mit Chipsatz","Monitor"],
+            correct: [0, 2, 3],
+            explain: "Die Zentraleinheit umfasst Mainboard, CPU und Arbeitsspeicher - alles, was zur direkten Datenverarbeitung gehört. Tastatur und Monitor sind Peripheriegeräte (für Eingabe bzw. Ausgabe), gehören also nicht zur Zentraleinheit.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "mc", q: "Welche Prozessor-Reihe von Intel ist speziell für leistungsstarke Workstations und Server konzipiert (mit Performance-Stufen Bronze, Silver, Gold und Platinum)?",
+            options: ["Intel Core i9","Intel Core i7","Intel Xeon","Intel Pentium"],
+            correct: 2,
+            explain: "Intel Xeon-Prozessoren sind für Workstations und Server ausgelegt - mit den Performance-Stufen Bronze, Silver, Gold und Platinum. Sie bieten mehr Cache, mehr Cores, ECC-Speicher-Unterstützung und höhere Zuverlässigkeit. Das AMD-Pendant für diesen Bereich ist der Ryzen Threadripper bzw. EPYC.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "multi", q: "Welche der folgenden Speichertypen sind nichtflüchtig (behalten Daten ohne Stromversorgung)? (Mehrfachauswahl)",
+            options: ["RAM (DDR4)","SSD","HDD","Cache-Speicher der CPU","ROM (mit BIOS/UEFI)"],
+            correct: [1, 2, 4],
+            explain: "Nichtflüchtig sind SSD und HDD (Massenspeicher) sowie das ROM mit dem BIOS/UEFI. RAM und der CPU-Cache sind flüchtige Speicher - sie verlieren ihren Inhalt beim Ausschalten.",
+            source: "LF 2, Kap. 2.4.1, 2.4.3" },
+          { type: "tf", q: "Single-Core-Prozessoren sind für anspruchsvolle Anwendungen wie 3D-Rendering, CAD und professionelle Videobearbeitung ausreichend.",
+            correct: false,
+            explain: "Falsch. Single-Core-Prozessoren reichen für Standardanwendungen (Office, Kommunikation, einfache Bildbearbeitung). Für 3D-Rendering, CAD, Videobearbeitung und professionelle Audio-/Bildbearbeitung sind Multi-Core-Prozessoren notwendig, da diese Anwendungen die Last auf mehrere Kerne verteilen können.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "mc", q: "Welche Komponente auf dem Mainboard sorgt für die Kommunikation zwischen allen Hardware-Komponenten und bestimmt maßgeblich die Ausstattung und Leistung des Mainboards?",
+            options: ["Die CPU (der Prozessor)","Das BIOS","Der Chipsatz","Der RAM-Slot"],
+            correct: 2,
+            explain: "Der Chipsatz organisiert über seine Controller den Datenverkehr zwischen CPU, RAM, Festplatten und Peripherie. Beim Mainboard-Kauf ist die Kompatibilität von Chipsatz, Prozessor und Sockel entscheidend - sie bestimmt, welche CPUs überhaupt eingesetzt werden können.",
+            source: "LF 2, Kap. 2.4.1" },
+          { type: "fill", q: "Welche RAM-Variante korrigiert Speicherfehler selbstständig und wird daher häufig in Servern und hochwertigen Workstations eingesetzt? (Abkürzung)",
+            answers: ["ECC", "ECC-RAM", "ECC RAM"],
+            explain: "ECC (Error Correcting Code) RAM kann Speicherfehler erkennen und korrigieren. In gängigen Desktop-PCs und Notebooks wird unbuffered, unregistered RAM ohne ECC verwendet. Server und Workstations setzen auf das teurere \"fully buffered, registered ECC RAM\", um Datenintegrität sicherzustellen.",
+            source: "LF 2, Kap. 2.4.1" }
+        ]
+      },
+      "2.5": {
+        title: "Kundenanforderungen und Projektmanagement",
+        questions: [
+          { type: "mc", q: "Welches Dokument wird vom Auftraggeber erstellt und beschreibt die Anforderungen mit den Fragen \"Was?\" und \"Wofür?\"?",
+            options: ["Pflichtenheft","Lastenheft","Werkvertrag","Sollkonzept"],
+            correct: 1,
+            explain: "Das Lastenheft (User Specification) wird vom Auftraggeber/Kunden erstellt und beschreibt die Gesamtheit der Forderungen - das Was und Wofür. Es ist allgemein verständlich und ergebnisorientiert. Das Pflichtenheft erstellt der Auftragnehmer als Antwort darauf (Wie und Womit).",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "mc", q: "Wer erstellt das Pflichtenheft und welche Fragen beantwortet es?",
+            options: ["Der Auftraggeber - es beantwortet \"Was?\" und \"Wofür?\"","Der Auftragnehmer - es beantwortet \"Wie?\" und \"Womit?\"","Eine externe Zertifizierungsstelle - es beantwortet \"Wann?\" und \"Wo?\"","Der Projektmanager des Kunden - es beantwortet \"Wer?\" und \"Warum?\""],
+            correct: 1,
+            explain: "Das Pflichtenheft (Functional Specification) wird vom Auftragnehmer auf Basis des Lastenhefts erstellt. Es enthält die konkreten Realisierungsvorgaben - das Wie und Womit - und ist Grundlage für den Kundenvertrag und den späteren Abnahmekatalog.",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "fill", q: "In welcher DIN-Norm zum Projektmanagement sind die Begriffe Lasten- und Pflichtenheft definiert?",
+            answers: ["DIN 69901-5", "DIN 69901", "DIN 69905"],
+            explain: "Die DIN 69901-5 (Projektmanagement, Begriffe) definiert Lasten- und Pflichtenheft. Wichtig: Die Norm legt die Begriffe fest, nicht aber die konkrete Gliederung oder die Inhalte - jedes Unternehmen hat hier seinen eigenen Standard.",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "mc", q: "Welche Vertragsart liegt vor, wenn ein Systemhaus IT-Hardware an einen Kunden liefert und das Eigentum übergeht?",
+            options: ["Werkvertrag","Dienstleistungsvertrag","Kaufvertrag","Mietvertrag"],
+            correct: 2,
+            explain: "Der Kaufvertrag regelt die Übergabe von Eigentum gegen Bezahlung. Im IT-Bereich kommen außerdem der Werkvertrag (geschuldet wird ein konkretes Werk/Ergebnis, z.B. eine fertige Konfiguration) und der Dienstleistungsvertrag (geschuldet wird die Tätigkeit, nicht der Erfolg, z.B. Beratung, Support) zum Einsatz.",
+            source: "LF 2, Kap. 2.5, 2.9.4" },
+          { type: "mc", q: "Welche Kriterien werden in einem Lastenheft typischerweise unterschieden, um die Wichtigkeit von Anforderungen zu strukturieren?",
+            options: ["A-, B- und C-Kriterien","Muss-, Kann- und Abgrenzungskriterien","Soll-, Wunsch- und Verbots-Kriterien","Prio-1-, Prio-2- und Prio-3-Kriterien"],
+            correct: 1,
+            explain: "Funktionale Anforderungen werden im Lastenheft typischerweise in Muss-Kriterien (zwingend), Kann-Kriterien (optional/Wunsch) und Abgrenzungskriterien (was ausdrücklich nicht zum Lieferumfang gehört) unterteilt. So lassen sich Prioritäten klar kommunizieren.",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "fill", q: "Welches Akronym beschreibt eine Methode zur Zielformulierung mit den Eigenschaften Spezifisch, Messbar, Akzeptiert, Realistisch und Terminiert?",
+            answers: ["SMART"],
+            explain: "Die SMART-Methode hilft, Ziele präzise zu formulieren: Spezifisch (eindeutig), Messbar (mit Kennzahlen), Akzeptiert (von allen Beteiligten), Realistisch (machbar), Terminiert (mit Frist). Besonders im Pflichtenheft sollten Ziele SMART formuliert sein, um spätere Abnahmen zu erleichtern.",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "mc", q: "Welche Anforderungstypen werden bei der Anforderungsanalyse üblicherweise unterschieden?",
+            options: ["Externe und interne Anforderungen","Funktionale und nicht funktionale Anforderungen","Hardware- und Software-Anforderungen","Schriftliche und mündliche Anforderungen"],
+            correct: 1,
+            explain: "Funktionale Anforderungen beschreiben, WAS das System leisten soll (z.B. Druck, Datenexport). Nicht funktionale Anforderungen beschreiben, WIE es geleistet werden soll (z.B. Performance, Sicherheit, Verfügbarkeit, Benutzbarkeit, rechtliche/kulturelle/normative Vorgaben).",
+            source: "LF 2, Kap. 2.5.3, LF 5" },
+          { type: "multi", q: "Welche der folgenden Punkte gehören typischerweise in ein Lastenheft? (Mehrfachauswahl)",
+            options: ["Ausgangssituation und Zielsetzung","Funktionale Anforderungen (Muss-/Kann-/Abgrenzungskriterien)","Detaillierter Programmcode der Lösung","Lieferumfang","Abnahmekriterien"],
+            correct: [0, 1, 3, 4],
+            explain: "Typische Lastenheft-Bestandteile: Ausgangssituation/Zielsetzung, funktionale Anforderungen, nicht funktionale Anforderungen, Lebenszyklus des Gesamtsystems, Lieferumfang und Abnahmekriterien. Programmcode oder technische Lösungsdetails gehören NICHT ins Lastenheft - das würde die Lösungsfreiheit des Auftragnehmers einschränken.",
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "mc", q: "Welche Aussage beschreibt die typische Reihenfolge im idealtypischen Ablauf bis zum Projektbeginn am besten?",
+            options: ["Pflichtenheft (Auftraggeber) → Lastenheft (Auftragnehmer) → Vertrag","Lastenheft (Auftraggeber) → Pflichtenheft (Auftragnehmer) → Vertrag → Projektstart","Vertrag → Lastenheft → Pflichtenheft → Projektstart","Angebot → Bestellung → Lastenheft → Pflichtenheft"],
+            correct: 1,
+            explain: "Idealtypischer Ablauf: Auftraggeber erstellt das Lastenheft → übergibt es an den Auftragnehmer → dieser erstellt auf Basis des Lastenhefts das Pflichtenheft → Pflichtenheft wird Grundlage des Vertrags → nach Vertragsunterzeichnung startet das Projekt. Das Pflichtenheft kann während des Projekts noch ergänzt werden.",
+            source: "LF 2, Kap. 2.5.3" }
+        ]
+      },
+      "2.6": {
+        title: "Marktgängige IT-Systeme vorstellen",
+        questions: []
+      },
+      "2.7": {
+        title: "Konfiguration und Installation",
+        questions: []
+      },
+      "2.8": {
+        title: "Beschaffungsprozess und Kalkulation",
+        questions: [
+          { type: "fill", q: "Wie heißt die Methode, mit der Artikel anhand ihres Wertanteils am Lagerbestand in drei Kategorien eingeteilt werden - typischerweise hochpreisige Hauptartikel, mittlere und geringwertige Artikel?",
+            answers: ["ABC-Analyse", "ABC Analyse"],
+            explain: "Die ABC-Analyse teilt Artikel nach Wertanteil ein: A-Artikel (hoher Wertanteil, wenige Stück - z.B. Server, intensive Beschaffung), B-Artikel (mittlerer Wertanteil - z.B. PCs, Notebooks), C-Artikel (geringer Wertanteil, viele Stück - z.B. USB-Sticks, vereinfachte Beschaffung). Bei A- und B-Artikeln lohnt sich intensives Lieferantenmanagement.",
+            source: "LF 2, Kap. 2.9.1" }
+        ]
+      },
+      "2.9": {
+        title: "Angebotsvergleich und Nutzwertanalyse",
+        questions: [
+          { type: "mc", q: "Bei einem Angebotsvergleich sollen nicht nur quantitative (Preis), sondern auch qualitative Kriterien wie Service, Lieferzuverlässigkeit oder bisherige Zusammenarbeit gewichtet einfließen. Welche Methode wird dafür eingesetzt?",
+            options: ["ABC-Analyse","Nutzwertanalyse","SWOT-Analyse","Pareto-Analyse"],
+            correct: 1,
+            explain: "Die Nutzwertanalyse kombiniert quantitative und qualitative Kriterien in einer gewichteten Bewertung. Jedes Kriterium erhält ein Gewicht (in %), jedes Angebot eine Punktzahl pro Kriterium - daraus ergibt sich ein Gesamtnutzwert. Wichtig: Die Kriterien sollten gut voneinander abgegrenzt sein und sich nicht gegenseitig bedingen.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "tf", q: "Im Angebotsvergleich ist immer das Angebot mit dem niedrigsten Einstandspreis auszuwählen.",
+            correct: false,
+            explain: "Falsch. Nicht der niedrigste Einstandspreis, sondern das wirtschaftlichste Angebot ist auszuwählen - also das mit dem besten Preis-/Leistungsverhältnis. Folgekosten, Qualität, Service, Lieferzuverlässigkeit und weitere weiche Kriterien können den Preisvorteil deutlich überwiegen. Auch öffentliche Auftraggeber wählen das wirtschaftlichste, nicht das billigste Angebot.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "mc", q: "Welche Rechnung führt im quantitativen Angebotsvergleich vom Listeneinkaufspreis zum Einstandspreis (Bezugspreis)?",
+            options: ["Listeneinkaufspreis + Liefererrabatt + Liefererskonto + Bezugskosten","Listeneinkaufspreis - Liefererrabatt - Liefererskonto + Bezugskosten","Listeneinkaufspreis - Liefererrabatt + Liefererskonto - Bezugskosten","Listeneinkaufspreis + Bezugskosten - Mehrwertsteuer"],
+            correct: 1,
+            explain: "Die Kalkulation lautet: Listeneinkaufspreis MINUS Liefererrabatt = Zieleinkaufspreis MINUS Liefererskonto = Bareinkaufspreis PLUS Bezugskosten (z.B. Fracht, Versand) = Bezugspreis (Einstandspreis). Die Umsatzsteuer wird nicht einbezogen, da sie kein Kostenbestandteil ist.",
+            source: "LF 2, Kap. 2.9.2" }
+        ]
+      }
     }
-  ]
+  }
 };
 
 /* =====================================================================
-   LERNFELD METADATA (with block assignment for accent colors)
+   LERNFELD METADATA
    ===================================================================== */
 const LERNFELDER = [
   { id: "LF1",  num: "LF 01", title: "Das Unternehmen und die eigene Rolle im Betrieb beschreiben", block: "grund", available: true },
@@ -1286,9 +1342,42 @@ const BLOCK_ACCENT_SOFT_VAR = {
 };
 
 /* =====================================================================
-   STATE & STORAGE
+   HELPERS - data shape introspection
    ===================================================================== */
-const STORAGE_KEY = "itberufe_quiz_v2";
+function hasSubchapters(lfId) {
+  const lf = QUESTIONS[lfId];
+  return lf && lf.subchapters !== undefined;
+}
+function getSubchapterIds(lfId) {
+  if (!hasSubchapters(lfId)) return [];
+  return Object.keys(QUESTIONS[lfId].subchapters);
+}
+function getQuestionPool(lfId, subId) {
+  if (!QUESTIONS[lfId]) return [];
+  if (subId === null || subId === "_full") {
+    // Full LF mode: combine all sub-chapters, or use flat
+    if (hasSubchapters(lfId)) {
+      return Object.values(QUESTIONS[lfId].subchapters).flatMap(sc => sc.questions);
+    }
+    return QUESTIONS[lfId].questions || [];
+  }
+  return QUESTIONS[lfId].subchapters[subId]?.questions || [];
+}
+function getTotalQuestionCount(lfId) {
+  return getQuestionPool(lfId, "_full").length;
+}
+function getSubchapterTitle(lfId, subId) {
+  return QUESTIONS[lfId]?.subchapters?.[subId]?.title || "";
+}
+
+/* =====================================================================
+   STORAGE
+   Schema v3:
+     stats[lfId][scopeId] = { best: {attempt}, last: {attempt} }
+       scopeId = "_full" or "2.4" etc.
+     paused[lfId][scopeId] = { snapshot }
+   ===================================================================== */
+const STORAGE_KEY = "itberufe_quiz_v3";
 const THEME_KEY = "itberufe_quiz_theme";
 
 function loadData() {
@@ -1300,39 +1389,93 @@ function loadData() {
 function saveData(d) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch (e) {}
 }
-function recordAttempt(lfId, attempt) {
-  // attempt = { score, total, ts, questions: [...], answers: [...] }
+function recordAttempt(lfId, scopeId, attempt) {
   const d = loadData();
   if (!d.stats[lfId]) d.stats[lfId] = {};
+  if (!d.stats[lfId][scopeId]) d.stats[lfId][scopeId] = {};
   const pct = (attempt.score / attempt.total) * 100;
-  const bestPct = d.stats[lfId].best ? (d.stats[lfId].best.score / d.stats[lfId].best.total) * 100 : -1;
-  d.stats[lfId].last = attempt;
-  if (pct > bestPct) {
-    d.stats[lfId].best = attempt;
+  const cur = d.stats[lfId][scopeId];
+  const bestPct = cur.best ? (cur.best.score / cur.best.total) * 100 : -1;
+  cur.last = attempt;
+  if (pct > bestPct) cur.best = attempt;
+  saveData(d);
+}
+function getStat(lfId, scopeId, which) {
+  const d = loadData();
+  return d.stats[lfId]?.[scopeId]?.[which] || null;
+}
+function clearPaused(lfId, scopeId) {
+  const d = loadData();
+  if (d.paused[lfId]) {
+    delete d.paused[lfId][scopeId];
+    if (Object.keys(d.paused[lfId]).length === 0) delete d.paused[lfId];
   }
   saveData(d);
 }
-function clearPaused(lfId) {
+function getPaused(lfId, scopeId) {
+  return loadData().paused[lfId]?.[scopeId] || null;
+}
+function savePaused(lfId, scopeId, snapshot) {
   const d = loadData();
-  delete d.paused[lfId];
+  if (!d.paused[lfId]) d.paused[lfId] = {};
+  d.paused[lfId][scopeId] = snapshot;
   saveData(d);
 }
-function getPaused(lfId) {
-  return loadData().paused[lfId] || null;
-}
-function savePaused(lfId, snapshot) {
-  const d = loadData();
-  d.paused[lfId] = snapshot;
-  saveData(d);
+function hasAnyPausedInLF(lfId) {
+  const p = loadData().paused[lfId];
+  return p && Object.keys(p).length > 0;
 }
 
+/* =====================================================================
+   GLOBAL & PER-LF AVERAGES
+   ===================================================================== */
+function computeGlobalAverage() {
+  // Average of best %ages across all (lfId, scopeId) combinations the user has attempted.
+  // We count every scope the user has best-attempted (sub-chapters AND full-LFs)
+  const d = loadData();
+  let sum = 0, count = 0;
+  Object.keys(d.stats).forEach(lfId => {
+    Object.keys(d.stats[lfId]).forEach(scope => {
+      const best = d.stats[lfId][scope].best;
+      if (best) {
+        sum += (best.score / best.total) * 100;
+        count++;
+      }
+    });
+  });
+  return count === 0 ? null : { avg: sum / count, count };
+}
+function computeLFAverage(lfId) {
+  // Average of best %ages across all scopes within this one LF.
+  const d = loadData();
+  const lfStats = d.stats[lfId];
+  if (!lfStats) return null;
+  let sum = 0, count = 0;
+  Object.keys(lfStats).forEach(scope => {
+    const best = lfStats[scope].best;
+    if (best) {
+      sum += (best.score / best.total) * 100;
+      count++;
+    }
+  });
+  return count === 0 ? null : { avg: sum / count, count };
+}
+
+/* =====================================================================
+   NAVIGATION STATE
+   ===================================================================== */
 let state = {
+  // Current quiz state
   lfId: null,
+  scopeId: null,           // "_full" or "2.4" etc.
   block: null,
   questions: [],
   index: 0,
   answers: [],
-  currentSelection: null
+  currentSelection: null,
+  // Navigation
+  prevScreen: "select",    // where to go back to after viewing a result
+  viewingStored: false     // are we just viewing an old attempt?
 };
 
 /* =====================================================================
@@ -1347,9 +1490,10 @@ function shuffle(arr) {
   return a;
 }
 function show(id) {
-  ["screen-select","screen-quiz","screen-result"].forEach(s => {
+  ["screen-select","screen-lf-detail","screen-quiz","screen-result"].forEach(s => {
     document.getElementById(s).classList.toggle("hidden", s !== id);
   });
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
 function normalize(s) {
   return s.trim().toLowerCase()
@@ -1367,19 +1511,12 @@ function formatDate(ts) {
    ===================================================================== */
 function applyTheme(theme) {
   document.documentElement.setAttribute("data-theme", theme);
-  const icon = document.getElementById("theme-icon");
-  const label = document.getElementById("theme-label");
-  if (theme === "dark") {
-    icon.textContent = "☾";
-    label.textContent = "Dunkel";
-  } else {
-    icon.textContent = "☀";
-    label.textContent = "Hell";
-  }
+  document.getElementById("theme-icon").textContent = theme === "dark" ? "☾" : "☀";
+  document.getElementById("theme-label").textContent = theme === "dark" ? "Dunkel" : "Hell";
 }
 function toggleTheme() {
-  const current = document.documentElement.getAttribute("data-theme") || "light";
-  const next = current === "dark" ? "light" : "dark";
+  const cur = document.documentElement.getAttribute("data-theme") || "light";
+  const next = cur === "dark" ? "light" : "dark";
   applyTheme(next);
   try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
 }
@@ -1390,13 +1527,11 @@ function toggleTheme() {
 })();
 
 /* =====================================================================
-   ACCENT COLOR SWITCHING
+   ACCENT SWITCHING
    ===================================================================== */
 function setAccentForBlock(block) {
-  const accentVar = BLOCK_ACCENT_VAR[block];
-  const softVar = BLOCK_ACCENT_SOFT_VAR[block];
-  document.documentElement.style.setProperty("--accent", `var(${accentVar})`);
-  document.documentElement.style.setProperty("--accent-soft", `var(${softVar})`);
+  document.documentElement.style.setProperty("--accent", `var(${BLOCK_ACCENT_VAR[block]})`);
+  document.documentElement.style.setProperty("--accent-soft", `var(${BLOCK_ACCENT_SOFT_VAR[block]})`);
 }
 function resetAccent() {
   document.documentElement.style.setProperty("--accent", `var(--accent-grund)`);
@@ -1404,12 +1539,27 @@ function resetAccent() {
 }
 
 /* =====================================================================
-   LERNFELD SELECTOR
+   OVERVIEW SCREEN
    ===================================================================== */
-function renderLernfelder() {
+function renderOverview() {
   resetAccent();
+  // Global stat banner
+  const banner = document.getElementById("global-stat");
+  const gv = document.getElementById("gs-value");
+  const gm = document.getElementById("gs-meta");
+  const g = computeGlobalAverage();
+  if (!g) {
+    banner.classList.add("empty");
+    gv.textContent = "Noch keine Daten";
+    gm.textContent = "Starte einen Quiz, um deine Bestleistungen zu erfassen.";
+  } else {
+    banner.classList.remove("empty");
+    gv.textContent = Math.round(g.avg) + "%";
+    gm.innerHTML = `aus ${g.count} ${g.count === 1 ? "Bestleistung" : "Bestleistungen"}<br>(Lernfelder + Unterkapitel)`;
+  }
+
+  // LF sections
   const container = document.getElementById("lf-sections");
-  const data = loadData();
   container.innerHTML = "";
 
   ["grund","fach1","fach2"].forEach(block => {
@@ -1426,57 +1576,72 @@ function renderLernfelder() {
     LERNFELDER.filter(lf => lf.block === block).forEach(lf => {
       const btn = document.createElement("div");
       btn.className = `lf-card ${block}`;
-      const count = lf.available && QUESTIONS[lf.id] ? QUESTIONS[lf.id].length : 0;
-      const stats = data.stats[lf.id];
-      const paused = data.paused[lf.id];
+      if (!lf.available) btn.classList.add("disabled");
+
+      const count = lf.available ? getTotalQuestionCount(lf.id) : 0;
+      const subCount = lf.available && hasSubchapters(lf.id) ? getSubchapterIds(lf.id).length : 0;
+      const lfAvg = computeLFAverage(lf.id);
+
+      let metaText;
+      if (!lf.available) metaText = "in Vorbereitung";
+      else if (subCount > 0) metaText = `${subCount} Unterkapitel · ${count} Fragen`;
+      else metaText = `${count} Fragen im Pool`;
 
       let inner = `
         <div class="lf-num">${lf.num}</div>
         <div class="lf-title">${lf.title}</div>
-        <div class="lf-meta">${lf.available ? count + " Fragen im Pool" : "in Vorbereitung"}</div>
+        <div class="lf-meta">${metaText}</div>
       `;
 
-      if (stats && (stats.best || stats.last)) {
-        inner += `<div class="lf-stats">`;
-        if (stats.best) {
-          const pct = Math.round((stats.best.score / stats.best.total) * 100);
-          inner += `<button class="lf-stat best clickable" data-action="view-best" data-lf="${lf.id}"><span class="stat-label">Bestleistung:</span> ${pct}% (${stats.best.score}/${stats.best.total})</button>`;
+      if (lf.available && lfAvg) {
+        // Show LF-wide best/last only for flat LFs; for subchapter-LFs the average banner replaces it
+        if (hasSubchapters(lf.id)) {
+          inner += `<div class="lf-stats">
+            <div class="lf-stat best"><span class="stat-label">Ø Bestleistung:</span> ${Math.round(lfAvg.avg)}%</div>
+            <div class="lf-stat"><span class="stat-label">${lfAvg.count} ${lfAvg.count === 1 ? "Bereich" : "Bereiche"} absolviert</span></div>
+          </div>`;
+        } else {
+          // Flat LF: best + last
+          const best = getStat(lf.id, "_full", "best");
+          const last = getStat(lf.id, "_full", "last");
+          if (best || last) {
+            inner += `<div class="lf-stats">`;
+            if (best) {
+              const pct = Math.round((best.score / best.total) * 100);
+              inner += `<button class="lf-stat best clickable" data-act="view-best" data-lf="${lf.id}"><span class="stat-label">Bestleistung:</span> ${pct}% (${best.score}/${best.total})</button>`;
+            }
+            if (last) {
+              const pct = Math.round((last.score / last.total) * 100);
+              inner += `<button class="lf-stat clickable" data-act="view-last" data-lf="${lf.id}"><span class="stat-label">Letzter Versuch:</span> ${pct}% · ${formatDate(last.ts)}</button>`;
+            }
+            inner += `</div>`;
+          }
         }
-        if (stats.last) {
-          const pct = Math.round((stats.last.score / stats.last.total) * 100);
-          inner += `<button class="lf-stat clickable" data-action="view-last" data-lf="${lf.id}"><span class="stat-label">Letzter Versuch:</span> ${pct}% · ${formatDate(stats.last.ts)}</button>`;
-        }
-        inner += `</div>`;
       }
 
-      if (paused) {
-        inner += `<div class="resume-banner">▶ Pausiert bei Frage ${paused.index + 1} von ${paused.questions.length}</div>`;
+      if (lf.available && hasAnyPausedInLF(lf.id)) {
+        inner += `<div class="resume-banner">▶ Pausierte Quizze vorhanden</div>`;
       }
 
       btn.innerHTML = inner;
 
       btn.addEventListener("click", (e) => {
-        // If user clicked an inner stat button, handle that
-        const statBtn = e.target.closest(".lf-stat");
+        if (!lf.available) return;
+        const statBtn = e.target.closest("[data-act]");
         if (statBtn) {
           e.stopPropagation();
-          const action = statBtn.dataset.action;
+          const act = statBtn.dataset.act;
           const lfId = statBtn.dataset.lf;
-          if (action === "view-best") showStoredAttempt(lfId, "best");
-          if (action === "view-last") showStoredAttempt(lfId, "last");
+          if (act === "view-best") showStoredAttempt(lfId, "_full", "best");
+          if (act === "view-last") showStoredAttempt(lfId, "_full", "last");
           return;
         }
-        if (!lf.available) return;
-        // If paused, ask whether to resume or start fresh
-        if (paused) {
-          if (confirm(`Es gibt einen pausierten Versuch (Frage ${paused.index + 1} von ${paused.questions.length}). Fortsetzen?\n\nOK = Fortsetzen\nAbbrechen = Neu starten`)) {
-            resumeQuiz(lf.id);
-            return;
-          } else {
-            clearPaused(lf.id);
-          }
+        // Flat LFs go straight into quiz; subchapter LFs go to detail screen
+        if (hasSubchapters(lf.id)) {
+          openLFDetail(lf.id);
+        } else {
+          handleQuizEntry(lf.id, "_full");
         }
-        startQuiz(lf.id);
       });
 
       grid.appendChild(btn);
@@ -1488,42 +1653,138 @@ function renderLernfelder() {
 }
 
 /* =====================================================================
-   VIEW STORED ATTEMPT (clicking on Bestleistung or Letzter Versuch)
+   LF-DETAIL SCREEN (sub-chapter selector)
    ===================================================================== */
-function showStoredAttempt(lfId, which) {
-  const data = loadData();
-  const attempt = data.stats[lfId] && data.stats[lfId][which];
-  if (!attempt) return;
+function openLFDetail(lfId) {
   const lf = LERNFELDER.find(l => l.id === lfId);
   state.lfId = lfId;
   state.block = lf.block;
   setAccentForBlock(lf.block);
-  state.questions = attempt.questions;
-  state.answers = attempt.answers;
-  renderResultsFromStored(attempt, which);
+
+  // Breadcrumb
+  document.getElementById("bc-lf-current").textContent = lf.num;
+
+  // Overview card
+  const card = document.getElementById("lf-detail-card");
+  const total = getTotalQuestionCount(lfId);
+  const subCount = getSubchapterIds(lfId).length;
+  const lfAvg = computeLFAverage(lfId);
+  let cardHTML = `
+    <div class="lf-num">${lf.num}</div>
+    <h3>${lf.title}</h3>
+    <div class="lf-overview-meta">${subCount} Unterkapitel · ${total} Fragen insgesamt im Pool</div>
+  `;
+  if (lfAvg) {
+    cardHTML += `
+      <div class="lf-overview-avg">
+        <span class="avg-val">${Math.round(lfAvg.avg)}%</span>
+        <span class="avg-label">Ø deiner Bestleistungen in diesem LF · aus ${lfAvg.count} ${lfAvg.count === 1 ? "Bereich" : "Bereichen"}</span>
+      </div>
+    `;
+  }
+  card.innerHTML = cardHTML;
+
+  // Full-LF button
+  const fullBest = getStat(lfId, "_full", "best");
+  const fullLast = getStat(lfId, "_full", "last");
+  const fullBtn = document.getElementById("btn-full-lf");
+  let fullStatsHTML = `<div>${total} Fragen verfügbar</div>`;
+  if (fullBest) fullStatsHTML += `<div>Best: ${Math.round((fullBest.score/fullBest.total)*100)}%</div>`;
+  if (fullLast) fullStatsHTML += `<div>Letzter: ${Math.round((fullLast.score/fullLast.total)*100)}% · ${formatDate(fullLast.ts).split(" ")[0]}</div>`;
+  const fullPaused = getPaused(lfId, "_full");
+  fullBtn.innerHTML = `
+    <div class="full-text">
+      <div class="full-eyebrow">Ganzer Lernfeld-Mix${fullPaused ? " · pausiert" : ""}</div>
+      <div class="full-title">Zufällige Fragen aus allen Kapiteln</div>
+    </div>
+    <div class="full-stats">${fullStatsHTML}</div>
+  `;
+  fullBtn.onclick = () => handleQuizEntry(lfId, "_full");
+
+  // Sub-chapter grid
+  const subContainer = document.getElementById("lf-detail-subchapters");
+  subContainer.innerHTML = '<div class="divider-label">Oder gezielt nach Kapitel</div><div class="subchapter-grid" id="sc-grid"></div>';
+  const grid = document.getElementById("sc-grid");
+
+  getSubchapterIds(lfId).forEach(scId => {
+    const sc = QUESTIONS[lfId].subchapters[scId];
+    const card = document.createElement("div");
+    card.className = "subchapter-card";
+    const qCount = sc.questions.length;
+    const disabled = qCount === 0;
+    if (disabled) card.classList.add("disabled");
+
+    const best = getStat(lfId, scId, "best");
+    const last = getStat(lfId, scId, "last");
+    const paused = getPaused(lfId, scId);
+
+    let inner = `
+      <div class="sub-head">
+        <span class="sub-num">${scId}</span>
+        <span class="sub-count">${disabled ? "in Vorbereitung" : qCount + " Fragen"}</span>
+      </div>
+      <div class="sub-title">${sc.title}</div>
+    `;
+    if (best || last) {
+      inner += `<div class="sub-stats">`;
+      if (best) {
+        const pct = Math.round((best.score/best.total)*100);
+        inner += `<button class="sub-stat best" data-sc-act="view-best" data-sc="${scId}"><span class="stat-label">Best:</span> ${pct}% (${best.score}/${best.total})</button>`;
+      }
+      if (last) {
+        const pct = Math.round((last.score/last.total)*100);
+        inner += `<button class="sub-stat" data-sc-act="view-last" data-sc="${scId}"><span class="stat-label">Letzter:</span> ${pct}% · ${formatDate(last.ts)}</button>`;
+      }
+      inner += `</div>`;
+    }
+    if (paused) {
+      inner += `<div class="resume-banner">▶ Pausiert bei Frage ${paused.index + 1} von ${paused.questions.length}</div>`;
+    }
+    card.innerHTML = inner;
+
+    card.addEventListener("click", (e) => {
+      const statBtn = e.target.closest("[data-sc-act]");
+      if (statBtn) {
+        e.stopPropagation();
+        const act = statBtn.dataset.scAct;
+        const sc = statBtn.dataset.sc;
+        if (act === "view-best") showStoredAttempt(lfId, sc, "best");
+        if (act === "view-last") showStoredAttempt(lfId, sc, "last");
+        return;
+      }
+      if (disabled) return;
+      handleQuizEntry(lfId, scId);
+    });
+
+    grid.appendChild(card);
+  });
+
+  show("screen-lf-detail");
 }
 
-function renderResultsFromStored(attempt, which) {
-  const total = attempt.total;
-  const score = attempt.score;
-
-  document.getElementById("r-score").textContent = score;
-  document.getElementById("r-total").textContent = total;
-  document.getElementById("r-label").textContent = which === "best" ? "Bestleistung" : "Letzter Versuch";
-  document.getElementById("r-message").textContent = scoreMessage(score, total);
-  document.getElementById("r-meta").textContent = formatDate(attempt.ts);
-
-  renderReviewList(attempt.questions, attempt.answers);
-  // Hide retry button when just viewing stored attempt - or keep it? Keep it, it makes sense to allow restart
-  document.getElementById("btn-retry").textContent = "Neue Runde dieses Lernfeldes";
-  show("screen-result");
+/* =====================================================================
+   QUIZ ENTRY - decides resume vs fresh
+   ===================================================================== */
+function handleQuizEntry(lfId, scopeId) {
+  const paused = getPaused(lfId, scopeId);
+  if (paused) {
+    const lf = LERNFELDER.find(l => l.id === lfId);
+    const scopeLabel = scopeId === "_full" ? `${lf.num} (ganzer LF)` : `${lf.num} / ${scopeId}`;
+    if (confirm(`Es gibt einen pausierten Versuch für ${scopeLabel} (Frage ${paused.index + 1} von ${paused.questions.length}). Fortsetzen?\n\nOK = Fortsetzen\nAbbrechen = Neu starten`)) {
+      resumeQuiz(lfId, scopeId);
+      return;
+    } else {
+      clearPaused(lfId, scopeId);
+    }
+  }
+  startQuiz(lfId, scopeId);
 }
 
 /* =====================================================================
    QUIZ FLOW
    ===================================================================== */
-function startQuiz(lfId) {
-  const pool = QUESTIONS[lfId] || [];
+function startQuiz(lfId, scopeId) {
+  const pool = getQuestionPool(lfId, scopeId);
   if (pool.length === 0) return;
   const lf = LERNFELDER.find(l => l.id === lfId);
 
@@ -1546,47 +1807,65 @@ function startQuiz(lfId) {
     return copy;
   });
 
-  state = {
-    lfId,
-    block: lf.block,
-    questions: picked,
-    index: 0,
-    answers: [],
-    currentSelection: null
-  };
+  state.lfId = lfId;
+  state.scopeId = scopeId;
+  state.block = lf.block;
+  state.questions = picked;
+  state.index = 0;
+  state.answers = [];
+  state.currentSelection = null;
+  state.viewingStored = false;
+  state.prevScreen = hasSubchapters(lfId) ? "lf-detail" : "select";
+
   setAccentForBlock(lf.block);
+  setQuizBreadcrumb();
   show("screen-quiz");
   renderQuestion();
 }
 
-function resumeQuiz(lfId) {
-  const paused = getPaused(lfId);
-  if (!paused) { startQuiz(lfId); return; }
+function resumeQuiz(lfId, scopeId) {
+  const paused = getPaused(lfId, scopeId);
+  if (!paused) { startQuiz(lfId, scopeId); return; }
   const lf = LERNFELDER.find(l => l.id === lfId);
-  state = {
-    lfId,
-    block: lf.block,
-    questions: paused.questions,
-    index: paused.index,
-    answers: paused.answers,
-    currentSelection: null
-  };
+  state.lfId = lfId;
+  state.scopeId = scopeId;
+  state.block = lf.block;
+  state.questions = paused.questions;
+  state.index = paused.index;
+  state.answers = paused.answers;
+  state.currentSelection = null;
+  state.viewingStored = false;
+  state.prevScreen = hasSubchapters(lfId) ? "lf-detail" : "select";
+
   setAccentForBlock(lf.block);
+  setQuizBreadcrumb();
   show("screen-quiz");
   renderQuestion();
+}
+
+function setQuizBreadcrumb() {
+  const lf = LERNFELDER.find(l => l.id === state.lfId);
+  document.getElementById("bc-back-lf-q").textContent = lf.num;
+  document.getElementById("bc-back-lf-q").style.display = hasSubchapters(state.lfId) ? "inline" : "none";
+  // Hide separator before lf-back if flat
+  const seps = document.querySelectorAll("#quiz-breadcrumb .sep");
+  if (!hasSubchapters(state.lfId)) {
+    seps[0].style.display = "none";
+  } else {
+    seps[0].style.display = "inline";
+  }
+  const scopeLabel = state.scopeId === "_full" ? "Ganzer LF" : state.scopeId;
+  document.getElementById("bc-quiz-current").textContent = scopeLabel;
 }
 
 function pauseQuiz() {
-  // Save current progress and return to overview
-  savePaused(state.lfId, {
+  savePaused(state.lfId, state.scopeId, {
     questions: state.questions,
     index: state.index,
     answers: state.answers,
     ts: Date.now()
   });
-  resetAccent();
-  renderLernfelder();
-  show("screen-select");
+  goToOverview();
 }
 
 function renderQuestion() {
@@ -1598,7 +1877,6 @@ function renderQuestion() {
 
   const typeMap = { mc: "MC", multi: "MC+", fill: "Lücke", tf: "Wahr/Falsch" };
   document.getElementById("q-type").textContent = typeMap[q.type];
-
   document.getElementById("q-text").textContent = q.q;
 
   document.getElementById("feedback").classList.add("hidden");
@@ -1741,7 +2019,6 @@ function checkAnswer() {
     type: q.type,
     correct,
     userAnswer,
-    correctAnswer: q.correct,
     correctAnswerText: getCorrectAnswerText(q),
     explain: q.explain,
     source: q.source,
@@ -1752,9 +2029,7 @@ function checkAnswer() {
   const fb = document.getElementById("feedback");
   fb.className = "feedback " + (correct ? "correct" : "wrong");
   let correctAnsText = "";
-  if (!correct) {
-    correctAnsText = `<br><strong>Richtige Antwort:</strong> ${getCorrectAnswerText(q)}`;
-  }
+  if (!correct) correctAnsText = `<br><strong>Richtige Antwort:</strong> ${getCorrectAnswerText(q)}`;
   fb.innerHTML = `<strong>${correct ? "Richtig." : "Nicht ganz."}</strong>${correctAnsText}<br>${q.explain}<div class="source">${q.source}</div>`;
   fb.classList.remove("hidden");
 
@@ -1789,7 +2064,7 @@ function scoreMessage(score, total) {
   return "Hier lohnt sich noch eine Runde durch das Lehrbuch.";
 }
 
-function renderReviewList(questions, answers) {
+function renderReviewList(answers) {
   const list = document.getElementById("review-list");
   list.innerHTML = "<h3>Übersicht</h3>";
   answers.forEach((a, i) => {
@@ -1808,7 +2083,6 @@ function renderReviewList(questions, answers) {
       <div class="review-explain">${a.explain}</div>
       <div class="review-source">${a.source}</div>
     `;
-    div.tabIndex = 0;
     list.appendChild(div);
   });
 }
@@ -1816,7 +2090,10 @@ function renderReviewList(questions, answers) {
 function showResults() {
   const total = state.questions.length;
   const score = state.answers.filter(a => a.correct).length;
+  const lf = LERNFELDER.find(l => l.id === state.lfId);
+  const scopeLabel = state.scopeId === "_full" ? `${lf.num} · ganzer LF-Mix` : `${lf.num} · Kapitel ${state.scopeId} (${getSubchapterTitle(state.lfId, state.scopeId)})`;
 
+  document.getElementById("r-scope").textContent = scopeLabel;
   document.getElementById("r-score").textContent = score;
   document.getElementById("r-total").textContent = total;
   document.getElementById("r-label").textContent = "Ergebnis";
@@ -1824,20 +2101,81 @@ function showResults() {
   document.getElementById("r-meta").textContent = formatDate(Date.now());
   document.getElementById("btn-retry").textContent = "Nochmal mit neuen Fragen";
 
-  renderReviewList(state.questions, state.answers);
+  setResultBreadcrumb("Ergebnis");
+  renderReviewList(state.answers);
 
-  // Persist this attempt
+  // Persist
   const attempt = {
-    score,
-    total,
-    ts: Date.now(),
+    score, total, ts: Date.now(),
     questions: state.questions,
     answers: state.answers
   };
-  recordAttempt(state.lfId, attempt);
-  clearPaused(state.lfId);
+  recordAttempt(state.lfId, state.scopeId, attempt);
+  clearPaused(state.lfId, state.scopeId);
+  state.viewingStored = false;
 
   show("screen-result");
+}
+
+function showStoredAttempt(lfId, scopeId, which) {
+  const attempt = getStat(lfId, scopeId, which);
+  if (!attempt) return;
+  const lf = LERNFELDER.find(l => l.id === lfId);
+
+  state.lfId = lfId;
+  state.scopeId = scopeId;
+  state.block = lf.block;
+  state.questions = attempt.questions;
+  state.answers = attempt.answers;
+  state.viewingStored = true;
+  // Where did we come from? Detail screen if from sub-chapter card, overview if flat
+  state.prevScreen = hasSubchapters(lfId) ? "lf-detail" : "select";
+
+  setAccentForBlock(lf.block);
+
+  const scopeLabel = scopeId === "_full" ? `${lf.num} · ganzer LF-Mix` : `${lf.num} · Kapitel ${scopeId} (${getSubchapterTitle(lfId, scopeId)})`;
+  document.getElementById("r-scope").textContent = scopeLabel;
+  document.getElementById("r-score").textContent = attempt.score;
+  document.getElementById("r-total").textContent = attempt.total;
+  document.getElementById("r-label").textContent = which === "best" ? "Bestleistung" : "Letzter Versuch";
+  document.getElementById("r-message").textContent = scoreMessage(attempt.score, attempt.total);
+  document.getElementById("r-meta").textContent = formatDate(attempt.ts);
+  document.getElementById("btn-retry").textContent = "Neue Runde dieses Bereichs";
+
+  setResultBreadcrumb(which === "best" ? "Bestleistung" : "Letzter Versuch");
+  renderReviewList(attempt.answers);
+
+  show("screen-result");
+}
+
+function setResultBreadcrumb(currentLabel) {
+  const lf = LERNFELDER.find(l => l.id === state.lfId);
+  document.getElementById("bc-back-lf-r").textContent = lf.num;
+  const seps = document.querySelectorAll("#result-breadcrumb .sep");
+  if (!hasSubchapters(state.lfId)) {
+    seps[0].style.display = "none";
+    document.getElementById("bc-back-lf-r").style.display = "none";
+  } else {
+    seps[0].style.display = "inline";
+    document.getElementById("bc-back-lf-r").style.display = "inline";
+  }
+  document.getElementById("bc-result-current").textContent = currentLabel;
+}
+
+/* =====================================================================
+   NAVIGATION
+   ===================================================================== */
+function goToOverview() {
+  resetAccent();
+  renderOverview();
+  show("screen-select");
+}
+function goToLFDetail() {
+  if (state.lfId && hasSubchapters(state.lfId)) {
+    openLFDetail(state.lfId);
+  } else {
+    goToOverview();
+  }
 }
 
 /* =====================================================================
@@ -1847,22 +2185,27 @@ document.getElementById("btn-check").addEventListener("click", checkAnswer);
 document.getElementById("btn-next").addEventListener("click", nextQuestion);
 document.getElementById("btn-abort").addEventListener("click", pauseQuiz);
 document.getElementById("btn-back").addEventListener("click", () => {
-  resetAccent();
-  renderLernfelder();
-  show("screen-select");
+  if (state.prevScreen === "lf-detail") goToLFDetail();
+  else goToOverview();
 });
 document.getElementById("btn-retry").addEventListener("click", () => {
-  if (state.lfId) startQuiz(state.lfId);
+  if (state.lfId && state.scopeId) startQuiz(state.lfId, state.scopeId);
 });
 document.getElementById("btn-reset").addEventListener("click", () => {
   if (confirm("Alle Fortschritte (Bestleistungen, letzte Versuche und pausierte Quizze) löschen?")) {
     try { localStorage.removeItem(STORAGE_KEY); } catch (e) {}
-    renderLernfelder();
+    renderOverview();
   }
 });
 document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
 
-renderLernfelder();
+document.getElementById("bc-back-overview").addEventListener("click", goToOverview);
+document.getElementById("bc-back-overview-q").addEventListener("click", goToOverview);
+document.getElementById("bc-back-overview-r").addEventListener("click", goToOverview);
+document.getElementById("bc-back-lf-q").addEventListener("click", goToLFDetail);
+document.getElementById("bc-back-lf-r").addEventListener("click", goToLFDetail);
+
+renderOverview();
 show("screen-select");
 </script>
 </body>
