@@ -1141,7 +1141,60 @@ const QUESTIONS = {
           { type: "tf", q: "Die Festplatte zählt zu den Peripheriegeräten eines Computers.",
             correct: true,
             explain: "Korrekt. Peripheriegeräte sind alle Geräte zur Eingabe, Ausgabe und Speicherung der Daten - die Festplatte gehört als externe Speichereinheit dazu. Zur Zentraleinheit zählen nur CPU, RAM und Mainboard.",
-            source: "LF 2, Kap. 2.1.1" }
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "multi", q: "Welche Aussagen beschreiben Ziele der Datenverarbeitung korrekt? (Mehrfachauswahl)",
+            options: [
+              "Schnelle Verarbeitung großer Datenmengen",
+              "Beseitigung monotoner Routinetätigkeiten",
+              "Maximierung des Personalbestands",
+              "Bessere Kommunikation durch Integration und Vernetzung",
+              "Höhere Wirtschaftlichkeit durch geringere Personal- und Sachkosten"
+            ],
+            correct: [0, 1, 3, 4],
+            explain: "Ziele der Datenverarbeitung: schnelle Verarbeitung großer Datenmengen, Beseitigung monotoner Routinetätigkeiten, Automatisierung und Verbesserung der Abläufe, bessere Informations- und Kommunikationssysteme, höhere Wirtschaftlichkeit durch geringere Personal- und Sachkosten. Personalwachstum ist ausdrücklich kein Ziel.",
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "fill", q: "Wie heißt die in den 1940er-Jahren entwickelte Computerarchitektur, bei der ein gemeinsamer Speicher sowohl Programmbefehle als auch Daten hält?",
+            answers: ["Von-Neumann-Architektur", "Von Neumann Architektur", "Von-Neumann-Rechner-Architektur"],
+            explain: "Die Von-Neumann-Architektur (1940er-Jahre) ist das klassische Referenzmodell: gemeinsamer Speicher für Programme und Daten, Komponenten wie Rechenwerk, Steuerwerk, Arbeitsspeicher, Bussystem und Input/Output. Sie ermöglicht Programmänderungen ohne Hardware-Eingriffe. Konrad Zuse hatte ähnliche Überlegungen, baute 1941 den ersten funktionsfähigen Digitalcomputer.",
+            source: "LF 2, Kap. 2.1.2" },
+          { type: "mc", q: "Was besagt das sogenannte Mooresche Gesetz vereinfacht?",
+            options: [
+              "Die Speicherkapazität halbiert sich alle 5 Jahre",
+              "Die Leistung von Mikroprozessoren verdoppelt sich etwa alle 18 Monate",
+              "Die Hardwarepreise verdoppeln sich alle 24 Monate",
+              "Quantencomputer sind dreimal schneller als klassische Computer"
+            ],
+            correct: 1,
+            explain: "Nach Moores Gesetz verdoppelt sich die Leistung von Mikroprozessoren etwa alle 18 Monate. Heute stößt diese Entwicklung an physikalische Grenzen des Materials - statt der Taktfrequenz wird die Leistung u.a. durch mehr Kerne, größere Caches und intelligentere Architekturen gesteigert.",
+            source: "LF 2, Kap. 2.1.2" },
+          { type: "mc", q: "Welche der folgenden Aussagen über die Zentraleinheit eines Computers ist korrekt?",
+            options: [
+              "Die Leistungsfähigkeit der Zentraleinheit ist nebensächlich für die Gesamtleistung",
+              "Die Zentraleinheit verarbeitet die Daten und entscheidet wesentlich über die Leistungsfähigkeit des Systems",
+              "Die Zentraleinheit umfasst auch Monitor und Tastatur",
+              "Die Zentraleinheit ist immer ein einzelner Chip"
+            ],
+            correct: 1,
+            explain: "Die Zentraleinheit (Mainboard, CPU, RAM) verarbeitet die Daten und entscheidet wesentlich über die Leistungsfähigkeit des Gesamtsystems. Sie ist klar abgegrenzt von Peripheriegeräten wie Monitor und Tastatur, die zur Ein-/Ausgabe und Speicherung dienen.",
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "tf", q: "Für die Funktion eines Computers werden mindestens die Zentraleinheit und zwei Peripheriegeräte (eine Eingabe- und eine Ausgabeeinheit) benötigt.",
+            correct: true,
+            explain: "Korrekt. Die Minimalkonfiguration eines arbeitsfähigen Computers besteht aus der Zentraleinheit und mindestens zwei Peripheriegeräten - eines zur Eingabe (z.B. Tastatur), eines zur Ausgabe (z.B. Monitor). Ohne Eingabe wären keine Daten zur Verarbeitung verfügbar, ohne Ausgabe keine Ergebnisse sichtbar.",
+            source: "LF 2, Kap. 2.1.1" },
+          { type: "fill", q: "Wie nennt man die Unterscheidung von IT-Systemen in Bestandteile wie Hardware, Firmware und Software?",
+            answers: ["Bestandteile", "Komponenten"],
+            explain: "IT-Systeme werden typischerweise in drei Bestandteile gegliedert: Hardware (Zentraleinheit, Peripherie), Firmware (z.B. fest eingebautes BIOS, Systemsoftware, Utilities) und Software (Standard-, Anwendungs-, Branchen-, Individualsoftware). Die Hardware ist greifbar, die Software immateriell, die Firmware bildet die Brücke.",
+            source: "LF 2, Kap. 2.1.4" },
+          { type: "mc", q: "Welche Aussage zur Unterscheidung zwischen LAN, MAN und WAN trifft zu?",
+            options: [
+              "LAN deckt Kontinente ab, WAN nur ein Gebäude",
+              "LAN ist ein lokales Netzwerk, MAN umfasst Städte/Regionen, WAN spannt sich über Länder und Kontinente",
+              "MAN und WAN sind Synonyme für dasselbe Netz",
+              "LAN ist drahtlos, WAN immer kabelgebunden"
+            ],
+            correct: 1,
+            explain: "Die geografische Abgrenzung: LAN (Local Area Network) - lokal, etwa in einem Gebäude. MAN (Metropolitan Area Network) - Stadt- oder Regionsebene. WAN (Wide Area Network) - länder- und kontinentübergreifend. Drahtlosvarianten heißen z.B. WLAN.",
+            source: "LF 2, Kap. 2.1.4" }
         ]
       },
       "2.2": {
@@ -1151,7 +1204,80 @@ const QUESTIONS = {
             options: ["Einfache Systemadministration","Hoher Energieverbrauch","Schnelle Betriebsbereitschaft","Geringe Betriebskosten","Volle lokale Datenverarbeitung"],
             correct: [0, 2, 3],
             explain: "Thin Clients bieten einfache Administration, schnelle Betriebsbereitschaft, geringe Betriebskosten und geringen Energieverbrauch - sie entsprechen damit der Forderung nach Green-IT. Die eigentliche Datenverarbeitung läuft serverseitig, nicht lokal auf dem Thin Client.",
-            source: "LF 2, Kap. 2.2.2" }
+            source: "LF 2, Kap. 2.2.2" },
+          { type: "mc", q: "Was beschreibt der Begriff IT-Sourcing?",
+            options: [
+              "Die interne Entwicklung von Software durch eigene Mitarbeiter",
+              "Die externe Fremdbeschaffung von IT-Dienstleistungen und IT-Services sowie die Strategie zur Auslagerung von IT-Diensten",
+              "Die Quellcode-Verwaltung in einem Versionskontrollsystem",
+              "Die Beschaffung von Open-Source-Software ausschließlich"
+            ],
+            correct: 1,
+            explain: "IT-Sourcing (IT-Beschaffung) umfasst die externe Fremdbeschaffung von IT-Dienstleistungen und -Services sowie die Strategie zur Auslagerung von IT-Diensten. Beim Multi-Vendor-Sourcing sind mehrere Dienstleister beteiligt.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "fill", q: "Wie heißt die unbefristete Auslagerung umfangreicher IT-Aufgaben oder -Bereiche an ein externes Unternehmen in eigener Verantwortung, jedoch mit Vertragsbindung?",
+            answers: ["Outsourcing", "IT-Outsourcing"],
+            explain: "Outsourcing bedeutet \"von außen beziehen\" (Outside Resource Using). Es handelt sich um die unbefristete Auslagerung von IT-Aufgaben an externe Unternehmen. Dabei gehen oft Systeme und Personal auf den Dienstleister über. Beim Selective Outsourcing werden nur einzelne Bereiche ausgelagert.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "mc", q: "Was sind Managed-Services im IT-Bereich?",
+            options: [
+              "Einmalige Beratungsleistungen ohne weitere vertragliche Bindung",
+              "Wiederkehrende IT-Dienstleistungen, die ein Service-Provider oder Systemhaus per Rahmenvertrag befristet erbringt, mit Umfang und Verfügbarkeit über SLAs definiert",
+              "Die kostenlose Wartung im Rahmen der gesetzlichen Gewährleistung",
+              "Die ausschließlich automatisierten Backup-Dienste"
+            ],
+            correct: 1,
+            explain: "Managed-Services sind wiederkehrende IT-Dienstleistungen per Rahmenvertrag - Umfang und Verfügbarkeit werden durch Service Level Agreements (SLAs) definiert. Beispiele: Server- und Netzwerkbetreuung, Help-Desk, Cloud-Services. Leistungen können je nach Vertrag bedarfsgerecht abgerufen werden.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "tf", q: "Service Level Agreements (SLAs) regeln Umfang, Art und Qualität der zu erbringenden Leistungen zwischen Unternehmen und Dienstleister und sind Vertragsbestandteil.",
+            correct: true,
+            explain: "Korrekt. SLAs werden im Vorfeld zwischen Unternehmen und Dienstleister festgelegt und abgestimmt. Sie sind Vertragsbestandteil und dienen als Grundlage zur Überwachung und Bewertung der Leistungserbringung.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "mc", q: "Welches Cloud-Servicemodell stellt dem Kunden Hardware-Ressourcen wie Rechenleistung und Speicher als Dienstleistung bereit?",
+            options: [
+              "Software as a Service (SaaS)",
+              "Platform as a Service (PaaS)",
+              "Infrastructure as a Service (IaaS)",
+              "Desktop as a Service (DaaS)"
+            ],
+            correct: 2,
+            explain: "Die drei klassischen Cloud-Servicemodelle: IaaS liefert Hardware (Server, Storage, Netz), PaaS liefert Laufzeit- und Entwicklungsumgebungen, SaaS liefert fertige Software nach Bedarf (on demand). Je weiter oben im Stack, desto weniger muss der Kunde selbst administrieren.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "fill", q: "Wie heißt das Anbieten von Anwendungen (z.B. eines ERP-Systems) durch einen Dienstleister über eine Datenleitung, in der Regel auf Basis eines Mietvertrags? (Abkürzung mit drei Buchstaben)",
+            answers: ["ASP", "Application Service Providing"],
+            explain: "Application Service Providing (ASP) ist eine Anwendungsdienstleistung: Über eine Datenleitung erhält das Kundenunternehmen Anwendungen mit Dienstleistungen - meist per Mietvertrag. ASP gilt als Vorläuferkonzept des heutigen SaaS.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "mc", q: "Was beschreibt das On-Site-Management?",
+            options: [
+              "Die ausschließliche Fernwartung beim Kunden, ohne dass Mitarbeiter vor Ort sind",
+              "Die Übernahme von Funktionen eines Betriebsteils des Kundenbetriebs in den Räumen des Kunden durch einen externen Dienstleister",
+              "Die Auslagerung von IT-Diensten in eine externe Cloud",
+              "Eine reine Vor-Ort-Beratung ohne weitere Leistungen"
+            ],
+            correct: 1,
+            explain: "Beim On-Site-Management übernimmt der externe Dienstleister Funktionen eines Betriebsteils direkt in den Räumen des Kunden. Dabei verwendet er teilweise oder vollständig die vorhandenen Betriebsmittel des Kunden.",
+            source: "LF 2, Kap. 2.2.3" },
+          { type: "multi", q: "Welche Leistungsbereiche umfasst ein typisches Leistungsportfolio eines Systemhauses laut Lehrbuch? (Mehrfachauswahl)",
+            options: [
+              "Beratung",
+              "Beschaffung",
+              "IT-Management und Betreuung/Support",
+              "Bauleitung von Industriegebäuden",
+              "Remarketing (Weiterverwertung nicht mehr benötigter Einheiten)"
+            ],
+            correct: [0, 1, 2, 4],
+            explain: "Ein typisches Systemhaus-Portfolio umfasst alle Leistungsbereiche von Beratung über Beschaffung, IT-Management, Betreuung/Support bis zum Remarketing. Bauleistungen außerhalb der IT gehören nicht dazu - ein Systemhaus ist ein IT-Dienstleister.",
+            source: "LF 2, Kap. 2.2.1" },
+          { type: "mc", q: "Welche Unterscheidung trifft das Lehrbuch zwischen Standardarbeitsplätzen und Arbeitsplätzen mit leistungsstarken Anwendungen?",
+            options: [
+              "Bei beiden wird grundsätzlich eine detaillierte Anforderungsanalyse durchgeführt",
+              "Bei Standardarbeitsplätzen können Leistungen auch pauschal angeboten werden, bei Arbeitsplätzen mit leistungsstarken Anwendungen werden Anforderungsanalyse und detaillierte Angebotskalkulation durchgeführt",
+              "Standardarbeitsplätze sind grundsätzlich Thin Clients, alle anderen sind Workstations",
+              "Beide Arten werden zum gleichen pauschalen Preis angeboten"
+            ],
+            correct: 1,
+            explain: "Standardarbeitsplätze lassen sich pauschal anbieten - die Konfiguration ist weitgehend einheitlich. Bei Arbeitsplätzen mit leistungsstarken Anwendungen (z.B. CAD, Videobearbeitung) sind dagegen Anforderungsanalyse und detaillierte Kalkulation nötig, weil Komponenten, Spezifikationen und Aufwand individuell sind.",
+            source: "LF 2, Kap. 2.2.1" }
         ]
       },
       "2.3": {
@@ -1169,7 +1295,48 @@ const QUESTIONS = {
           { type: "tf", q: "Bei der Beschaffung von IT-Systemen sind die Schutzziele Vertraulichkeit, Integrität und Verfügbarkeit unabhängig vom Arbeitsplatz pauschal anzuwenden.",
             correct: false,
             explain: "Falsch. Die Schutzziele sind grundsätzlich relevant, aber die Anforderungen müssen je nach Arbeitsplatz und Schutzbedarf differenziert betrachtet werden. Für Standardarbeitsplätze reichen Standardanforderungen (pauschal), für Spezialanforderungen ist eine Anforderungsanalyse oder ein Lasten-/Pflichtenheft nötig. Die Schutzbedarfsanalyse selbst wird in LF 4 vertieft.",
-            source: "LF 2, Kap. 2.3.4, vgl. LF 4" }
+            source: "LF 2, Kap. 2.3.4, vgl. LF 4" },
+          { type: "fill", q: "Welche ISO-Norm regelt die Ergonomie der Mensch-System-Interaktion und ist damit für Bildschirmarbeitsplätze relevant?",
+            answers: ["ISO 9241", "DIN EN ISO 9241"],
+            explain: "Die ISO 9241 \"Ergonomie der Mensch-System-Interaktion\" regelt Anforderungen an Bildschirmarbeitsplätze, Software-Ergonomie und Benutzerfreundlichkeit. Sie ist die wichtigste Bezugsnorm für ergonomische Anforderungen am Arbeitsplatz.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "mc", q: "Welche ISO-Norm definiert acht Qualitätskriterien für Softwareentwicklung (u.a. Functional Suitability, Reliability, Performance Efficiency, Security)?",
+            options: ["ISO 9000","ISO 14000","ISO/IEC 25010","ISO 9241"],
+            correct: 2,
+            explain: "ISO/IEC 25010 definiert acht Qualitätskriterien für Software: funktionale Eignung, Verlässlichkeit, Performance, Kompatibilität, Bedienbarkeit, Sicherheit, Wartbarkeit, Portabilität. Sie ist für Softwareentwickler die zentrale Bezugsnorm und wird in LF 5 vertieft.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "multi", q: "Welche der genannten Normen sind für IT-Qualität und -Sicherheit besonders relevant? (Mehrfachauswahl)",
+            options: ["ISO 9000 (Qualitätsmanagement)","ISO 9241 (Ergonomie)","ISO 14000 (Umweltmanagement)","ISO/IEC 27001 (Informationssicherheit)","ISO 6346 (Frachtcontainer-Codierung)"],
+            correct: [0, 1, 2, 3],
+            explain: "Die ersten vier sind direkt IT- oder arbeitsplatzbezogen: Qualitätsmanagement (9000), Ergonomie der Mensch-System-Interaktion (9241), Umweltmanagement (14000), Informationssicherheit (27001). ISO 6346 für Frachtcontainer hat mit IT nichts zu tun.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "fill", q: "Wie heißen Prüfdokumente, die von anerkannten Stellen nach Prüfung von Produkten, Verfahren oder Leistungen ausgestellt werden und i.d.R. die Einhaltung von Normen bestätigen?",
+            answers: ["Zertifikate", "Zertifikat", "Zertifizierung", "Zertifizierungen"],
+            explain: "Zertifikate werden von anerkannten Zertifizierungsstellen nach einer Prüfung ausgestellt. Sie bestätigen i.d.R. die Einhaltung bestimmter Normen (z.B. ISO 9001 für Qualitätsmanagement). Sie sind ein wichtiges Marketing- und Qualitätsmerkmal für Anbieter.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "tf", q: "Marken sind Schutzzeichen, die Unternehmen beim Deutschen Patent- und Markenamt für Wörter, Bilder, Töne und andere Unterscheidungskennzeichen registrieren lassen können.",
+            correct: true,
+            explain: "Korrekt. Marken (brands) sind beim DPMA (Deutsches Patent- und Markenamt, www.dpma.de) registrierte Schutzzeichen. Unternehmen versuchen, Leistungen und Erfolge mit ihrer Marke zu verbinden und Marktvorteile zu erlangen. Amazon, Apple und Google gehören weltweit zu den wertvollsten Marken.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "mc", q: "Welche der acht Qualitätskriterien nach ISO/IEC 25010 beschreibt die Eigenschaft \"leicht installierbar, leicht auf andere Systeme übertragbar\"?",
+            options: ["Reliability (Verlässlichkeit)","Portability (Portabilität)","Security (Sicherheit)","Maintainability (Wartbarkeit)"],
+            correct: 1,
+            explain: "Portability (Portabilität) beschreibt, wie leicht sich Software installieren und auf andere Umgebungen übertragen lässt. Die anderen Kriterien: Reliability = ausgereift/fehlertolerant; Security = Datensicherheit, Manipulationsschutz; Maintainability = leicht wartbar, gesetzeskonform.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "fill", q: "Welche Abkürzung steht für die Konstruktionsvorgaben (z.B. Größe, Anschlüsse) bei Mainboards, Gehäusen oder Einsteckkarten - so genannte Industriestandards?",
+            answers: ["Formfaktor", "Formfaktoren"],
+            explain: "Formfaktoren sind Konstruktionsvorgaben für bestimmte Größen, Formen und Anschlüsse, die sich am Markt durchgesetzt haben - z.B. ATX/Micro-ATX bei Mainboards, M.2 bei SSDs. Sie sind für die Kompatibilität von Komponenten essenziell.",
+            source: "LF 2, Kap. 2.3.1" },
+          { type: "mc", q: "Welche Aussage zum Verhältnis von Datenschutz und Datensicherheit ist korrekt?",
+            options: [
+              "Beide Begriffe sind synonym und beschreiben dieselbe Sache",
+              "Datenschutz bezieht sich auf personenbezogene Daten, Datensicherheit auf den Schutz aller Daten unabhängig vom Personenbezug",
+              "Datenschutz gilt nur digital, Datensicherheit nur analog",
+              "Datenschutz wird vom BSI geregelt, Datensicherheit vom Datenschutzbeauftragten"
+            ],
+            correct: 1,
+            explain: "Datenschutz schützt die privaten, personenbezogenen Daten - Recht auf informationelle Selbstbestimmung (BDSG, DSGVO). Datensicherheit dagegen ist umfassender: Schutz ALLER Daten im Unternehmen, mit oder ohne Personenbezug, digital oder analog. Zuständig für Datensicherheit ist u.a. das BSI.",
+            source: "LF 2, Kap. 2.3.3, 2.3.4" }
         ]
       },
       "2.4": {
@@ -1268,7 +1435,46 @@ const QUESTIONS = {
             options: ["Pflichtenheft (Auftraggeber) → Lastenheft (Auftragnehmer) → Vertrag","Lastenheft (Auftraggeber) → Pflichtenheft (Auftragnehmer) → Vertrag → Projektstart","Vertrag → Lastenheft → Pflichtenheft → Projektstart","Angebot → Bestellung → Lastenheft → Pflichtenheft"],
             correct: 1,
             explain: "Idealtypischer Ablauf: Auftraggeber erstellt das Lastenheft → übergibt es an den Auftragnehmer → dieser erstellt auf Basis des Lastenhefts das Pflichtenheft → Pflichtenheft wird Grundlage des Vertrags → nach Vertragsunterzeichnung startet das Projekt. Das Pflichtenheft kann während des Projekts noch ergänzt werden.",
-            source: "LF 2, Kap. 2.5.3" }
+            source: "LF 2, Kap. 2.5.3" },
+          { type: "fill", q: "Wie heißt nach DIN 69901 ein Einzelvorhaben mit definierbarem Anfang und Ende, das im Wesentlichen durch die Einmaligkeit der Bedingungen gekennzeichnet ist (z.B. Ziele, Zeit, Ressourcen, Projektorganisation)?",
+            answers: ["Projekt"],
+            explain: "Nach DIN 69901 ist ein Projekt ein Einzelvorhaben mit definierbarem Anfang und Ende, gekennzeichnet durch die Einmaligkeit der Rahmenbedingungen - Zielvorgaben, zeitliche/finanzielle/personelle/organisatorische Aspekte. Typisch ist eine eigene Projektorganisation mit Teammitgliedern aus unterschiedlichen Fachbereichen.",
+            source: "LF 2, Kap. 2.5.4" },
+          { type: "mc", q: "Was bezeichnet ein Meilenstein im Projektmanagement nach DIN 69900?",
+            options: [
+              "Eine Routineaufgabe, die täglich wiederholt wird",
+              "Ein Ereignis besonderer Bedeutung, in der Regel die Fertigstellung eines Projektabschnitts oder Teilprojekts",
+              "Eine einzelne Stunde Arbeitsaufwand",
+              "Die finale Rechnung an den Auftraggeber"
+            ],
+            correct: 1,
+            explain: "Nach DIN 69900 ist ein Meilenstein ein \"Ereignis besonderer Bedeutung\", typischerweise die Fertigstellung eines Projektabschnitts oder Teilprojekts. Als Handlungsprodukte können Präsentationen, Abnahmeprotokolle oder Gutachten dienen. Ein Meilenstein ist immer auch ein Termin, an dem über die Fortsetzung oder den Abbruch des Projekts entschieden werden kann.",
+            source: "LF 2, Kap. 2.5.4" },
+          { type: "tf", q: "Im Projektmanagement sollten nachträgliche Änderungen am Projektauftrag möglichst vermieden werden, um Termine und Kosten kalkulierbar zu halten.",
+            correct: true,
+            explain: "Korrekt. Zu den Grundsätzen erfolgreichen Projektmanagements gehört: der Projektauftrag muss klare (SMART-)Ziele angeben, und nachträgliche Änderungen sollten möglichst vermieden werden. Häufige Änderungen gefährden Zeitplan, Budget und Qualität - das sogenannte magische Dreieck des Projektmanagements.",
+            source: "LF 2, Kap. 2.5.4" },
+          { type: "multi", q: "Welche der folgenden Punkte gelten laut Lehrbuch als Erfolgsfaktoren guten Projektmanagements? (Mehrfachauswahl)",
+            options: [
+              "Klar verteilte Rollen im Team",
+              "Möglichst homogene Zusammensetzung des Teams",
+              "Mindestens einige projekterfahrene Mitarbeiter",
+              "Akzeptanz und Durchsetzungskraft des Projektleiters",
+              "Unterstützung durch Vorgesetzte und Auftraggeber"
+            ],
+            correct: [0, 2, 3, 4],
+            explain: "Erfolgsfaktoren: klare Rollenverteilung, projekterfahrene Mitarbeiter im Team, akzeptierter Projektleiter, Unterstützung durch Auftraggeber. Wichtig ist außerdem, dass das Team gerade NICHT zu homogen ist - verschiedene Teamtypen und Teilkompetenzen ergänzen sich besser.",
+            source: "LF 2, Kap. 2.5.4" },
+          { type: "mc", q: "Welche Phase folgt im Beschaffungs- und Bereitstellungsablauf typischerweise UNMITTELBAR auf die Anforderungsanalyse?",
+            options: [
+              "Abnahme und Übergabe",
+              "Angebot bis Auftragsbestätigung",
+              "Wartung und Support",
+              "Schulung der Mitarbeiter"
+            ],
+            correct: 1,
+            explain: "Typischer Ablauf laut Netzplanbeispiel: Anforderungsanalyse → Angebot bis Auftragsbestätigung → Bestellung der Hard-/Software → Anlieferung und Vorinstallation → Komponenten montieren → System lauffähig einrichten → Abnahme. Schulung und Support folgen erst nach erfolgreicher Inbetriebnahme.",
+            source: "LF 2, Kap. 2.5.4" }
         ]
       },
       "2.6": {
@@ -1441,7 +1647,95 @@ const QUESTIONS = {
           { type: "fill", q: "Wie heißt die Methode, mit der Artikel anhand ihres Wertanteils am Lagerbestand in drei Kategorien eingeteilt werden - typischerweise hochpreisige Hauptartikel, mittlere und geringwertige Artikel?",
             answers: ["ABC-Analyse", "ABC Analyse"],
             explain: "Die ABC-Analyse teilt Artikel nach Wertanteil ein: A-Artikel (hoher Wertanteil, wenige Stück - z.B. Server, intensive Beschaffung), B-Artikel (mittlerer Wertanteil - z.B. PCs, Notebooks), C-Artikel (geringer Wertanteil, viele Stück - z.B. USB-Sticks, vereinfachte Beschaffung). Bei A- und B-Artikeln lohnt sich intensives Lieferantenmanagement.",
-            source: "LF 2, Kap. 2.9.1" }
+            source: "LF 2, Kap. 2.9.1" },
+          { type: "mc", q: "Welche der folgenden Aussagen beschreibt eine \"Anpreisung\" im rechtlichen Sinne korrekt?",
+            options: [
+              "Ein rechtlich verbindliches Angebot an einen konkreten Adressaten",
+              "Ein unverlangtes, unverbindliches Angebot an die Allgemeinheit (z.B. Inserat, Plakat)",
+              "Eine schriftliche Bestellung des Kunden",
+              "Eine Auftragsbestätigung des Verkäufers"
+            ],
+            correct: 1,
+            explain: "Eine Anpreisung ist ein unverlangtes Angebot, das sich nicht an eine konkrete Person richtet (z.B. Inserate, Schaufenster, Plakate). Sie ist rechtlich unverbindlich - eine Bestellung darauf muss nicht zum Kaufvertrag führen. Das Gesetz gegen den unlauteren Wettbewerb (UWG) ist zu beachten.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "tf", q: "Eine Anfrage des Kunden ist rechtlich verbindlich und verpflichtet den Lieferanten zur Annahme.",
+            correct: false,
+            explain: "Falsch. Die Anfrage ist rechtlich unverbindlich. Sie dient zur Geschäftsanbahnung und fordert den Lieferanten lediglich auf, ein Angebot abzugeben (verlangtes Angebot). Erst Angebot und Bestellung führen ggf. zum Vertragsabschluss.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "mc", q: "Welche Formulierung kennzeichnet ein unverbindliches Angebot durch sogenannte Freizeichnungsklauseln?",
+            options: [
+              "\"Festpreis, gültig bis zum Vertragsschluss\"",
+              "\"Lieferung garantiert innerhalb von 7 Tagen\"",
+              "\"Freibleibend\", \"Zwischenverkauf vorbehalten\", \"solange der Vorrat reicht\"",
+              "\"Bindefrist 30 Tage\""
+            ],
+            correct: 2,
+            explain: "Freizeichnungsklauseln machen ein Angebot unverbindlich. Typische Formulierungen: \"freibleibend\", \"ohne Gewähr\", \"solange der Vorrat reicht\", \"Preis freibleibend\", \"Zwischenverkauf vorbehalten\", \"Druckfehler und Irrtum vorbehalten\". Fehlen solche Klauseln, ist der Anbieter innerhalb bestimmter Fristen an das Angebot gebunden.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "fill", q: "Wie nennt man die zweiseitige Willenserklärung, die durch übereinstimmende Erklärungen von Käufer und Verkäufer zustande kommt und beide zur Erfüllung verpflichtet?",
+            answers: ["Kaufvertrag"],
+            explain: "Ein Kaufvertrag entsteht durch zwei übereinstimmende Willenserklärungen - z.B. Angebot des Verkäufers und Bestellung des Kunden ohne Änderungen, oder Bestellung des Kunden und passende Auftragsbestätigung. Mit dem Vertragsabschluss gehen beide Parteien ein Verpflichtungsgeschäft ein. Schriftform ist nach BGB nicht vorgeschrieben, in der Praxis aber dringend zu empfehlen.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "multi", q: "Welche Fragen sollten vor Annahme eines Auftrags zur Prüfung der Realisierbarkeit beantwortet werden? (Mehrfachauswahl)",
+            options: [
+              "Ist die nachgefragte Menge bis zur Lieferfrist lieferbar?",
+              "Sind Personal und Ressourcen für die Abwicklung vorhanden?",
+              "Wie ist die Bonität des Kunden?",
+              "Welche Farbe hat das Firmenlogo des Kunden?",
+              "Sind die Preiserwartungen des Kunden erfüllbar?"
+            ],
+            correct: [0, 1, 2, 4],
+            explain: "Die Realisierbarkeitsprüfung umfasst Lieferfähigkeit (Menge, Personal, Ressourcen) und Lieferwilligkeit (Bonität des Kunden, Liquidität des eigenen Unternehmens, Erfüllbarkeit der Konditionen). Ein zu großer Auftrag kann ein Unternehmen sonst schnell in Liquiditätsprobleme bringen.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "mc", q: "Was bezeichnet der Begriff E-Procurement?",
+            options: [
+              "Die Beschaffung ausschließlich über Faxgeräte",
+              "Die Beschaffung von Gütern und Dienstleistungen unter Nutzung des Internets sowie spezieller Informations- und Kommunikationssysteme",
+              "Die Verlagerung der gesamten IT in die Cloud",
+              "Die Beschaffung über reine Telefonbestellungen"
+            ],
+            correct: 1,
+            explain: "E-Procurement (elektronische Beschaffung) ist die Beschaffung von Gütern und Dienstleistungen unter Nutzung des Internets und spezieller IT-Systeme. Formen: E-Shops der Lieferanten, eigene Beschaffungssysteme großer Unternehmen, Marktplatzsysteme. Oft wird Datenaustausch via EDI oder XML in das ERP-System integriert.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "tf", q: "Bei der Warenannahme reicht eine einmalige Sichtprüfung beim Eintreffen - eine spätere, genauere Kontrolle ist nicht mehr erforderlich.",
+            correct: false,
+            explain: "Falsch. Die Warenannahme erfolgt in zwei Schritten: erstens eine äußere Sichtkontrolle in Anwesenheit des Frachtführers (Verpackung, Lieferdokumente), zweitens eine genauere Kontrolle nach dessen Abgang (Menge, Art, Qualität, ggf. Stichproben). Unternehmen müssen Lieferungen unverzüglich prüfen - sonst können spätere Mängelansprüche abgelehnt werden.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "mc", q: "Welcher Zeitraum gilt grundsätzlich als gesetzliche Gewährleistungsfrist für Mängel an gelieferter Ware?",
+            options: [
+              "6 Monate",
+              "1 Jahr",
+              "2 Jahre",
+              "5 Jahre"
+            ],
+            correct: 2,
+            explain: "Innerhalb der gesetzlichen Gewährleistungszeit von 2 Jahren können Mängel angezeigt werden. Besonderheit: Innerhalb der ersten 6 Monate nach Lieferung muss der Verkäufer nachweisen, dass die Ware bei Übertragung mangelfrei war (Beweislastumkehr) - danach kehrt sich die Beweislast um.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "fill", q: "Wie heißt das Prinzip, bei dem ein IT-Produkt (z.B. ein Server oder PC) erst nach individueller Online-Konfiguration durch den Kunden produziert wird? (Abkürzung mit drei Buchstaben)",
+            answers: ["BTO", "Build-to-Order", "Build to Order"],
+            explain: "BTO (Build-to-Order) bedeutet \"Fertigung nach Auftrag\". Viele Hersteller (z.B. Dell, HP, Lenovo) bieten in ihren Online-Shops Konfiguratoren an, mit denen Kunden Computer und Server nach ihren Anforderungen zusammenstellen. Erst dann wird produziert.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "mc", q: "Welche Aussage zu Rahmenverträgen mit Lieferanten trifft zu?",
+            options: [
+              "Rahmenverträge gelten nur für Einmalbeschaffungen",
+              "Für große Unternehmen und Behörden sind Rahmenverträge mit Lieferanten von Gütern und Dienstleistungen eine Selbstverständlichkeit",
+              "Rahmenverträge sind in Deutschland gesetzlich untersagt",
+              "Rahmenverträge legen ausschließlich die Lieferzeit fest"
+            ],
+            correct: 1,
+            explain: "Für große Unternehmen und Behörden sind Rahmenverträge selbstverständlich. Sie regeln über einen längeren Zeitraum Konditionen für wiederkehrende Beschaffungen (Preise, Konditionen, Mengen, Service). Auf dieser Basis lassen sich einzelne Abrufaufträge schnell und ohne neue Verhandlungen abwickeln.",
+            source: "LF 2, Kap. 2.8" },
+          { type: "multi", q: "Welche Faktoren beeinflussen die Frage \"Wie viel soll beschafft werden?\" (Mehrfachauswahl)",
+            options: [
+              "Beschaffungsart (Einzel- oder Vorratsbeschaffung)",
+              "Bestellvorschläge des ERP-Systems",
+              "Lieblingsfarbe der Geschäftsführung",
+              "Artikelart (ABC-Artikel)",
+              "Lagerkapazität und zu erwartender Verbrauch"
+            ],
+            correct: [0, 1, 3, 4],
+            explain: "Die Bestellmenge hängt ab von: Beschaffungsart (Einzel-/Vorrat), ERP-Bestellvorschlägen, Artikelart (ABC), Lagerkapazität, erwartetem Absatz/Verbrauch, Preiskonditionen und -schwankungen sowie sonstigen Bedingungen wie Sicherheitsbeständen. Geschmacksfragen spielen keine Rolle.",
+            source: "LF 2, Kap. 2.8" }
         ]
       },
       "2.9": {
@@ -1460,9 +1754,277 @@ const QUESTIONS = {
             options: ["Listeneinkaufspreis + Liefererrabatt + Liefererskonto + Bezugskosten","Listeneinkaufspreis - Liefererrabatt - Liefererskonto + Bezugskosten","Listeneinkaufspreis - Liefererrabatt + Liefererskonto - Bezugskosten","Listeneinkaufspreis + Bezugskosten - Mehrwertsteuer"],
             correct: 1,
             explain: "Die Kalkulation lautet: Listeneinkaufspreis MINUS Liefererrabatt = Zieleinkaufspreis MINUS Liefererskonto = Bareinkaufspreis PLUS Bezugskosten (z.B. Fracht, Versand) = Bezugspreis (Einstandspreis). Die Umsatzsteuer wird nicht einbezogen, da sie kein Kostenbestandteil ist.",
+            source: "LF 2, Kap. 2.9.2" },
+          { type: "fill", q: "Wie heißt das Zwischenergebnis in der Bezugspreiskalkulation nach Abzug des Liefererrabatts vom Listeneinkaufspreis?",
+            answers: ["Zieleinkaufspreis", "Ziel-Einkaufspreis"],
+            explain: "Listeneinkaufspreis minus Liefererrabatt ergibt den Zieleinkaufspreis. Davon zieht man das Liefererskonto ab und erhält den Bareinkaufspreis. Plus Bezugskosten = Bezugspreis (Einstandspreis).",
+            source: "LF 2, Kap. 2.9.2" },
+          { type: "mc", q: "Welche Aussage zur Umsatzsteuer im quantitativen Angebotsvergleich trifft zu?",
+            options: ["Die Umsatzsteuer wird zum Bezugspreis hinzugerechnet, da sie Teil der Kosten ist","Die Umsatzsteuer wird nicht in die Kalkulation einbezogen, da sie kein Kostenbestandteil ist","Die Umsatzsteuer ersetzt im Vergleich den Liefererskonto","Die Umsatzsteuer entfällt im B2B-Bereich grundsätzlich"],
+            correct: 1,
+            explain: "Die Umsatzsteuer wird nicht in den Angebotsvergleich einbezogen, da sie für vorsteuerabzugsberechtigte Unternehmen kein Kostenbestandteil ist - sie wird mit der eigenen Umsatzsteuerschuld verrechnet. Verglichen werden also stets die Nettobeträge.",
+            source: "LF 2, Kap. 2.9.2" },
+          { type: "multi", q: "Welche der folgenden Kriterien zählen zu den typischen qualitativen Bewertungskriterien einer Nutzwertanalyse? (Mehrfachauswahl)",
+            options: ["Qualität und Funktionen des Produkts","Kompetenz und Service des Lieferanten","Listeneinkaufspreis in Euro","Verhalten bei Reklamationen","Beachtung umweltgerechter Methoden"],
+            correct: [0, 1, 3, 4],
+            explain: "Qualitative Kriterien sind weiche, oft subjektiv zu bewertende Aspekte: Produktqualität, Lieferanten-Kompetenz, Verhalten bei Reklamationen, Umweltbewusstsein, Service, Image, bisherige Zusammenarbeit. Der Listeneinkaufspreis ist dagegen ein quantitatives, hartes Kriterium.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "mc", q: "Welche rechtliche Grundlage müssen öffentliche Auftraggeber (Kommunen, Behörden) bei der Auswahl von Angeboten besonders beachten?",
+            options: ["Bundesdatenschutzgesetz (BDSG)","Gesetz gegen Wettbewerbsbeschränkungen (GWB) und Vergabeordnungen (VOB, VOF, VOL)","Gewerbeordnung (GewO)","Betriebsverfassungsgesetz (BetrVG)"],
+            correct: 1,
+            explain: "Behörden und öffentliche Unternehmen müssen das Gesetz gegen Wettbewerbsbeschränkungen (GWB) sowie die Vergabeordnungen (VOB für Bauleistungen, VOF für freiberufliche Leistungen, VOL für sonstige Leistungen) beachten. Sie sind zur Auswahl des wirtschaftlichsten - nicht des billigsten - Angebots verpflichtet.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "tf", q: "Beim qualitativen Angebotsvergleich (Nutzwertanalyse) sollten die ausgewählten Bewertungskriterien sich gegenseitig bedingen und stark überlappen, damit ein klares Ergebnis entsteht.",
+            correct: false,
+            explain: "Falsch. Die Kriterien sollten gut voneinander abgegrenzt sein und sich gerade NICHT gegenseitig bedingen. Sonst wird ein einzelner Aspekt doppelt gewichtet, was die Aussagekraft der Nutzwertanalyse verfälscht. Auf sachliche und nachvollziehbare Argumentation ist zu achten.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "fill", q: "Wie nennt man die Vertragsart, bei der die individuelle Erstellung eines konkreten Werks (z.B. eines IT-Systems aus Komponenten) geschuldet wird?",
+            answers: ["Werkvertrag"],
+            explain: "Beim Werkvertrag (§ 631 BGB) wird ein konkretes Werk/Ergebnis geschuldet, nicht nur die Tätigkeit. Beispiel: individuelle Erstellung eines IT-Systems aus Komponenten. Standardprodukte fallen dagegen unter Kaufvertragsrecht, reine Tätigkeiten (z.B. Beratung) unter Dienstleistungsvertragsrecht.",
+            source: "LF 2, Kap. 2.9.4" },
+          { type: "mc", q: "Welche Kostenarten gehören laut Lehrbuch in die Wirtschaftlichkeitsbetrachtung über den reinen Anschaffungspreis hinaus?",
+            options: ["Ausschließlich der Netto-Kaufpreis","Anschaffungs-, Folge- (Verbrauch, Wartung, Reparatur) und Restwertbetrachtungen","Nur die Mehrwertsteuer","Nur die Schulungskosten"],
+            correct: 1,
+            explain: "In die Wirtschaftlichkeitsbetrachtung gehören: Anschaffungskosten (inkl. Bezugskosten, Installations- und Schulungskosten), Folgekosten (Verbrauch, Reparatur, Wartung), Restwerte (Wertverlust über die Nutzungsdauer) sowie qualitative Aspekte. Der reine Listenpreis greift zu kurz.",
+            source: "LF 2, Kap. 2.9.3" },
+          { type: "multi", q: "Welche Schritte gehören typischerweise in einen quantitativen Angebotsvergleich mehrerer Lieferanten? (Mehrfachauswahl)",
+            options: ["Berechnung des Bezugspreises (Einstandspreises) je Lieferant","Berücksichtigung von Rabatten und Skonti","Berücksichtigung der Mehrwertsteuer als Kostenbestandteil","Hinzurechnen von Bezugskosten (Fracht, Versand)","Vergleich und Auswahl des günstigsten Bezugspreises"],
+            correct: [0, 1, 3, 4],
+            explain: "Der quantitative Angebotsvergleich rechnet: Listeneinkaufspreis - Rabatt - Skonto + Bezugskosten = Bezugspreis. Diese werden je Lieferant verglichen und der günstigste ermittelt. Die Mehrwertsteuer wird nicht einbezogen, da sie für vorsteuerabzugsberechtigte Unternehmen kein Kostenbestandteil ist.",
             source: "LF 2, Kap. 2.9.2" }
         ]
       }
+    }
+  },
+
+  /* ============================================================
+     LF 3 - Clients in Netzwerke einbinden (Grundstufe)
+     Source: Westermann LF 1-5, Kapitel 3
+     ============================================================ */
+  "LF3": {
+    subchapters: {
+      "3.1": { title: "Einführung in das Netzwerk des Ausbildungsbetriebs", questions: [
+        { type: "mc", q: "Welche Aussage zur IP-Adresse im LAN trifft zu?",
+          options: [
+            "Mehrere Geräte können sich eine IP-Adresse teilen, solange sie an unterschiedlichen Switches hängen",
+            "Jedes Gerät im LAN hat eine eindeutige IP-Adresse, über die es adressiert werden kann",
+            "Nur Server bekommen eine IP-Adresse, Clients nicht",
+            "IP-Adressen werden ausschließlich für den Internetzugang benötigt"
+          ],
+          correct: 1,
+          explain: "Jedes Gerät (Device) im LAN hat eine eindeutige IP-Adresse, über die es angesprochen wird. Das IP (Internet Protocol) transportiert Datenpakete an den Rechner mit der angegebenen Ziel-IP-Adresse - sowohl im internen Netzwerk als auch ins Internet.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "fill", q: "Wie nennt man das lokale, meist auf ein Betriebsgelände begrenzte Netzwerk, das ein Unternehmen für die interne Kommunikation und Datenverarbeitung einsetzt? (Abkürzung)",
+          answers: ["LAN", "Local Area Network"],
+          explain: "LAN steht für Local Area Network - ein lokal begrenztes Netzwerk, in der Regel auf ein Betriebsgelände begrenzt, mit Ausdehnungen bis zu mehreren Kilometern. Drahtlos heißt es WLAN (Wireless LAN).",
+          source: "LF 3, Kap. 3.1" },
+        { type: "tf", q: "Ein Router verbindet das LAN mit dem Internet und unterscheidet sich damit von einem Switch, der innerhalb des LANs Datenpakete weiterleitet.",
+          correct: true,
+          explain: "Korrekt. Switches leiten Datenpakete zielgerichtet innerhalb eines Netzwerks weiter (z.B. zwischen Endgeräten im LAN). Router verbinden mehrere Netzwerke - typisch das LAN mit dem Internet oder mit anderen Subnetzen.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "mc", q: "Welche Aufgabe übernimmt ein Server im Netzwerk üblicherweise?",
+          options: [
+            "Er ersetzt den Router als Internetzugang",
+            "Er stellt den Clients Dienste (Services) zur Verfügung, z.B. zentrale Datenspeicherung, E-Mail oder Telefon",
+            "Er dient ausschließlich als Drucker für Großformate",
+            "Er ist die Bezeichnung für das WLAN-Netzwerk"
+          ],
+          correct: 1,
+          explain: "Server sind leistungsfähige Rechner, die im Datacenter (Rechenzentrum) untergebracht sind und Dienste im Netzwerk anbieten - zentrale Datenspeicherung, Telefonie (TK-Anlage als IP-Server), E-Mail, CRM, ERP und vieles mehr. Clients (z.B. Arbeitsplatzrechner) nutzen diese Dienste.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "multi", q: "Welche der folgenden Geräte gehören laut Lehrbuch zu den Network Devices (Netzwerkkomponenten)? (Mehrfachauswahl)",
+          options: [
+            "Switch",
+            "Router",
+            "Access Point",
+            "Tastatur",
+            "Endgeräte wie PCs oder Drucker"
+          ],
+          correct: [0, 1, 2],
+          explain: "Network Devices sind die physischen Geräte, die Datenpakete im Netzwerk weiterleiten: Switches (verbinden Endgeräte), Access Points (verbinden Mobilgeräte per WLAN), Router (verbinden mehrere Netzwerke). Endgeräte wie PCs, Drucker oder Tastaturen sind Hosts/Clients, keine Network Devices.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "fill", q: "Wie heißt das drahtlose Netzwerk, über das Mobilgeräte wie Smartphones, Tablets oder Notebooks ins LAN eingebunden werden können? (Abkürzung)",
+          answers: ["WLAN", "Wireless LAN", "Wi-Fi"],
+          explain: "WLAN (Wireless LAN) ist das drahtlose lokale Netzwerk - im Standard-Sprachgebrauch auch Wi-Fi genannt. Mobilgeräte verbinden sich über Access Points mit dem WLAN, das wiederum mit dem kabelgebundenen LAN gekoppelt ist.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "mc", q: "Was ist die Funktion einer TK-Anlage in einem IT-Netzwerk eines modernen Unternehmens?",
+          options: [
+            "Sie ersetzt den Router als Internetzugang",
+            "Sie ist ein Server, der den Telefondienst (z.B. IP-Telefonie) für interne und externe Telefonate bereitstellt",
+            "Sie ist ein Backup-System für die Festplatten",
+            "Sie ist ein spezielles Druckergerät"
+          ],
+          correct: 1,
+          explain: "Die TK-Anlage (Telefonanlage) ist heute typischerweise ein Server, der den Telefondienst versieht. IP-Telefone sind über das Netzwerk angeschlossen - die TK-Anlage verbindet sie intern und ermöglicht über das Internet oder öffentliche Telefonnetze auch externe Gespräche.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "tf", q: "Server und Netzwerkdienste können auch in externe Rechenzentren ausgelagert werden - der Zugriff erfolgt dann über das Internet.",
+          correct: true,
+          explain: "Korrekt. Viele Unternehmen verlagern Server und zentrale Dienste in externe Rechenzentren oder zu Cloud-Anbietern. Der Zugriff erfolgt dann über das Internet (oft über VPN). Das reduziert eigene Hardware-Investitionen und Wartungsaufwand - die Daten liegen aber bei externen Dienstleistern.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "mc", q: "Welche Aussage zu Hosts bzw. Datenendgeräten im Netzwerk ist korrekt?",
+          options: [
+            "Hosts sind ausschließlich Server, niemals Arbeitsplatzrechner",
+            "Hosts sind die letzten Geräte im Netz, die Daten empfangen oder erzeugen - z.B. Rechner, Server, Drucker",
+            "Hosts sind Synonym für Router",
+            "Hosts werden nur in Rechenzentren verwendet"
+          ],
+          correct: 1,
+          explain: "Als Hosts (Datenendgeräte) werden die letzten Geräte im Netz bezeichnet, die Daten empfangen oder erzeugen - z.B. Arbeitsplatzrechner, Server, Drucker. Sie sind das jeweilige Anfang oder Ende einer Kommunikationsverbindung, im Unterschied zu durchleitenden Network Devices wie Switches und Routern.",
+          source: "LF 3, Kap. 3.1" },
+        { type: "multi", q: "Welche zentralen Aufgaben erfüllt ein Datennetzwerk im Betrieb? (Mehrfachauswahl)",
+          options: [
+            "Kommunikationsverbund (z.B. Text, Bild, Video)",
+            "Datenverbund (Zugriff auf zentrale und verteilte Daten)",
+            "Funktionsverbund (Nutzung von Anwendungen anderer Arbeitsplätze)",
+            "Ressourcenverbund (gemeinsame Nutzung von Druckern, Speicher etc.)",
+            "Ersatz für ein Buchhaltungssystem"
+          ],
+          correct: [0, 1, 2, 3],
+          explain: "Die zentralen Aufgaben eines Datennetzwerks: Kommunikationsverbund, Datenverbund, Funktionsverbund, Ressourcenverbund sowie Last- und Leistungsverbund (Verteilung von Lasten zur Verbesserung der Antwortzeiten). Ein Netzwerk ist die Infrastruktur dafür - kein Ersatz für Fachanwendungen wie Buchhaltungssysteme.",
+          source: "LF 3, Kap. 3.1" }
+      ] },
+      "3.2": { title: "Hauptbestandteile von Computernetzen", questions: [] },
+      "3.3": { title: "Grundlagen der Datenübertragung in Netzwerken", questions: [] },
+      "3.4": { title: "Netzwerkstrukturen, -komponenten, -standards und -modelle", questions: [] },
+      "3.5": { title: "Adressierung im Netzwerk (IP, MAC, DNS, DHCP)", questions: [] },
+      "3.6": { title: "Clients in Netzwerke einbinden und konfigurieren", questions: [] },
+      "3.7": { title: "Netzwerksicherheit und Backupstrategien", questions: [] },
+      "3.8": { title: "Stromversorgung und unterbrechungsfreier Betrieb (USV)", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 4 - Schutzbedarfsanalyse im eigenen Arbeitsbereich (Grundstufe)
+     Source: Westermann LF 1-5, Kapitel 4
+     ============================================================ */
+  "LF4": {
+    subchapters: {
+      "4.1": { title: "Einführung, Verantwortung, Zuständigkeiten und Sicherheitsbereiche", questions: [] },
+      "4.2": { title: "Technisch-organisatorische Maßnahmen (TOM) und Sicherheitskonzept", questions: [] },
+      "4.3": { title: "Schutzbedarfsfeststellung anhand des BSI-Beispielunternehmens", questions: [] },
+      "4.4": { title: "Schutzbedarfsfeststellung in Arbeitsbereichen (Software, Clients, mobile Daten)", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 5 - Software zur Verwaltung von Daten anpassen (Grundstufe)
+     Source: Westermann LF 1-5, Kapitel 5
+     ============================================================ */
+  "LF5": {
+    subchapters: {
+      "5.1": { title: "Umfeld der Softwareentwicklung analysieren", questions: [] },
+      "5.2": { title: "Grundlagen zur Verwaltung von Daten in IT-Systemen", questions: [] },
+      "5.3": { title: "Prozess der Softwareentwicklung analysieren", questions: [] },
+      "5.4": { title: "Anforderungsspezifikation und Softwareentwurf", questions: [] },
+      "5.5": { title: "Algorithmen und Kontrollstrukturen", questions: [] },
+      "5.6": { title: "Objektorientierte Programmierung", questions: [] },
+      "5.7": { title: "Datenbanken und SQL", questions: [] },
+      "5.8": { title: "Software testen und dokumentieren", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 6 - Serviceanfragen bearbeiten (Fachstufe I)
+     Source: Westermann LF 6-9, Kapitel 1
+     ============================================================ */
+  "LF6": {
+    subchapters: {
+      "6.1": { title: "Servicearten und Serviceanforderungen im IT-Bereich", questions: [] },
+      "6.2": { title: "Serviceanfragen entgegennehmen und eingangs bearbeiten", questions: [] },
+      "6.3": { title: "Serviceanfragen vertiefend analysieren und Lösungen erarbeiten", questions: [] },
+      "6.4": { title: "Situationsgerecht kommunizieren und reflektieren", questions: [] },
+      "6.5": { title: "Präventive Instandhaltung, Wartung und Störungsvermeidung", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 7 - Cyber-physische Systeme ergänzen (Fachstufe I, technische IT-Berufe)
+     Source: Westermann LF 6-9, Kapitel 2
+     ============================================================ */
+  "LF7": {
+    subchapters: {
+      "7.1": { title: "Grundlagen von cyber-physischen Systemen (IoT, Industrie 4.0)", questions: [] },
+      "7.2": { title: "Kommunikation zwischen cyber-physischen Systemen (MQTT, OPC UA)", questions: [] },
+      "7.3": { title: "Bestehende cyber-physische Systeme im Unternehmen analysieren", questions: [] },
+      "7.4": { title: "Erweiterungen für ein cyber-physisches System planen", questions: [] },
+      "7.5": { title: "Cyber-physisches System in Betrieb nehmen", questions: [] },
+      "7.6": { title: "Cyber-physisches System optimieren (FMEA, Betriebs- und Datensicherheit)", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 8 - Daten systemübergreifend bereitstellen (Fachstufe I, technische IT-Berufe)
+     Source: Westermann LF 6-9, Kapitel 3
+     ============================================================ */
+  "LF8": {
+    subchapters: {
+      "8.1": { title: "Kundenaufträge im Rahmen von Softwareprojekten bearbeiten", questions: [] },
+      "8.2": { title: "Daten bewerten und aus verschiedenen Datenquellen zusammenführen", questions: [] },
+      "8.3": { title: "Objektorientierte Softwarelösungen planen (mit Informationssicherheit)", questions: [] },
+      "8.4": { title: "Softwarelösungen implementieren und testen", questions: [] },
+      "8.5": { title: "Datenbanken und Datenaustausch (SQL, NoSQL, Schnittstellen)", questions: [] },
+      "8.6": { title: "Datenflüsse und Datenanalyse, ETL-Prozesse", questions: [] },
+      "8.7": { title: "Datenschutz und Datensicherheit bei systemübergreifenden Daten", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 9 - Netzwerke und Dienste bereitstellen (Fachstufe I, technische IT-Berufe)
+     Source: Westermann LF 6-9, Kapitel 4
+     ============================================================ */
+  "LF9": {
+    subchapters: {
+      "9.1": { title: "Netzwerkbereitstellung nach Unternehmensanforderungen", questions: [] },
+      "9.2": { title: "Ist-Analyse durchführen und Lastenhefte erstellen", questions: [] },
+      "9.3": { title: "Technische Anforderungen für die Bereitstellung", questions: [] },
+      "9.4": { title: "Wirtschaftliche und sicherheitsrelevante Anforderungen, Nachhaltigkeit", questions: [] },
+      "9.5": { title: "Pflichtenhefte nach Unternehmensanforderungen erstellen", questions: [] },
+      "9.6": { title: "Netzwerke installieren, konfigurieren und bereitstellen", questions: [] },
+      "9.7": { title: "Funktionsprüfungen, Messungen und Dokumentation", questions: [] },
+      "9.8": { title: "Virtualisierungskonzept und Managed Services", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 10 - Benutzerschnittstellen gestalten und entwickeln (Fachstufe II, Anwendungsentwicklung)
+     Source: Westermann LF 10-12, Kapitel 1 (Lernfeld 10a)
+     ============================================================ */
+  "LF10": {
+    subchapters: {
+      "10.1": { title: "Anforderungen an eine Benutzerschnittstelle ermitteln", questions: [] },
+      "10.2": { title: "Softwareprodukt designen (Softwarearchitektur, Architekturmuster)", questions: [] },
+      "10.3": { title: "Benutzerschnittstellen funktionsgerecht und ergonomisch konzipieren", questions: [] },
+      "10.4": { title: "Benutzerschnittstellen implementieren (Python, Java, Web)", questions: [] },
+      "10.5": { title: "Benutzerschnittstellen testen (GUI-Tests, UX)", questions: [] },
+      "10.6": { title: "Benutzerschnittstellen dokumentieren (Benutzerhandbuch)", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 11 - Funktionalität in Anwendungen realisieren (Fachstufe II, Anwendungsentwicklung)
+     Source: Westermann LF 10-12, Kapitel 2 (Lernfeld 11a)
+     ============================================================ */
+  "LF11": {
+    subchapters: {
+      "11.1": { title: "Modulare Softwarekomponenten planen (UML, Entwurfsmuster, Clean Code)", questions: [] },
+      "11.2": { title: "Datenstrukturen von Softwarekomponenten planen und implementieren", questions: [] },
+      "11.3": { title: "Funktionalität implementieren (Algorithmen, Sortieren, Verschlüsseln, Hashes)", questions: [] },
+      "11.4": { title: "Softwarekomponenten integrieren und testen", questions: [] },
+      "11.5": { title: "Versionskontrolle und Continuous Integration", questions: [] }
+    }
+  },
+
+  /* ============================================================
+     LF 12 - Kundenspezifische Anwendungsentwicklung durchführen (Fachstufe II, Anwendungsentwicklung)
+     Source: Westermann LF 10-12, Kapitel 3 (Lernfeld 12a)
+     ============================================================ */
+  "LF12": {
+    subchapters: {
+      "12.1": { title: "Anforderungen für eine kundenspezifische Anwendung analysieren", questions: [] },
+      "12.2": { title: "Softwarearchitektur und Datenmodell entwerfen", questions: [] },
+      "12.3": { title: "Anwendung implementieren (Backend, Frontend, Schnittstellen)", questions: [] },
+      "12.4": { title: "Anwendung testen, dokumentieren und ausliefern", questions: [] },
+      "12.5": { title: "Wartung, Erweiterung und Lifecycle-Management", questions: [] }
     }
   }
 };
@@ -1473,16 +2035,16 @@ const QUESTIONS = {
 const LERNFELDER = [
   { id: "LF1",  num: "LF 01", title: "Das Unternehmen und die eigene Rolle im Betrieb beschreiben", block: "grund", available: true },
   { id: "LF2",  num: "LF 02", title: "Arbeitsplätze nach Kundenwunsch ausstatten", block: "grund", available: true },
-  { id: "LF3",  num: "LF 03", title: "Clients in Netzwerke einbinden", block: "grund", available: false },
-  { id: "LF4",  num: "LF 04", title: "Schutzbedarfsanalyse im eigenen Arbeitsbereich durchführen", block: "grund", available: false },
-  { id: "LF5",  num: "LF 05", title: "Software zur Verwaltung von Daten anpassen", block: "grund", available: false },
-  { id: "LF6",  num: "LF 06", title: "Serviceanfragen bearbeiten", block: "fach1", available: false },
-  { id: "LF7",  num: "LF 07", title: "Funktionalität in IT-Systeme programmieren", block: "fach1", available: false },
-  { id: "LF8",  num: "LF 08", title: "Daten systemübergreifend bereitstellen", block: "fach1", available: false },
-  { id: "LF9",  num: "LF 09", title: "Netzwerke und Dienste bereitstellen", block: "fach1", available: false },
-  { id: "LF10", num: "LF 10", title: "Benutzerschnittstellen gestalten und entwickeln", block: "fach2", available: false },
-  { id: "LF11", num: "LF 11", title: "Cyber-physische Systeme entwickeln", block: "fach2", available: false },
-  { id: "LF12", num: "LF 12", title: "Kundenspezifische Anwendungsentwicklung durchführen", block: "fach2", available: false }
+  { id: "LF3",  num: "LF 03", title: "Clients in Netzwerke einbinden", block: "grund", available: true },
+  { id: "LF4",  num: "LF 04", title: "Schutzbedarfsanalyse im eigenen Arbeitsbereich durchführen", block: "grund", available: true },
+  { id: "LF5",  num: "LF 05", title: "Software zur Verwaltung von Daten anpassen", block: "grund", available: true },
+  { id: "LF6",  num: "LF 06", title: "Serviceanfragen bearbeiten", block: "fach1", available: true },
+  { id: "LF7",  num: "LF 07", title: "Cyber-physische Systeme ergänzen", block: "fach1", available: true },
+  { id: "LF8",  num: "LF 08", title: "Daten systemübergreifend bereitstellen", block: "fach1", available: true },
+  { id: "LF9",  num: "LF 09", title: "Netzwerke und Dienste bereitstellen", block: "fach1", available: true },
+  { id: "LF10", num: "LF 10", title: "Benutzerschnittstellen gestalten und entwickeln", block: "fach2", available: true },
+  { id: "LF11", num: "LF 11", title: "Funktionalität in Anwendungen realisieren", block: "fach2", available: true },
+  { id: "LF12", num: "LF 12", title: "Kundenspezifische Anwendungsentwicklung durchführen", block: "fach2", available: true }
 ];
 
 const BLOCK_LABELS = {
