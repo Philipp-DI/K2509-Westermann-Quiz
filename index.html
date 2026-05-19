@@ -1355,7 +1355,85 @@ const QUESTIONS = {
       },
       "2.7": {
         title: "Konfiguration und Installation",
-        questions: []
+        questions: [
+          { type: "mc", q: "Was beschreibt der Begriff \"Customizing\" im Zusammenhang mit Standardsoftware?",
+            options: [
+              "Die komplette Neuentwicklung einer Software als Individualsoftware",
+              "Das Anpassen von Standardsoftware an die individuellen Wünsche des Kunden, ohne den Quellcode zu verändern",
+              "Das Übersetzen einer Software in eine andere Programmiersprache",
+              "Das Übertragen von Daten aus einem Altsystem in ein neues System"
+            ],
+            correct: 1,
+            explain: "Customizing ist das Anpassen von Standardsoftware an Kundenwünsche, ohne den Quellcode anzufassen. Üblich sind zwei Wege: Konfiguration (Auswahl und Zusammenstellung von Modulen) und Parametrisierung (Aktivieren/Deaktivieren von Funktionen über Parameter).",
+            source: "LF 2, Kap. 2.7" },
+          { type: "fill", q: "Wie nennt man die Anpassung einer Standardsoftware durch das Setzen von Parametern, mit denen Teile des Programms aktiviert oder deaktiviert werden?",
+            answers: ["Parametrisierung", "Parametrierung"],
+            explain: "Bei der Parametrisierung wird die Software über Parameter auf den benötigten Funktionsumfang angepasst - Teile der Standardsoftware werden aktiviert oder deaktiviert. Sie ist neben der Konfiguration die zweite klassische Customizing-Variante.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "tf", q: "Wenn das Customizing einer Standardsoftware nicht ausreicht, ist die Erweiterungsprogrammierung über definierte Schnittstellen die nächste Stufe, bevor eine komplette Neuentwicklung als Individualsoftware in Betracht gezogen wird.",
+            correct: true,
+            explain: "Korrekt. Die Stufen lauten: Customizing (Konfiguration/Parametrisierung) → Erweiterungsprogrammierung (individuelle Programmteile über definierte Schnittstellen) → Individualsoftware (komplette Neuentwicklung). Erst wenn die jeweils einfachere Stufe nicht reicht, geht man zur nächsten über.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "mc", q: "Welche Reihenfolge beschreibt den typischen Ablauf bei der Bereitstellung eines neuen Arbeitsplatz-Clients (vereinfacht)?",
+            options: [
+              "Anschluss → Anforderungsanalyse → Beschaffung → Einweisung",
+              "Anforderungsanalyse → Beschaffung → Konfiguration → Installation → Einweisung und Abnahme",
+              "Installation → Beschaffung → Anforderungsanalyse → Abnahme",
+              "Einweisung → Konfiguration → Beschaffung → Installation"
+            ],
+            correct: 1,
+            explain: "Die typische Abfolge im Leistungsprozess: zuerst Anforderungsanalyse beim Kunden, dann Beschaffung der passenden Komponenten, anschließend Konfiguration und Installation (Betriebssystem, Anwendersoftware, Anpassung der Oberfläche), zum Schluss Einweisung der Anwender und formale Abnahme.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "multi", q: "Welche Schritte gehören zum physischen (Hardware-)Anschluss eines neuen Clients im Netzwerk? (Mehrfachauswahl)",
+            options: [
+              "Prüfen, ob die Anschlussdose vorhanden und die richtige Kategorie hat",
+              "Konfiguration der Benutzeroberfläche an die Kundenwünsche anpassen",
+              "Freien Switchport im Verteiler suchen",
+              "Patchverbindung zwischen Switchport und Anschlussbuchse herstellen",
+              "Druckertreiber installieren"
+            ],
+            correct: [0, 2, 3],
+            explain: "Der Hardwareanschluss umfasst: Anschlussdose und deren Kategorie prüfen, Verteiler/Buchse lokalisieren, freien Switchport suchen, Verbindungsschnüre prüfen und patchen (Rechner → Dose, Switchport → Buchse). GUI-Anpassung und Druckertreiber gehören zur nachgelagerten Software- bzw. Inbetriebnahme-Phase.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "mc", q: "Wie beziehen Clients in einem ordentlich eingerichteten Netzwerk üblicherweise ihre IP-Adresse?",
+            options: [
+              "Manuell per Hand vom Administrator eingetragen, da das zuverlässiger ist",
+              "Automatisch über einen DHCP-Server, der einen Pool von IP-Adressen verwaltet",
+              "Über das BIOS des Clients",
+              "Vom Drucker, der die IP-Adressen verteilt"
+            ],
+            correct: 1,
+            explain: "Manuelle Einstellungen sind zu fehleranfällig und werden vermieden. Beim Einrichten eines Netzwerks wird ein DHCP-Server eingerichtet, der die IP-Adressen aus einem Pool automatisch an die angeschlossenen Rechner verteilt.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "fill", q: "Welcher Konsolenbefehl zeigt unter Windows die aktuelle IP-Konfiguration des Rechners an?",
+            answers: ["ipconfig", "ipconfig /all"],
+            explain: "Mit \"ipconfig\" in der Eingabeaufforderung erhält man einen kurzen Überblick über die IP-Einstellungen. Mit dem Parameter \"/all\" werden alle Details ausgegeben (MAC, DNS-Server, DHCP-Lease usw.). Verändern lässt sich die Konfiguration mit ipconfig nicht - dafür braucht es die grafische Oberfläche oder andere Tools.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "mc", q: "Welche Tests gehören zur Inbetriebnahme eines neu eingebundenen Clients dazu?",
+            options: [
+              "Nur ein Reboot des Rechners",
+              "Ping auf eine Internetseite, Prüfung der Namensauflösung (DNS), Erreichbarkeit von Router und Internet",
+              "Ausschließlich das Öffnen eines Browsers",
+              "Eine reine Sichtprüfung der LED-Anzeigen am Switch"
+            ],
+            correct: 1,
+            explain: "Zur sauberen Inbetriebnahme gehört: Ping auf eine Internetseite, Prüfung der DNS-Namensauflösung, Erreichbarkeit des Routers, Zugang zum Internet. Anschließend werden Rechnername, Anschlussdosen-Nummer, IP-Adresse und Betriebssystem dokumentiert.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "tf", q: "Bei der Datenmigration wird ein vorhandenes System zur Verwaltung von Daten durch ein neues ersetzt, wobei die Daten vom Altsystem auf das neue System übertragen werden müssen.",
+            correct: true,
+            explain: "Korrekt. Datenmigration bedeutet: Altsystem wird abgelöst, die enthaltenen Daten müssen ins neue System überführt werden. Häufige Herausforderungen dabei: unterschiedliche Datenformate, Datenbereinigung, Vollständigkeit der Übernahme und Validierung nach dem Transfer.",
+            source: "LF 2, Kap. 2.7" },
+          { type: "mc", q: "Was unterscheidet die Anpassung von Individualsoftware grundsätzlich von der Anpassung einer Standardsoftware?",
+            options: [
+              "Individualsoftware kann nur vom Hersteller verändert werden, Standardsoftware nur vom Kunden",
+              "Bei Individualsoftware wird in der Regel der Quellcode verändert; bei Standardsoftware erfolgt die Anpassung üblicherweise über Customizing (Konfiguration und Parametrisierung)",
+              "Standardsoftware ist immer kostenfrei, Individualsoftware kostenpflichtig",
+              "Individualsoftware lässt sich grundsätzlich nicht mehr anpassen, sobald sie ausgeliefert wurde"
+            ],
+            correct: 1,
+            explain: "Bei Individualsoftware wird typischerweise der Quellcode geändert - flexible Anpassung, allerdings mit Aufwand. Bei Standardsoftware bleibt der Quellcode unverändert; Anpassungen laufen über Customizing (Konfiguration, Parametrisierung) und ggf. Erweiterungsprogrammierung über definierte Schnittstellen.",
+            source: "LF 2, Kap. 2.7" }
+        ]
       },
       "2.8": {
         title: "Beschaffungsprozess und Kalkulation",
