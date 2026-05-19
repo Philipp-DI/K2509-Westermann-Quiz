@@ -302,18 +302,23 @@
     color: var(--ink-soft);
     flex-wrap: wrap;
   }
-  .breadcrumb a {
+  .breadcrumb a,
+  .breadcrumb button {
     color: var(--ink-soft);
     text-decoration: none;
     cursor: pointer;
     transition: color 0.15s ease;
-    background: none;
+    background: transparent !important;
     border: none;
     font-family: inherit;
     font-size: inherit;
     padding: 0;
+    margin: 0;
+    -webkit-appearance: none;
+    appearance: none;
   }
-  .breadcrumb a:hover { color: var(--accent); }
+  .breadcrumb a:hover,
+  .breadcrumb button:hover { color: var(--accent); }
   .breadcrumb .current { color: var(--accent); font-weight: 600; }
   .breadcrumb .sep { opacity: 0.4; }
 
@@ -1268,7 +1273,85 @@ const QUESTIONS = {
       },
       "2.6": {
         title: "Marktgängige IT-Systeme vorstellen",
-        questions: []
+        questions: [
+          { type: "mc", q: "Was unterscheidet einen Fat Client (Thick Client) von einem Thin Client?",
+            options: [
+              "Fat Clients besitzen kein eigenes Betriebssystem, Thin Clients schon.",
+              "Fat Clients verarbeiten Programme und Daten lokal, Thin Clients lassen das Meiste vom Server erledigen.",
+              "Fat Clients sind grundsätzlich mobile Geräte, Thin Clients stationär.",
+              "Fat Clients haben kein Display, Thin Clients schon."
+            ],
+            correct: 1,
+            explain: "Bei Fat Clients (Desktops, Workstations) werden Programme und Daten im Wesentlichen auf dem Client-Rechner verarbeitet. Bei Thin Clients erfolgt die Verarbeitung in der Regel auf dem Server - der Client bleibt schlank und dient vor allem der Ein- und Ausgabe.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "fill", q: "Wie nennt man einen ausbaufähigen Basisrechner, bei dem Netzteil, Mainboard, Kabel und Kühlsystem bereits in einem Gehäuse vormontiert sind, weitere Komponenten aber selbst ergänzt werden?",
+            answers: ["Barebone", "Barebone-Rechner", "Barebone PC"],
+            explain: "Ein Barebone (englisch \"blanker Knochen\") liefert die Grundausstattung in einem Gehäuse. CPU, RAM, Festplatten und ggf. Grafikkarte werden je nach Bedarf ergänzt. Geeignet für Arbeitsplätze mit hohen oder speziellen Leistungsanforderungen sowie für Mini-PC-Lösungen.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "tf", q: "Ein Zero Client besitzt im Gegensatz zum klassischen Thin Client keinen lokalen Anwenderspeicher und ist vollständig vom Server abhängig.",
+            correct: true,
+            explain: "Korrekt. Der Zero Client ist eine besonders schlanke Form des Thin Clients - ohne lokalen Anwenderspeicher, vollständig abhängig vom Server. Nachteile: Offline-Betrieb nicht möglich, Latenzzeiten durch Netzbelastung. Vorteile: minimaler Administrationsaufwand, geringer Energieverbrauch.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "mc", q: "Welche Bauform ist typisch für einen leistungsstarken Arbeitsplatzcomputer für technisch-wissenschaftliche Zwecke oder Multimedia-Bearbeitung, oft mit vielen Kernen und mehr als 8 GB RAM?",
+            options: [
+              "All-in-One-PC",
+              "Workstation",
+              "Stick-PC",
+              "Zero Client"
+            ],
+            correct: 1,
+            explain: "Die Workstation (deutsch: Arbeitsstation) ist ein leistungsfähiger Arbeitsplatzrechner für technisch-wissenschaftliche oder multimediale Aufgaben. Typische Merkmale: viele Kerne, hoch getaktet, mehr als 8 GB RAM, oft mit zertifizierten Komponenten (z.B. Xeon-CPUs, ECC-RAM, dedizierte Grafikkarte).",
+            source: "LF 2, Kap. 2.6" },
+          { type: "multi", q: "Welche der folgenden Aussagen über Thin Clients treffen zu? (Mehrfachauswahl)",
+            options: [
+              "Daten werden bevorzugt zentral auf Servern abgelegt.",
+              "Wartungskosten sind in der Regel höher als bei Fat Clients.",
+              "Auch ältere Geräte lassen sich als Thin Clients weiternutzen.",
+              "Sie eignen sich gut für Green-IT-Konzepte.",
+              "Sie funktionieren ohne Netzanbindung uneingeschränkt."
+            ],
+            correct: [0, 2, 3],
+            explain: "Thin Clients legen Daten zentral ab (besserer Datenschutz und -sicherheit), erlauben die Weiternutzung von Altgeräten, und sind durch geringen Energieverbrauch grün. Falsch ist hingegen: Wartungskosten sind niedriger, nicht höher; ohne Netz sind sie eingeschränkt nutzbar.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "mc", q: "Welche Aussage zu All-in-One-PCs ist korrekt?",
+            options: [
+              "Der Rechner ist physisch von Monitor und Eingabegeräten getrennt.",
+              "Der Rechner ist im Monitorgehäuse untergebracht, die Monitore sind daher meist größer (ca. 21-27 Zoll).",
+              "All-in-One-PCs sind grundsätzlich Thin Clients.",
+              "Sie können keine Touchscreens haben."
+            ],
+            correct: 1,
+            explain: "Beim All-in-One-PC ist der Rechner im Monitorgehäuse verbaut. Dadurch sind die Monitore in der Regel größer (21-27 Zoll), häufig auch mit Touchscreen ausgestattet - etwa für die Nutzung als Infopoint oder durch wechselnde Anwender.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "fill", q: "Wie heißt das Konzept eines sehr kleinen, portablen Rechners im Stiftformat, der oft mit portablem Betriebssystem und portablen Apps flexibel an Bildschirme angeschlossen werden kann?",
+            answers: ["Stick-PC", "Stick PC", "StickPC"],
+            explain: "Stick-PCs sind besonders kompakte Mini-Computer, die mit portablem Betriebssystem und Apps flexibel überall einen eigenen Rechner mit Anwendungen bieten können. Typisch werden sie an einen HDMI-Eingang eines Monitors gesteckt.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "mc", q: "Welche Geräte zählen laut Lehrbuch zur Kategorie der Smart Devices am Arbeitsplatz?",
+            options: [
+              "Tower-PCs und Workstations",
+              "Mainframe-Computer und Supercomputer",
+              "Kleinst-Computer, die vernetzt mit IT-Systemen interagieren (z.B. Smartphones, Smart-Home-Geräte, Komponenten in Smart Factories)",
+              "Ausschließlich klassische Desktop-PCs"
+            ],
+            correct: 2,
+            explain: "Smart Devices sind digital vernetzte Einheiten - Kleinst-Computer, die in Maschinen, Werkzeugen und Anlagen eingebaut sind und vernetzt mit Computersystemen interagieren. Beispiele: Smartphones, Smart-Home-Anwendungen, Komponenten in Smart Factories.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "tf", q: "Ein Embedded System ist ein eigenständiger Arbeitsplatzcomputer, der typischerweise als Tower-PC im Büro eingesetzt wird.",
+            correct: false,
+            explain: "Falsch. Embedded Systems sind in Maschinen, Anlagen oder Erzeugnisse eingebettete IT-Systeme - sie sind genau das Gegenteil eines eigenständigen Arbeitsplatzcomputers. Beispiele: Steuerungselektronik in Fahrzeugen, Industriemaschinen oder Haushaltsgeräten.",
+            source: "LF 2, Kap. 2.6" },
+          { type: "mc", q: "Welche der folgenden Größen zählt zu den quantitativen (messbaren, objektiven) Auswahlkriterien für IT-Hardware?",
+            options: [
+              "Design",
+              "Robustheit",
+              "Energieverbrauch und Geschwindigkeit",
+              "Erweiterbarkeit und Kompatibilität"
+            ],
+            correct: 2,
+            explain: "Quantitative Größen sind objektiv messbar: Volumen, Kapazität, Gewicht, Energie, Geräuschentwicklung, Temperatur, Schnelligkeit, Performance, Stabilität. Qualitative Größen wie Design, Robustheit, Kompatibilität und Erweiterbarkeit sind schwerer zu messen und oft subjektiv zu bewerten.",
+            source: "LF 2, Kap. 2.6" }
+        ]
       },
       "2.7": {
         title: "Konfiguration und Installation",
