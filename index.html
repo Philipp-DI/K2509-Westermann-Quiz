@@ -2948,6 +2948,71 @@ const QUESTIONS = {
             correct: 1,
             explain: "Social Engineering nutzt den 'Faktor Mensch' als Schwachstelle aus. Durch Täuschung, Dringlichkeit oder Vortäuschen falscher Identitäten werden Mitarbeiter zur Herausgabe sensibler Daten bewegt.",
             source: "LF 4, Kap. 4.1"
+          },
+          {
+            type: "mc",
+            q: "Was unterscheidet die Architektur eines Hauptprozessors (CPU) grundlegend von der eines Grafikprozessors (GPU)?",
+            options: [
+              "CPUs arbeiten ausschließlich mit analogen Signalen, während GPUs rein digital aufgebaut sind.",
+              "CPUs sind auf die sequentielle Ausführung komplexer Rechenbefehele mit wenigen, aber sehr leistungsstarken Kernen optimiert; GPUs besitzen tausende kleine Kerne für massiv parallele, einfache Berechnungen.",
+              "GPUs besitzen keinen eigenen Cache-Speicher und greifen direkt auf die Festplatte zu.",
+              "CPUs können nur Ganzzahlen verarbeiten, während GPUs ausschließlich Textzeichen codieren."
+            ],
+            correct: 1,
+            explain: "CPUs sind Allrounder für serielle Aufgaben. GPUs hingegen wurden für die parallele Verarbeitung riesiger Datenmengen (wie Bildpunkte oder Matrizenberechnungen im KI-Umfeld) entwickelt.",
+            source: "LF 4, Kap. 4.1.2"
+          },
+          {
+            type: "mc",
+            q: "Ein Techniker liest in den Spezifikationen eines Server-Arbeitsspeichers den Begriff 'ECC' (Error Correcting Code). Welche Funktion bietet dieses RAM-Modul?",
+            options: [
+              "Es verdoppelt die Taktfrequenz durch automatische Hardware-Übertaktung.",
+              "Es kann Bitkipper (Single-Bit-Fehler) im Arbeitsspeicher selbstständig erkennen und korrigieren, um Systemabstürze zu verhindern.",
+              "Es verschlüsselt alle im RAM befindlichen Daten nach dem AES-256-Standard.",
+              "Es speichert Daten auch nach dem Ausschalten des IT-Systems dauerhaft ab."
+            ],
+            correct: 1,
+            explain: "ECC-Speicher wird vor allem in geschäftskritischen Servern und Workstations eingesetzt, um Datenkorruption im flüchtigen Speicher rechtzeitig im Betrieb abzufangen.",
+            source: "LF 4, Kap. 4.1.2"
+          },
+          {
+            type: "mc",
+            q: "Über welche serielle Schnittstelle werden moderne, extrem schnelle NVMe-SSDs direkt auf dem Mainboard angebunden, um die Bandbreitenbegrenzung älterer SATA-Anschlüsse zu umgehen?",
+            options: [
+              "PCI Express (PCIe)",
+              "USB-C 3.2",
+              "SCSI-Bus",
+              "IDE/PATA"
+            ],
+            correct: 0,
+            explain: "NVMe (Non-Volatile Memory Express) nutzt die hochperformanten PCIe-Lanes des Mainboards. Dadurch werden deutlich höhere Lese- und Schreibgeschwindigkeiten als über das alte SATA-Protokoll erreicht.",
+            source: "LF 4, Kap. 4.1.2"
+          },
+          {
+            type: "mc",
+            q: "Welche primäre Aufgabe übernimmt das mathematisch-logische Rechenwerk (ALU - Arithmetic Logic Unit) als funktionaler Bestandteil einer CPU?",
+            options: [
+              "Das Laden und Dekodieren von Programmabläufen aus dem Festplattenspeicher.",
+              "Die Durchführung von arithmetischen (z. B. Addition) und logischen (z. B. UND/ODER) Verknüpfungen.",
+              "Die kontinuierliche Bereitstellung der elektrischen Betriebsspannung für die Register.",
+              "Das Verwalten der Zugriffsrechte im lokalen Netzwerk."
+            ],
+            correct: 1,
+            explain: "Die ALU ist das eigentliche Rechenzentrum im Prozessor. Sie führt die elementaren mathematischen Berechnungen und logischen Vergleiche aus, die ihr vom Steuerwerk zugewiesen werden.",
+            source: "LF 4, Kap. 4.1.2"
+          },
+          {
+            type: "mc",
+            q: "Was beschreibt die 'Latenzzeit' (CL - Cas Latency) bei der Spezifikation eines DDR-RAM-Riegels?",
+            options: [
+              "Die physische Lebensdauer der Speicherzellen in Jahren.",
+              "Die Verzögerungszeit zwischen dem Senden eines Lesebefehls durch den Speichercontroller und dem tatsächlichen Erhalt des ersten Datenbits.",
+              "Die maximale Temperatur, die der RAM ohne zusätzlichen Kühlkörper verträgt.",
+              "Die Anzahl der Sekunden, die das System zum Herunterfahren benötigt."
+            ],
+            correct: 1,
+            explain: "Die CAS-Latency wird in Taktzyklen gemessen. Je niedriger dieser Wert bei gleicher Taktfrequenz ist, desto schneller reagiert der Arbeitsspeicher auf Zugriffsanfragen.",
+            source: "LF 4, Kap. 4.1.2"
           }
         ]
       },
@@ -3018,6 +3083,71 @@ const QUESTIONS = {
             correct: 1,
             explain: "Nach Art. 28 und 32 DSGVO müssen Beschäftigte, die Zugriff auf personenbezogene Daten haben, explizit auf die Vertraulichkeit verpflichtet und entsprechend geschult bzw. sensibilisiert werden.",
             source: "LF 4, Kap. 4.2"
+          },
+          {
+            type: "mc",
+            q: "Welches mathematische Verfahren wird bei der Dimensionierung eines RAID-5-Verbunds angewendet, um die Ausfallsicherheit beim Verlust einer beliebigen Festplatte zu gewährleisten?",
+            options: [
+              "Symmetrische AES-Verschlüsselung",
+              "Paritätsberechnung mittels XOR-Verknüpfung",
+              "Asymmetrische Schlüsselkompression",
+              "Zyklische Redundanzprüfung (CRC-32)"
+            ],
+            correct: 1,
+            explain: "Bei RAID 5 werden Daten und Paritätsinformationen blockweise über alle Festplatten verteilt. Die Parität wird über eine logische XOR-Schaltung berechnet, wodurch die Daten einer ausgefallenen Platte rekonstruiert werden können.",
+            source: "LF 4, Kap. 4.2.3"
+          },
+          {
+            type: "mc",
+            q: "Ein Unternehmen fordert für seine neue Server-Infrastruktur ein 'Hot-Swapping'-Konzept. Was bedeutet diese Anforderung für die Hardware-Komponenten?",
+            options: [
+              "Die Komponenten müssen bei Temperaturen von über 50 °C im Serverraum betrieben werden können.",
+              "Defekte Komponenten (wie Festplatten oder Netzteile) müssen im laufenden Betrieb ohne Systemunterbrechung ausgetauscht werden können.",
+              "Alle Daten müssen vor dem Austausch zwingend auf ein analoges Magnetband überspielt werden.",
+              "Die Hardware darf ausschließlich über flüssigen Stickstoff gekühlt werden."
+            ],
+            correct: 1,
+            explain: "Hot-Swapping (oder Hot-Plug) erhöht die Hochverfügbarkeit, da für den Austausch defekter redundanter Bauteile kein Server-Shutdown oder Wartungsfenster eingeplant werden muss.",
+            source: "LF 4, Kap. 4.2.3"
+          },
+          {
+            type: "mc",
+            q: "Welche Kernfrage steht bei der Durchführung einer kaufmännisch-technischen 'TCO-Analyse' (Total Cost of Ownership) im Mittelpunkt?",
+            options: [
+              "Wie hoch sind die reinen Anschaffungskosten für die Hardwarekomponenten am Tag des Kaufs?",
+              "Welche Gesamtkosten entstehen über den gesamten Lebenszyklus eines IT-Systems hinweg (inklusive Anschaffung, Betrieb, Wartung, Strom und Entsorgung)?",
+              "Wie viele Programmierfehler befinden sich durchschnittlich im Betriebssystem?",
+              "Welche Verschlüsselungsalgorithmen werden für die Datensicherung verwendet?"
+            ],
+            correct: 1,
+            explain: "Die TCO-Betrachtung verhindert Fehlinvestitionen, indem sie versteckte Folgekosten (wie hohe Energiekosten, Lizenzgebühren oder teuren Herstellersupport) von Anfang an transparent einbezieht.",
+            source: "LF 4, Kap. 4.2.4"
+          },
+          {
+            type: "mc",
+            q: "Was beschreibt der Parameter 'MTBF' (Mean Time Between Failure) bei der Auswahl geschäftskritischer Server-Festplatten?",
+            options: [
+              "Die maximale Zeitspanne, die ein Techniker für den Austausch benötigt.",
+              "Die statistisch ermittelte, mittlere Betriebsdauer zwischen zwei aufeinanderfolgenden System- oder Hardwareausfällen.",
+              "Die Zeit, die vergeht, bis eine Festplatte nach dem Einschalten einsatzbereit ist.",
+              "Die Anzahl der Sektoren, die pro Minute formatiert werden können."
+            ],
+            correct: 1,
+            explain: "Die MTBF ist ein Indikator für die Zuverlässigkeit einer Hardwarekomponente. Je höher die MTBF-Stundenanzahl, desto seltener treten statistisch gesehen Ausfälle im Dauerbetrieb auf.",
+            source: "LF 4, Kap. 4.2.3"
+          },
+          {
+            type: "mc",
+            q: "Ein Administrator plant ein Storage-System und vergleicht IOPS-Werte. Was genau wird mit der Kennzahl 'IOPS' gemessen?",
+            options: [
+              "Die Anzahl der installierten Internet-Protokolle pro Server.",
+              "Die Ein- und Ausgabeoperationen pro Sekunde (Input/Output Operations Per Second), um die Leistungsfähigkeit von Speichermedien zu bewerten.",
+              "Die verbrauchten Watt-Stunden bei Volllast der Speicher-Controller.",
+              "Die Anzahl der unbefugten Zugriffsversuche auf die Firewall."
+            ],
+            correct: 1,
+            explain: "Während die Durchsatzrate (MB/s) für große, zusammenhängende Dateien wichtig ist, zeigt der IOPS-Wert, wie gut ein Speichermedium (insb. SSDs vs. HDDs) mit vielen kleinen, verstreuten Lese- und Schreibzugriffen (z. B. bei Datenbanken) umgehen kann.",
+            source: "LF 4, Kap. 4.2.3"
           }
         ]
       },
@@ -3088,6 +3218,84 @@ const QUESTIONS = {
             correct: 1,
             explain: "Die Bausteine des IT-Grundschutzes sind in 10 Schichten/Teilschichten unterteilt (z. B. Prozessbausteine wie ORP/Organisation, OPS/Betrieb und Systembausteine wie SYS/Systeme, NET/Netze, INF/Infrastruktur).",
             source: "LF 4, Kap. 4.3"
+          },
+          {
+            type: "mc",
+            q: "Welche Sicherheitsfunktion von modernem UEFI (Nachfolger des klassischen BIOS) verhindert effektiv, dass beim Systemstart Schadsoftware (wie Rootkits) noch vor dem eigentlichen Betriebssystem geladen wird?",
+            options: [
+              "Hyper-Threading",
+              "Secure Boot",
+              "Overclocking-Protection",
+              "S.M.A.R.T.-Monitoring"
+            ],
+            correct: 1,
+            explain: "Secure Boot überprüft die digitalen Signaturen der Bootloader, des Kernels und der Treiber. Fehlt eine gültige Signatur, wird der Startvorgang blockiert, um manipulierte Boot-Dateien abzuweisen.",
+            source: "LF 4, Kap. 4.3.1"
+          },
+          {
+            type: "mc",
+            q: "Ein Techniker stellt fest, dass nach einem unvollständigen BIOS/UEFI-Update der PC nicht mehr startet. Welches Hardware-Feature auf dem Mainboard rettet das System in diesem Fall vor dem Totalschaden?",
+            options: [
+              "Ein zusätzlicher RAM-Riegel im dritten Slot",
+              "Dual-BIOS (ein zweiter, redundanter BIOS-Chip mit einer Backup-Firmware)",
+              "Der automatische Reset der Netzwerkkarte",
+              "Ein integrierter Festplatten-Spiegel"
+            ],
+            correct: 1,
+            explain: "Schlägt ein Firmware-Update fehl (z. B. durch Stromausfall), kopiert das Mainboard bei vorhandenem Dual-BIOS die funktionierende Firmware automatisch vom Backup-Chip auf den primären Baustein.",
+            source: "LF 4, Kap. 4.3.1"
+          },
+          {
+            type: "mc",
+            q: "Was bewirkt das Ändern der sogenannten 'Boot-Reihenfolge' (Boot Order) in den Firmware-Einstellungen eines Computers?",
+            options: [
+              "Es beschleunigt die sequentiell durchgeführten Rechenoperationen der CPU.",
+              "Es legt fest, auf welchen Speichermedien (z. B. USB-Stick, NVMe-SSD, Netzwerk-PXE) das System in welcher Reihenfolge nach einem bootfähigen Betriebssystem sucht.",
+              "Es ändert die Partitionstabelle einer Festplatte von MBR auf GPT.",
+              "Es sortiert die installierten Software-Anwendungen nach dem Alphabet."
+            ],
+            correct: 1,
+            explain: "Die Boot-Reihenfolge steuert den Startprozess. Soll ein PC beispielsweise über ein Netzlaufwerk oder ein Installationsmedium neu aufgesetzt werden, muss dieses Medium an die erste Stelle gesetzt werden.",
+            source: "LF 4, Kap. 4.3.1"
+          },
+          {
+            type: "mc",
+            q: "Welches standardisierte System-Protokoll ermöglicht es einer Netzwerkkarte, einen PC direkt über ein lokales Netzwerk (LAN) zu booten und ein Betriebssystem-Image von einem Server zu laden?",
+            options: [
+              "PXE (Preboot Execution Environment)",
+              "DHCP-Ack",
+              "RDP (Remote Desktop Protocol)",
+              "DNS-Forwarding"
+            ],
+            correct: 0,
+            explain: "PXE ist eine herstellerunabhängige Umgebung. Sie erlaubt es Client-Rechnern ohne lokales Betriebssystem oder lokale Festplatte, Konfigurationsdaten und Start-Images direkt via Netzwerk/TFTP zu beziehen.",
+            source: "LF 4, Kap. 4.3.3"
+          },
+          {
+            type: "mc",
+            q: "Was geschieht beim Ausführen eines 'Chipsatz-Treiber-Updates' auf einem neu installierten Windows-Betriebssystem?",
+            options: [
+              "Es wird ein neuer Browser installiert, der Internetseiten schneller aufruft.",
+              "Es optimiert die Kommunikation zwischen dem Hauptprozessor und den zentralen Controller-Schnittstellen auf dem Mainboard (z. B. PCIe, USB, SATA).",
+              "Die Grafikauflösung des Monitors wird dauerhaft auf 4K fixiert.",
+              "Es löscht alle temporären Logdateien des Benutzers."
+            ],
+            correct: 1,
+            explain: "Der Chipsatz treibt das Mainboard an. Passende Chipsatz-Treiber stellen sicher, dass Energiesparmodi, Bus-Schnittstellen und Systemkomponenten stabil, fehlerfrei und mit maximaler Performance zusammenarbeiten.",
+            source: "LF 4, Kap. 4.3.2"
+          },
+          {
+            type: "mc",
+            q: "Ein IT-System wird eingerichtet und soll die Festplattenpartitionierung mittels 'GPT' (GUID Partition Table) nutzen. Welchen entscheidenden Vorteil bietet GPT gegenüber dem alten 'MBR'-Standard (Master Boot Record)?",
+            options: [
+              "GPT benötigt keine physische Festplatte und läuft direkt im RAM.",
+              "GPT unterstützt Festplattenkapazitäten von weit über 2 Terabyte und erlaubt die Erstellung von theoretisch unendlich vielen (unter Windows 128) Primärpartitionen.",
+              "GPT verschlüsselt die Daten automatisch hardwarebasiert ohne Passwort.",
+              "GPT verhindert das Entstehen von Dateifragmentierung."
+            ],
+            correct: 1,
+            explain: "Der alte MBR-Standard ist auf maximal 4 Primärpartitionen und Festplattengrößen bis zu 2 TB limitiert. GPT löst diese Restriktionen vollständig ab und speichert Partitionierungsdaten zudem redundant für mehr Sicherheit.",
+            source: "LF 4, Kap. 4.3.2"
           }
         ]
       },
@@ -3158,6 +3366,71 @@ const QUESTIONS = {
             correct: 2,
             explain: "Wenn die Schadensauswirkungen im Fall einer Schutzschriftenverletzung existenzbedrohlich für das Unternehmen sind oder schwerwiegende Verstöße gegen Gesetze/Freiheitsrechte bedeuten, ist die Stufe 'Sehr hoch' festzulegen.",
             source: "LF 4, Kap. 4.4"
+          },
+          {
+            type: "mc",
+            q: "Im Rahmen der formalen Übergabe eines IT-Systems unterschreiben Kunde und Dienstleister ein 'Abnahmeprotokoll'. Welche rechtliche Wirkung entfaltet diese Unterzeichnung primär?",
+            options: [
+              "Die gesetzliche Gewährleistungsfrist verfällt ab diesem Tag sofort.",
+              "Die Beweislast für das Vorliegen von Mängeln geht auf den Kunden über, der Erfüllungsanspruch erlischt für erkannte Mängel ohne Vorbehalt und die Vergütung wird fällig (Gefahrenübergang).",
+              "Der Kunde verzichtet damit auf jeglichen zukünftigen technischen Support durch das Systemhaus.",
+              "Das IT-System geht automatisch wieder in das Eigentum des Herstellers über."
+            ],
+            correct: 1,
+            explain: "Die Abnahme ist ein juristischer Meilenstein nach Werkvertragsrecht (§ 640 BGB). Sie bestätigt, dass das Werk im Wesentlichen vertragsgemäß hergestellt wurde. Der Dienstleister hat ab jetzt Anspruch auf seine Bezahlung.",
+            source: "LF 4, Kap. 4.4.2"
+          },
+          {
+            type: "mc",
+            q: "Was versteht man unter einer 'Einweisung' des Kunden bei der Übergabe einer neuen, komplexen Serverumgebung?",
+            options: [
+              "Das physische Einsperren des Kunden im Serverraum zu Schulungszwecken.",
+              "Das gemeinsame Durchgehen der Kernfunktionen, der Verhaltensregeln im Störungsfall sowie der grundlegenden Bedienungsschritte direkt vor Ort, um Fehlbedienungen zu vermeiden.",
+              "Das Zusenden des 500-seitigen englischen Quellcode-Handbuchs per E-Mail.",
+              "Das eigenständige Ändern aller administrativen Passwörter durch den Dienstleister nach Projektende."
+            ],
+            correct: 1,
+            explain: "Die Kundeneinweisung stellt sicher, dass das System sicher betrieben werden kann. Sie reduziert spätere Supportanfragen, die durch reine Anwenderfehler verursacht werden würden.",
+            source: "LF 4, Kap. 4.4.1"
+          },
+          {
+            type: "mc",
+            q: "Welcher Inhalt darf in einem professionellen 'Übergabeprotokoll' für einen kundenspezifisch eingerichteten PC-Arbeitsplatz keinesfalls fehlen?",
+            options: [
+              "Die Gehaltsdaten der IT-Techniker, die das System montiert haben.",
+              "Die vollständige Auflistung des Lieferumfangs (Seriennummern der Geräte), Dokumentation der Funktionstests sowie Unterschriften beider Parteien.",
+              "Die privaten Kontaktdaten aller Open-Source-Entwickler.",
+              "Das kaufmännische Umsatzsteuer-Zertifikat des Transportunternehmens."
+            ],
+            correct: 1,
+            explain: "Das Übergabeprotokoll dient dem rechtssicheren Nachweis, welche Geräte in welchem Zustand physisch an den Kunden ausgehändigt wurden. Es schützt vor nachträglichen Behauptungen, Komponenten hätten gefehlt.",
+            source: "LF 4, Kap. 4.4.2"
+          },
+          {
+            type: "mc",
+            q: "Was beschreibt der Begriff 'verdeckter Mangel' bei der technischen Überprüfung eines gelieferten IT-Systems?",
+            options: [
+              "Ein Mangel, der vom Techniker absichtlich mit Klebeband versteckt wurde.",
+              "Ein Fehler, der bei der ordnungsgemäßen Sichtprüfung bei Übergabe nicht erkennbar war und erst später im regulären Betrieb auftritt.",
+              "Ein Programmierfehler, der nur bei Nacht auftritt.",
+              "Ein Mangel, der ausschließlich kosmetische Fehler an der Verpackung betrifft."
+            ],
+            correct: 1,
+            explain: "Verdeckte Mängel können auch nach der Unterzeichnung des Übergabeprotokolls innerhalb der gesetzlichen Fristen gerügt werden, da sie bei der visuellen oder oberflächlichen Funktionsprüfung nicht auffindbar waren.",
+            source: "LF 4, Kap. 4.4.2"
+          },
+          {
+            type: "mc",
+            q: "Warum ist es wichtig, dem Kunden im Rahmen der Systemübergabe eine 'Admin-Dokumentation' mit allen initialen IP-Adressen und Standard-Passwörtern (sofern nicht geändert) auszuhändigen?",
+            options: [
+              "Weil der Gesetzgeber das unverschlüsselte Veröffentlichen von Passwörtern vorschreibt.",
+              "Damit die interne IT des Kunden das System eigenständig verwalten, konfigurieren und im Notfall administrieren kann (Vermeidung von Vendor Lock-in).",
+              "Um sicherzustellen, dass jeder beliebige Internetnutzer Zugriff auf den Server erhält.",
+              "Damit das Marketing-Team des Kunden gezielte Werbebanner schalten kann."
+            ],
+            correct: 1,
+            explain: "Eine saubere Übergabedokumentation ist Bestandteil der ordnungsgemäßen Vertragserfüllung. Sie stellt sicher, dass der Kunde nicht dauerhaft in ungesunde Abhängigkeit vom Dienstleister gerät.",
+            source: "LF 4, Kap. 4.4.1"
           }
         ]
       }
@@ -4948,6 +5221,71 @@ const QUESTIONS = {
             correct: [0, 1, 3],
             explain: "Ein Servicebericht dient als Nachweis für die Leistungserbringung und bildet die direkte Abrechnungsgrundlage für die Buchhaltung. Unvollständige Berichte können zu Zahlungsverzögerungen führen.",
             source: "LF 6, Kap. 6.4.1"
+          },
+          {
+            type: "mc",
+            q: "Ein gewerblicher Kunde (B2B) meldet einen Defekt an einer Netzwerkkarte 14 Monate nach dem Kauf. Wie unterscheidet sich die Gewährleistungssituation hier rechtlich im Vergleich zum Privatkunden (B2C)?",
+            options: [
+              "Im B2B-Geschäft gibt es überhaupt keine gesetzliche Mängelhaftung.",
+              "Die gesetzliche Gewährleistungsfrist kann im B2B-Handel über Allgemeine Geschäftsbedingungen (AGB) legal auf 12 Monate verkürzt werden; zudem greift die verbraucherschützende Beweislastumkehr nicht.",
+              "Gewerbliche Kunden haben immer Anspruch auf lebenslange kostenlose Neulieferung.",
+              "B2B-Verträge unterliegen ausschließlich dem US-amerikanischen Handelsrecht."
+            ],
+            correct: 1,
+            explain: "Das BGB schützt Verbraucher (B2C) besonders streng. Im reinen Handelsgeschäft (B2B) erlaubt der Gesetzgeber deutliche Vertragsanpassungen, wie die Reduzierung der Mängelhaftung auf ein Jahr.",
+            source: "LF 6, Kap. 6.4.2"
+          },
+          {
+            type: "mc",
+            q: "Was versteht man im Kauf- und Gewährleistungsrecht unter dem Begriff 'Gefahrenübergang'?",
+            options: [
+              "Der Moment, in dem ein Server durch Überspannung beschädigt wird.",
+              "Der Zeitpunkt, an dem das Risiko des zufälligen Untergangs oder der Verschlechterung der Ware vom Verkäufer auf den Käufer übergeht (in der Regel bei Übergabe der Ware).",
+              "Das Transportieren von schweren Akkus im Firmenfahrzeug.",
+              "Das Einspielen eines ungetesteten Updates auf der Firewall."
+            ],
+            correct: 1,
+            explain: "Der Gefahrenübergang (§ 446 BGB) ist entscheidend: Für Mängel, die *vor* oder *zu* diesem Zeitpunkt vorlagen, haftet der Verkäufer im Rahmen der Gewährleistung. Fehler, die danach durch den Kunden entstehen, fallen nicht darunter.",
+            source: "LF 6, Kap. 6.4.2"
+          },
+          {
+            type: "mc",
+            q: "Ein Support-Techniker stellt fest, dass ein gemeldeter Defekt am Kundengerät auf grobe Fehlbedienung (Flüssigkeitsschaden auf dem Mainboard) zurückzuführen ist. Wie verhält sich der Dienstleister bezüglich der Gewährleistung?",
+            options: [
+              "Er muss das Gerät trotzdem auf eigene Kosten reparieren, da der Kunde König ist.",
+              "Er lehnt den Gewährleistungsanspruch sachlich ab, da es sich um keinen Sachmangel ab Werk handelt, und bietet stattdessen eine kostenpflichtige Reparatur an.",
+              "Er behält das Gerät ein und verweigert die Herausgabe, bis der Kunde eine Strafe zahlt.",
+              "Er meldet den Vorfall automatisch der Kriminalpolizei."
+            ],
+            correct: 1,
+            explain: "Die gesetzliche Mängelhaftung deckt nur Fehler ab, die auf Produktions- oder Materialfehler zurückzuführen sind. Eigenverschulden, Verschleiß oder unsachgemäße Handhabung befreien den Verkäufer von der Pflicht zur kostenlosen Nachbesserung.",
+            source: "LF 6, Kap. 6.4.2"
+          },
+          {
+            type: "mc",
+            q: "Ein Kunde fordert Schadensersatz, weil durch den Defekt einer gelieferten Festplatte seine Produktion für zwei Tage stillstand. Unter welcher Voraussetzung haftet der Verkäufer im Rahmen der gesetzlichen Mängelhaftung für solche Mangelfolgeschäden?",
+            options: [
+              "Der Verkäufer haftet grundsätzlich immer und unbegrenzt für absolut jeden Schaden beim Kunden.",
+              "Nur wenn dem Verkäufer Vorsatz oder Fahrlässigkeit (Verschulden) bezüglich des Mangels nachgewiesen werden kann oder eine entsprechende Garantie vorlag.",
+              "Schadensersatzansprüche sind im deutschen Recht bei IT-Produkten gesetzlich komplett ausgeschlossen.",
+              "Der Verkäufer haftet nur, wenn die Festplatte weniger als 500 GB Speicherplatz besaß."
+            ],
+            correct: 1,
+            explain: "Während die reine Reparatur/Neulieferung (Nacherfüllung) verschuldensunabhängig ist, setzt ein Anspruch auf Schadensersatz neben dem Mangel immer ein Verschulden des Verkäufers voraus (§ 280 BGB).",
+            source: "LF 6, Kap. 6.4.2"
+          },
+          {
+            type: "mc",
+            q: "Ein Kunde verlangt im Rahmen der Nacherfüllung die Lieferung eines komplett neuen Ersatzgeräts. Der Verkäufer weigert sich jedoch und verweist darauf, dass die Reparatur des alten Geräts nur 10 Euro kostet, die Neulieferung dagegen 1.000 Euro. Welches Recht schützt hier den Verkäufer?",
+            options: [
+              "Das Recht auf sofortigen Vertragsrücktritt",
+              "Die Einrede der Unverhältnismäßigkeit (§ 439 Abs. 4 BGB)",
+              "Das gesetzliche Widerrufsrecht des Händlers",
+              "Die Einrede der Verjährung"
+            ],
+            correct: 1,
+            explain: "Der Verkäufer kann die vom Käufer gewählte Art der Nacherfüllung verweigern, wenn sie nur mit unverhältnismäßig hohen Kosten möglich ist und die andere Art (hier die günstige Reparatur) ohne erhebliche Nachteile für den Käufer bleibt.",
+            source: "LF 6, Kap. 6.4.2"
           }
         ]
       },
@@ -5030,6 +5368,71 @@ const QUESTIONS = {
             ],
             correct: 1,
             explain: "Rückstellungen werden gebildet, um Aufwendungen, die dem aktuellen Geschäftsjahr wirtschaftlich zuzuordnen sind (z. B. Verkäufe im Dezember, deren Defekte erst im Folgejahr auftreten), bilanztechnisch korrekt abzugrenzen.",
+            source: "LF 6, Kap. 6.5.1"
+          },
+          {
+            type: "mc",
+            q: "Ein IT-Unternehmen ermittelt im Rahmen des Controllings den 'Deckungsbeitrag' eines Servicevertrags. Wie berechnet sich der einfache Deckungsbeitrag (DB I)?",
+            options: [
+              "Umsatzerlöse abzüglich der gesamten fixen Gemeinkosten des Unternehmens.",
+              "Umsatzerlöse (Erlöse des Auftrags) abzüglich der variablen Kosten (z. B. direkt verbrauchtes Material und Technikerstunden).",
+              "Der Bruttolohn des Technikers geteilt durch die Mehrwertsteuer.",
+              "Die Summe aller offenen Rechnungen am Jahresende."
+            ],
+            correct: 1,
+            explain: "Der Deckungsbeitrag zeigt an, wie viel Geld ein konkreter Auftrag einspielt, um die fixen Kosten des Betriebs (Miete, Gehälter der Verwaltung etc.) zu decken. Ein negativer Deckungsbeitrag bedeutet, dass der Auftrag unrentabel ist.",
+            source: "LF 6, Kap. 6.5.2"
+          },
+          {
+            type: "mc",
+            q: "Was unterscheidet 'Fixkosten' von 'variablen Kosten' beim Betrieb eines IT-Service Desks?",
+            options: [
+              "Fixkosten fallen nur bei Softwarelizenzen an; variable Kosten betreffen nur Hardware.",
+              "Fixkosten sind zeitabhängig und bleiben unabhängig vom Arbeitsaufkommen konstant (z. B. Büromiete); variable Kosten ändern sich direkt mit dem Leistungsvolumen (z. B. verbrauchtes Kabelmaterial).",
+              "Fixkosten dürfen steuerlich nicht abgesetzt werden, variable Kosten schon.",
+              "Fixkosten werden monatlich vom Kunden im Voraus bezahlt."
+            ],
+            correct: 1,
+            explain: "Egal ob der Service Desk im Monat 10 oder 1.000 Tickets bearbeitet: Die Miete für die Räume bleibt gleich (Fixkosten). Der Verbrauch von Verpackungsmaterial für den Hardware-Versand steigt hingegen mit der Ticketanzahl (variable Kosten).",
+            source: "LF 6, Kap. 6.5.2"
+          },
+          {
+            type: "mc",
+            q: "Ein Systemhaus bietet seinen Kunden 'Managed Services' über eine monatliche Pauschale (Flatrate) an. Welches finanzielle Risiko trägt das Systemhaus bei diesem Abrechnungsmodell?",
+            options: [
+              "Das Risiko, dass der Kunde am Monatsende die Umsatzsteuer direkt einbehält.",
+              "Das Auslastungs- und Aufwandsrisiko: Fordert der Kunde extrem viele Serviceleistungen an, steigen die internen Arbeitskosten des Systemhauses, ohne dass die Einnahmen steigen.",
+              "Es gibt kein Risiko, da Pauschalen gesetzlich über die Bundesbank abgesichert sind.",
+              "Das Risiko, dass die Hardware beim Transport automatisch an Wert verliert."
+            ],
+            correct: 1,
+            explain: "Pauschalverträge erfordern eine präzise Vorkalkulation und kontinuierliche Überwachung (Nachkalkulation). Nimmt der Supportaufwand überhand, rutscht der Vertrag für den Dienstleister in die Verlustzone.",
+            source: "LF 6, Kap. 6.5.2"
+          },
+          {
+            type: "mc",
+            q: "Was versteht man unter dem Begriff 'Skonto' auf einer Ausgangsrechnung für IT-Dienstleistungen?",
+            options: [
+              "Eine gesetzliche Strafgebühr bei verspäteter Zahlung nach Ablauf von 30 Tagen.",
+              "Ein prozentualer Preisnachlass auf den Rechnungsbetrag, den der Verkäufer gewährt, wenn der Käufer innerhalb einer kurzen, festgesetzten Frist vorzeitig bezahlt.",
+              "Der kaufmännische Rabatt, der ausschließlich bei der Bestellung von Großmengen gewährt wird.",
+              "Die Gebühr für die Bereitstellung einer digitalen Rechnung als PDF."
+            ],
+            correct: 1,
+            explain: "Skonto belohnt schnelle Zahlungen (z. B. '2 % Skonto bei Zahlung innerhalb von 7 Tagen'). Dies verbessert die Liquidität (Zahlungsfähigkeit) des Dienstleisters, da er schneller über sein Geld verfügen kann.",
+            source: "LF 6, Kap. 6.5.1"
+          },
+          {
+            type: "mc",
+            q: "Wann gerät ein Kunde im B2B-Bereich bezüglich einer erbrachten IT-Dienstleistung auch ohne separate Mahnung automatisch in Zahlungsverzug?",
+            options: [
+              "Sofort am Tag der Leistungserbringung durch den Techniker.",
+              "Spätestens 30 Tage nach Fälligkeit und Zugang der Rechnung, sofern im Vertrag oder auf der Rechnung explizit darauf hingewiesen wurde (bei Verbrauchern verpflichtend).",
+              "Erst nach Ablauf des Kalenderjahres (zum 31. Dezember).",
+              "Sobald das Ticket im System des Dienstleisters auf den Status 'Closed' gesetzt wird."
+            ],
+            correct: 1,
+            explain: "Laut § 286 BGB kommt der Schuldner spätestens 30 Tage nach Fälligkeit und Zugang einer Rechnung in Verzug. Bei Verbrauchern (B2C) gilt dies jedoch nur, wenn sie in der Rechnung ausdrücklich auf diese Folge hingewiesen wurden.",
             source: "LF 6, Kap. 6.5.1"
           }
         ]
