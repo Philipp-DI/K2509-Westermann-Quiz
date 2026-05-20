@@ -2492,7 +2492,52 @@ const QUESTIONS =
       },
       "2.10": {
         "title": "Lieferung, Installation und Übergabe vornehmen",
-        "questions": []
+        "questions": [
+          {
+            "type": "mc",
+            "q": "Ein Systemhaus liefert einen konfigurierten Server. Welcher Schritt markiert rechtlich den Abschluss des Leistungsprozesses und löst die Zahlungsfälligkeit aus?",
+            "options": [
+              "Das Absenden der Rechnung per E-Mail",
+              "Die förmliche Abnahme durch den Auftraggeber, dokumentiert im Abnahmeprotokoll",
+              "Das Einschalten des Geräts durch den Techniker",
+              "Die Übergabe der Verpackungsunterlagen an das Lager"
+            ],
+            "correct": 1,
+            "explain": "Die Abnahme nach § 640 BGB ist die Erklärung des Bestellers, dass er das Werk akzeptiert. Mit ihr wird die Vergütung fällig, geht die Gefahr auf den Besteller über und beginnen die Verjährungsfristen für Mängelansprüche zu laufen. Das Abnahmeprotokoll dokumentiert diesen Vorgang verbindlich.",
+            "source": "LF 2, Kap. 2.10.1"
+          },
+          {
+            "type": "tf",
+            "q": "Bei der Warenannahme reicht eine äußere Sichtkontrolle in Anwesenheit des Frachtführers aus. Eine spätere, genauere Inhaltsprüfung auf Menge, Art und Qualität ist rechtlich nicht erforderlich.",
+            "correct": false,
+            "explain": "Die Prüfung erfolgt zweistufig: erst äußere Sichtkontrolle beim Eintreffen (in Anwesenheit des Frachtführers), dann eine genauere Inhaltsprüfung. Unternehmen müssen Warenlieferungen unverzüglich auf Art, Menge und Güte prüfen - andernfalls können spätere Mängelansprüche vom Lieferanten abgelehnt werden (§ 377 HGB).",
+            "source": "LF 2, Kap. 2.10.1"
+          },
+          {
+            "type": "fill",
+            "q": "Welches Gesetz regelt in Deutschland die Rücknahme- und Entsorgungspflichten für Elektro- und Elektronikaltgeräte und setzt die europäische WEEE-Richtlinie um? (Abkürzung)",
+            "answers": [
+              "ElektroG",
+              "Elektrogesetz",
+              "ElektronikG"
+            ],
+            "explain": "Das Elektro- und Elektronikgerätegesetz (ElektroG) verpflichtet Hersteller und Händler zur kostenlosen Rücknahme von Altgeräten. Ziel ist die Vermeidung von Sondermüll und die Förderung des Recyclings werthaltiger Rohstoffe. IT-Fachkräfte müssen bei der Entsorgung von Altgeräten diese Vorschriften kennen.",
+            "source": "LF 2, Kap. 2.10.4"
+          },
+          {
+            "type": "mc",
+            "q": "Ein IT-Techniker soll eine neue Serveranlage in Betrieb nehmen. Was gehört nach Abschluss der Installation zwingend zu einer ordnungsgemäßen Übergabe an den Kunden?",
+            "options": [
+              "Eine mündliche Einweisung genügt - eine Dokumentation ist optional",
+              "Übergabe von Messprotokolle, Dokumentation, Einweisung des Kunden und eine unterzeichnetes Abnahmeprotokoll",
+              "Das Gerät läuft - weitere Maßnahmen sind nicht notwendig",
+              "Die Übergabe erfolgt erst nach Ablauf der gesetzlichen Gewährleistungsfrist"
+            ],
+            "correct": 1,
+            "explain": "Eine vollständige Übergabe umfasst: Funktionsnachweis (ggf. Messprotokolle, Screenshots), Dokumentation des Systems, Einweisung der Nutzer und ein unterzeichnetes Abnahmeprotokoll. Das Protokoll ist die rechtlich relevante Grundlage für Gewährleistungsfristen und Zahlungsfälligkeit.",
+            "source": "LF 2, Kap. 2.10.5"
+          }
+        ]
       }
     }
   },
@@ -4082,7 +4127,62 @@ const QUESTIONS =
       },
       "5.6": {
         "title": "Auf Dateien in Anwendungen zugreifen",
-        "questions": []
+        "questions": [
+          {
+            "type": "mc",
+            "q": "Warum reicht der Arbeitsspeicher (RAM) nicht zur dauerhaften Speicherung von Daten aus?",
+            "options": [
+              "RAM ist zu langsam für schnelle Dateioperationen",
+              "RAM ist flüchtig - er verliert seinen Inhalt, sobald die Energieversorgung unterbrochen wird",
+              "RAM kann keine strukturierten Daten aufnehmen",
+              "RAM ist zu klein für Dateien und wird nur für Betriebssysteme verwendet"
+            ],
+            "correct": 1,
+            "explain": "Der Arbeitsspeicher (RAM) benötigt eine ständige Energieversorgung, um Daten zu halten. Wird der Strom unterbrochen oder das Gerät ausgeschaltet, gehen alle Inhalte verloren. Für die dauerhafte Speicherung werden nichtflüchtige Medien (HDD, SSD, optische Speicher) benötigt, auf denen Daten in Form von Dateien abgelegt werden.",
+            "source": "LF 5, Kap. 5.6.1"
+          },
+          {
+            "type": "fill",
+            "q": "Wie heißt das weitverbreitete, textbasierte Dateiformat, in dem Datensätze zeilenweise gespeichert und einzelne Felder durch ein Trennzeichen (oft Komma oder Semikolon) voneinander getrennt sind? (Abkürzung)",
+            "answers": [
+              "CSV",
+              "Comma-Separated Values",
+              "Comma Separated Values"
+            ],
+            "explain": "CSV (Comma-Separated Values) ist ein einfaches, plattformunabhängiges Textformat für tabellarische Daten. Da die Struktur standardisiert ist, kann es von nahezu jeder Anwendung (Tabellenkalkulation, Datenbank, Python) gelesen und geschrieben werden - ideal für den Datenaustausch zwischen Programmen.",
+            "source": "LF 5, Kap. 5.6.1"
+          },
+          {
+            "type": "mc",
+            "q": "Was ist der Unterschied zwischen einem Text-Stream und einem Binär-Stream beim Dateizugriff?",
+            "options": [
+              "Text-Streams sind schneller, Binär-Streams sind langsamer",
+              "Text-Streams bestehen aus lesbaren Zeichen (Unicode), Binär-Streams enthalten rohe Bytes, die nicht direkt für Menschen lesbar sind",
+              "Binär-Streams können nur Bilder speichern, Text-Streams nur Texte",
+              "Text-Streams sind unkomprimiert, Binär-Streams immer komprimiert"
+            ],
+            "correct": 1,
+            "explain": "Ein Text-Stream (Textmodus) interpretiert Daten als Folge von Zeichen und berücksichtigt Steuerzeichen wie EOF. Ein Binär-Stream liest den kompletten Dateiinhalt als Bytefolge ohne Interpretation - notwendig für Bilder, Videos, ausführbare Programme und andere Nicht-Text-Daten.",
+            "source": "LF 5, Kap. 5.6.1"
+          },
+          {
+            "type": "multi",
+            "q": "Welche der folgenden Aussagen zu Dateiformaten sind korrekt? (Mehrfachauswahl)",
+            "options": [
+              "Ein Dateiformat legt fest, wie Daten innerhalb einer Datei strukturiert und kodiert sind",
+              "Die Dateiendung (z.B. .csv, .xml) gibt einem Programm einen Hinweis auf das Format und die zu erwartende Struktur",
+              "XML ist eine beschreibende Sprache, die die Struktur von Daten flexibel beschreiben kann",
+              "Jedes Programm kann jede Datei lesen, da alle Formate identisch aufgebaut sind"
+            ],
+            "correct": [
+              0,
+              1,
+              2
+            ],
+            "explain": "Dateiformate definieren die innere Struktur einer Datei - nur Programme, die das Format kennen, können die Daten korrekt interpretieren. Die Dateiendung ist ein Hinweis, aber keine Garantie. XML ermöglicht flexible, selbstbeschreibende Datenstrukturen. Die Annahme, alle Formate seien identisch, ist falsch - Interoperabilität ist gerade deshalb eine Herausforderung.",
+            "source": "LF 5, Kap. 5.6.2"
+          }
+        ]
       },
       "5.7": {
         "title": "Die Verwaltung von Daten mithilfe von Datenbanken planen und umsetzen",
@@ -4576,7 +4676,38 @@ const QUESTIONS =
       },
       "5.9": {
         "title": "Den Prozess der Softwareentwicklung evaluieren",
-        "questions": []
+        "questions": [
+          {
+            "type": "mc",
+            "q": "Am Ende eines Scrum-Sprints findet eine Sprint Retrospektive statt. Was ist ihr primäres Ziel?",
+            "options": [
+              "Die fertiggestellten Features dem Kunden vorzustellen und Feedback einzuholen",
+              "Den Entwicklungsprozess selbst zu reflektieren und konkrete Verbesserungsmaßnahmen für den nächsten Sprint zu definieren",
+              "Den Product Backlog für den nächsten Sprint zu priorisieren",
+              "Die Sprint-Velocity zu berechnen und dem Management zu berichten"
+            ],
+            "correct": 1,
+            "explain": "Die Sprint Retrospektive dient der Prozessverbesserung - das Team fragt sich: Was lief gut? Was lief schlecht? Was ändern wir beim nächsten Mal? Sie ist das agile Äquivalent zum klassischen 'Lessons Learned' und gehört zum kontinuierlichen Verbesserungsprozess (KVP) in der Softwareentwicklung. Das Sprint Review zeigt dagegen die Produktergebnisse.",
+            "source": "LF 5, Kap. 5.9"
+          },
+          {
+            "type": "tf",
+            "q": "Die Evaluation des Softwareentwicklungsprozesses beschränkt sich auf die abschließende Projektphase - während laufender Sprints oder Projektphasen findet keine Prozessbewertung statt.",
+            "correct": false,
+            "explain": "Prozessevaluation ist im modernen Softwareengineering kontinuierlich - in Scrum durch Daily Stand-ups (täglich), Sprint Reviews und Retrospektiven (je Sprint), in klassischen Modellen durch Meilenstein-Reviews. Das Ziel ist, Probleme früh zu erkennen und den Prozess laufend zu verbessern, nicht erst am Projektende.",
+            "source": "LF 5, Kap. 5.9"
+          },
+          {
+            "type": "fill",
+            "q": "Wie nennt man die strukturierte Methode zur kontinuierlichen Prozessverbesserung, die nach jedem Projektabschnitt die Fragen stellt: Was haben wir gelernt? Was würden wir beim nächsten Mal anders machen? (englischer Begriff)",
+            "answers": [
+              "Lessons Learned",
+              "Lessons-Learned"
+            ],
+            "explain": "Lessons Learned ist eine Methode zur systematischen Auswertung von Projekterfahrungen. Positives wird als Best Practice dokumentiert, Probleme werden analysiert und Verbesserungsmaßnahmen abgeleitet. Das Wissen fließt in zukünftige Projekte ein. In agilen Methoden wird dies durch die Retrospektive umgesetzt.",
+            "source": "LF 5, Kap. 5.9"
+          }
+        ]
       }
     }
   },
@@ -4723,7 +4854,53 @@ const QUESTIONS =
       },
       "6.2": {
         "title": "IT-Serviceanfragen entgegennehmen und eingangs bearbeiten",
-        "questions": []
+        "questions": [
+          {
+            "type": "mc",
+            "q": "Ein Mitarbeiter ruft beim Service Desk an und meldet, dass sein PC nicht mehr startet. Was ist die wichtigste erste Aufgabe des Service-Desk-Mitarbeiters?",
+            "options": [
+              "Sofort den Third-Level-Support anrufen",
+              "Den Vorfall als neues Serviceticket im Ticketsystem erfassen und klassifizieren",
+              "Den Mitarbeiter bitten, morgen noch einmal anzurufen",
+              "Das Gerät ohne Rücksprache direkt austauschen"
+            ],
+            "correct": 1,
+            "explain": "Jeder Erstkontakt muss unverzüglich als Serviceticket im System erfasst werden. Das Ticket bildet die Grundlage für die gesamte weitere Bearbeitung, Priorisierung, Zuweisung und spätere Auswertung. Erst nach der Erfassung erfolgt die Klassifizierung (Störung, Service Request, Change?) und die Priorisierung nach Impact und Urgency.",
+            "source": "LF 6, Kap. 6.2.1"
+          },
+          {
+            "type": "fill",
+            "q": "Wie heißt das softwaregestützte Werkzeug, das IT-Service-Teams einsetzen, um eingehende Serviceanfragen zu erfassen, zu verfolgen, zu priorisieren und deren Bearbeitungsstatus zu dokumentieren?",
+            "answers": [
+              "Ticketsystem",
+              "Ticket-System",
+              "Helpdesk-System",
+              "Service-Management-System"
+            ],
+            "explain": "Ein Ticketsystem (auch ITSM-Tool oder Helpdesk-Software) ist das Kernwerkzeug des IT-Service-Managements. Jede Anfrage erhält eine eindeutige Ticketnummer. Das System ermöglicht Zuweisung, Statusverfolgung, Priorisierung, Eskalation und spätere Auswertung von Serviceanfragen - z.B. für SLA-Überwachung und Trendanalyse.",
+            "source": "LF 6, Kap. 6.2.1"
+          },
+          {
+            "type": "mc",
+            "q": "Ein Service-Desk-Mitarbeiter nimmt eine neue Anfrage auf. Nach welchen zwei Hauptfaktoren wird die Priorität des Tickets typischerweise bestimmt?",
+            "options": [
+              "Preis des betroffenen Geräts und Alter des Mitarbeiters",
+              "Auswirkung (Impact) - wie viele Nutzer/Prozesse betroffen sind - und Dringlichkeit (Urgency) - wie zeitkritisch die Störung ist",
+              "Uhrzeit des Anrufs und geografischer Standort des Kunden",
+              "Kundenzufriedenheit aus dem letzten Survey und Vertragslaufzeit"
+            ],
+            "correct": 1,
+            "explain": "Die Priorität ergibt sich aus Impact (Auswirkungsumfang: wie viele Nutzer oder Geschäftsprozesse betroffen sind) × Urgency (Zeitdruck: wie schnell muss reagiert werden). Aus dieser Kombination entsteht eine Prioritätsmatrix, die festlegt, wie schnell das Ticket bearbeitet werden muss - ein zentrales Element der SLA-konformen Serviceverarbeitung.",
+            "source": "LF 6, Kap. 6.2.2"
+          },
+          {
+            "type": "tf",
+            "q": "Bei der Erstaufnahme einer Serviceanfrage muss der Service-Desk-Mitarbeiter prüfen, ob für den Kunden bereits ein Vertrag (z.B. Wartungsvertrag, SLA) vorliegt - da dies bestimmt, auf welcher Vertragsbasis die Anfrage bearbeitet wird.",
+            "correct": true,
+            "explain": "Die Vertragsgrundlage ist entscheidend für Reaktionszeiten, Leistungsumfang und Abrechnung. Liegt ein SLA vor, gelten die darin vereinbarten Reaktions- und Lösungszeiten. Liegt kein Vertrag vor, muss zunächst ein neuer Auftrag vereinbart werden. Dieser Schritt gehört zwingend zur ordnungsgemäßen Eingangsbearbeitung einer Serviceanfrage.",
+            "source": "LF 6, Kap. 6.2.1"
+          }
+        ]
       },
       "6.3": {
         "title": "Serviceanfragen vertiefend analysieren und Lösungen erarbeiten",
@@ -5005,7 +5182,65 @@ const QUESTIONS =
       },
       "6.5": {
         "title": "Maßnahmen zur präventiven Instandhaltung, Wartung und zur Störungsvermeidung einleiten und durchführen",
-        "questions": []
+        "questions": [
+          {
+            "type": "mc",
+            "q": "Was unterscheidet präventive (vorbeugende) Wartung grundlegend von korrektiver Wartung im IT-Service?",
+            "options": [
+              "Präventive Wartung ist immer teurer und wird daher selten eingesetzt",
+              "Präventive Wartung findet planmäßig statt, bevor eine Störung auftritt - korrektive Wartung ist eine Reaktion auf eine bereits eingetretene Störung",
+              "Korrektive Wartung wird vom Kunden selbst durchgeführt, präventive Wartung immer extern",
+              "Präventive Wartung betrifft nur Hardware, korrektive Wartung nur Software"
+            ],
+            "correct": 1,
+            "explain": "Präventive (vorbeugende) Wartung zielt darauf ab, Ausfälle zu verhindern, bevor sie auftreten - z.B. durch regelmäßige Reinigung, Firmware-Updates, Kapazitätsmonitoring. Korrektive Wartung ist die Störungsbehebung nach einem eingetretenen Ausfall. Das Ziel des IT-Service-Managements ist, durch proaktive Maßnahmen den Anteil korrektiver Eingriffe zu minimieren.",
+            "source": "LF 6, Kap. 6.5.1"
+          },
+          {
+            "type": "multi",
+            "q": "Welche der folgenden Maßnahmen gehören zur präventiven IT-Instandhaltung? (Mehrfachauswahl)",
+            "options": [
+              "Regelmäßiges Aufspielen von Sicherheitsupdates und Patches (Patch-Management)",
+              "Proaktives Monitoring von Systemressourcen (CPU, RAM, Speicher) zur Früherkennung von Engpässen",
+              "Physische Reinigung von Servern und Kühlsystemen zur Vermeidung von Überhitzung",
+              "Datensicherung (Backup) zur Wiederherstellbarkeit im Störungsfall",
+              "Neuinstallation eines Systems erst nachdem es vollständig ausgefallen ist"
+            ],
+            "correct": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "explain": "Präventive Maßnahmen wirken proaktiv: Patch-Management schließt Sicherheitslücken bevor sie ausgenutzt werden; Monitoring erkennt Engpässe bevor sie zum Ausfall führen; Reinigung verhindert hitzebedingte Ausfälle; Backups sind eine präventive Maßnahme gegen Datenverlust. Eine Neuinstallation nach dem Totalausfall ist dagegen eine korrektive Maßnahme.",
+            "source": "LF 6, Kap. 6.5.1"
+          },
+          {
+            "type": "mc",
+            "q": "Ein Managed-Service-Anbieter hat mit seinem Kunden vereinbart, das gesamte Patch-Management der Windows-Server zu übernehmen. Welchem Wartungstyp entspricht diese Leistung?",
+            "options": [
+              "Korrektive Wartung, da Patches meist nach einem Sicherheitsvorfall eingespielt werden",
+              "Präventive Wartung, da das Einspielen von Patches Schwachstellen schließt, bevor sie zu einem Incident führen",
+              "Adaptive Wartung, da das Betriebssystem dabei auf neue Hardware angepasst wird",
+              "Perfektive Wartung, da die Performance durch Updates gesteigert wird"
+            ],
+            "correct": 1,
+            "explain": "Patch-Management ist eine klassisch präventive Maßnahme: Sicherheitslücken werden geschlossen, bevor Angreifer sie ausnutzen können. Managed Services erlauben es, diese proaktiven Tätigkeiten an einen Dienstleister auszulagern, der laut SLA für die laufende Aktualisierung und Systemstabilität verantwortlich ist.",
+            "source": "LF 6, Kap. 6.5.1"
+          },
+          {
+            "type": "fill",
+            "q": "Wie nennt man das systematische, proaktive Überwachen von IT-Systemen auf Kennzahlen wie CPU-Auslastung, Speicherfüllstand und Netzwerkdurchsatz, um Probleme zu erkennen, bevor sie zu einer Störung führen?",
+            "answers": [
+              "IT-Monitoring",
+              "Monitoring",
+              "Systemmonitoring",
+              "proaktives Monitoring"
+            ],
+            "explain": "IT-Monitoring (auch System-Monitoring oder proaktives Monitoring) ist ein zentrales Werkzeug der präventiven Wartung. Überschreiten Kennzahlen definierte Schwellenwerte, werden automatisch Alarme ausgelöst und das Service-Team kann eingreifen, bevor ein Ausfall entsteht. Es ist Bestandteil moderner Managed-Service-Verträge und des ITIL-Prozesses 'Event Management'.",
+            "source": "LF 6, Kap. 6.5.1"
+          }
+        ]
       }
     }
   },
