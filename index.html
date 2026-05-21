@@ -6324,7 +6324,7 @@ function renderQuestion() {
 
   if (q.type === "mc") {
     const wrap = document.createElement("div");
-    wrap.className = options;
+    wrap.className = "options";
     q.options.forEach((opt, i) => {
       const div = document.createElement("button");
       div.className = "option";
@@ -6343,7 +6343,7 @@ function renderQuestion() {
   }
   else if (q.type === "multi") {
     const wrap = document.createElement("div");
-    wrap.className = options;
+    wrap.className = "options";
     state.currentSelection = [];
     q.options.forEach((opt, i) => {
       const div = document.createElement("button");
@@ -6381,7 +6381,7 @@ function renderQuestion() {
   }
   else if (q.type === "tf") {
     const wrap = document.createElement("div");
-    wrap.className = options;
+    wrap.className = "options";
     ["Wahr", "Falsch"].forEach((label, i) => {
       const div = document.createElement("button");
       div.className = "option";
@@ -6411,7 +6411,7 @@ function checkAnswer() {
     body.querySelectorAll(".option").forEach((o, i) => {
       o.classList.add("disabled");
       o.classList.remove("selected");
-      if (i === q.correct) o.classList.add(correct);
+      if (i === q.correct) o.classList.add("correct");
       else if (i === state.currentSelection) o.classList.add("wrong");
     });
   }
@@ -6425,7 +6425,7 @@ function checkAnswer() {
       o.classList.remove("selected");
       const isCorrect = cor.includes(i);
       const wasSelected = sel.includes(i);
-      if (isCorrect) o.classList.add(correct);
+      if (isCorrect) o.classList.add("correct");
       else if (wasSelected) o.classList.add("wrong");
     });
   }
@@ -6435,7 +6435,7 @@ function checkAnswer() {
     correct = q.answers.some(a => normalize(a) === normalize(userText));
     const inp = body.querySelector(".fill-input");
     inp.disabled = true;
-    inp.classList.add(correct ? correct : "wrong");
+    inp.classList.add(correct ? "correct" : "wrong");
   }
   else if (q.type === "tf") {
     correct = state.currentSelection === q.correct;
@@ -6443,7 +6443,7 @@ function checkAnswer() {
       o.classList.add("disabled");
       o.classList.remove("selected");
       const optBool = (i === 0);
-      if (optBool === q.correct) o.classList.add(correct);
+      if (optBool === q.correct) o.classList.add("correct");
       else if (optBool === state.currentSelection && !correct) o.classList.add("wrong");
     });
   }
@@ -6461,7 +6461,7 @@ function checkAnswer() {
   });
 
   const fb = document.getElementById("feedback");
-  fb.className = "feedback " + (correct ? correct : "wrong");
+  fb.className = "feedback " + (correct ? "correct" : "wrong");
   let correctAnsText = "";
   if (!correct) correctAnsText = `<br><strong>Richtige Antwort:</strong> ${getCorrectAnswerText(q)}`;
   fb.innerHTML = `<strong>${correct ? "Richtig." : "Nicht ganz."}</strong>${correctAnsText}<br>${q.explain}<div class=source>${q.source}</div>`;
